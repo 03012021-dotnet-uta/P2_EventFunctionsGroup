@@ -20,4 +20,5 @@ The proposal is made to meet the ever demanded Web / Cloud based Event Managemen
 -To see necessary informations e.g location (google maps api), weather (weather API) and parking area etc
 -TO puchase tickets as set by event manger
 
-further functionalities should be easily added
+#further functionalities should be easily added
+- Booking of Hotels/Car and airtickets for participants
