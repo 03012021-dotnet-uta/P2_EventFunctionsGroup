@@ -12,7 +12,6 @@ trigger:
 
 pool:
   vmImage: 'windows-latest'
-  name: 'Default'
 
 variables:
   solution: '*.sln'
