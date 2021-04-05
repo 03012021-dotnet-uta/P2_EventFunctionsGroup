@@ -11,8 +11,7 @@ trigger:
  
 
 pool:
-  vmImage: 'windows-latest'
-  name: 'Test'
+  vmImage: 'ubuntu-18.04'
 
 variables:
   solution: '*.sln'
