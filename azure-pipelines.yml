@@ -11,7 +11,7 @@ trigger:
  
 
 pool:
-  vmImage: 'Default'
+  vmImage: 'ubuntu-18.04'
 
 variables:
   solution: '*.sln'
