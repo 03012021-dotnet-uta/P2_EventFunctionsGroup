@@ -65,4 +65,3 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'WebAPP'
-    publishLocation: 'Container'
