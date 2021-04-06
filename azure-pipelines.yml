@@ -55,9 +55,9 @@ steps:
     configuration: '$(buildConfiguration)'
 
 # To publish
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    modifyOutputPath: false
-    workingDirectory: ' *.sln'
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'publish'
+#     publishWebProjects: true
+#     modifyOutputPath: false
+#     workingDirectory: ' *.sln'
