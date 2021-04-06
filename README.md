@@ -22,3 +22,4 @@ The proposal is made to meet the ever demanded Web / Cloud based Event Managemen
 
 #further functionalities should be easily added
 - Booking of Hotels/Car and airtickets for participants
+# A small update here
