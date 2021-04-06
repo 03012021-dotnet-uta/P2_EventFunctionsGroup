@@ -38,8 +38,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: ' WebApi/*.sln'
-    workingDirectory: ' WebApi'
+    projects: ' *.sln'
+    # workingDirectory: ' WebApi'
     arguments: '--configuration $(buildConfiguration)' # Update this to match your need
 
 - task: VSBuild@1
@@ -60,4 +60,4 @@ steps:
     command: 'publish'
     publishWebProjects: true
     modifyOutputPath: false
-    workingDirectory: ' WebApi/*.sln'
+    workingDirectory: ' *.sln'
