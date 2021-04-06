@@ -1,17 +1,62 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- main
+  branches:
+    include:
+    - main
+
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'
 
 variables:
+  solution: '*.sln'
+  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+
+#this installs the newest SDK for this build
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '5.0.x'
+    # performMultiLevelLookup: true
+    # includePreviewVersions: false # Required 'true' to use preview versions
+
+- task: UseDotNet@2
+  displayName: 'Install .NET Core Runtime'
+  inputs:
+    packageType: 'runtime'
+    version: '2.x'
+    # performMultiLevelLookup: true
+
+
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+#this will restore and build the directory.
+- task: DotNetCoreCLI@2
+  displayName: 'building'
+  inputs:
+    command: 'build'
+    projects: '*.sln'
+    workingDirectory: 'WebApi'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publishing'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    modifyOutputPath: false
+    workingDirectory: 'WebApi'
+    projects: '$(solution)'
+    zipAfterPublish: true
