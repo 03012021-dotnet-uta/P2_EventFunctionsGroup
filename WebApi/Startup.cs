@@ -32,7 +32,7 @@ namespace WebApi
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("This is a test for P2_G3_EventFunctions");
                 });
             });
         }
