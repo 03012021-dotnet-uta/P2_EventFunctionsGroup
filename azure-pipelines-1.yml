@@ -17,7 +17,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'cd ''Angular Test'''
+    script: 'cd ''$(Build.SourcesDirectory)/Angular Test'''
 
 - script:
     npm install -g @angular/cli
