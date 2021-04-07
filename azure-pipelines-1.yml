@@ -15,8 +15,11 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: CmdLine@2
+  inputs:
+    script: 'cd $(System.DefaultWorkingDirectory)/''AngularTest'''
+
 - script:
-    cd '$(System.DefaultWorkingDirectory)/AngularTest'
     npm install -g @angular/cli
     npm install
     ng build --prod
