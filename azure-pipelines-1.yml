@@ -17,7 +17,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'cd $(System.DefaultWorkingDirectory)/''AngularTest'''
+    script: 'cd $(System.DefaultWorkingDirectory)/''AngularTest/angular-tour-of-heroes/'''
 
 - script:
     npm install -g @angular/cli
