@@ -39,10 +39,18 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-- task: AzureRmWebAppDeployment@4
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
+#     appType: 'webApp'
+#     WebAppName: 'functioningevents'
+#     packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+
+- task: AzureWebApp@1
   inputs:
-    ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
     appType: 'webApp'
-    WebAppName: 'functioningevents'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    appName: 'functioningevents'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
