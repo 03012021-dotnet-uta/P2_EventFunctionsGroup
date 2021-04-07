@@ -28,7 +28,7 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: '/'
+    workingDir: 'AngularTest/angular-tour-of-heroes/'
     customCommand: 'run build'
 
 - task: ArchiveFiles@2
