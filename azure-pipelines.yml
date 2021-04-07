@@ -90,6 +90,14 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
+    appType: 'webApp'
+    WebAppName: 'EventFunctionsP2'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
 # - task: DotNetCoreCLI@2
 #   displayName: 'Publishing'
 #   inputs:
