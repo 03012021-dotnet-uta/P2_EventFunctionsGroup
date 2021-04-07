@@ -57,8 +57,8 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: "/AngularTest/angular-tour-of-heroes/src" 
-    output_location: ""
+    app_location: "/AngularTest/angular-tour-of-heroes" 
+    output_location: "/AngularTest/angular-tour-of-heroes"
   env:
     azure_static_web_apps_api_token: $(deployment_token)
 
