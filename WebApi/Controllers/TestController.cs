@@ -28,6 +28,27 @@ namespace WebApi.Controllers
             return Ok(allUsers);
         }
 
+        [HttpGet("login/{email}/{password}")]
+        public ActionResult<List<User>> LogIn(string email, string password)
+        {
+            if(!ModelState.IsValid)
+            {
+                return StatusCode(400, "Failed to create models");
+            }
+            else
+            {
+                User getUser = testLogic.GetUserByEmail(email, password);
+                if(getUser == null)
+                {
+                    return StatusCode(450, "Invalid login");
+                }
+                else
+                {
+                    return Ok(getUser);
+                }
+            }
+        }
+
         [HttpPost("register")]
         public ActionResult<User> RegisterUser(RawUser user)
         {
@@ -43,6 +64,23 @@ namespace WebApi.Controllers
                 }
                 return newUser;
             }
-        }        
+        }
+        
+        [HttpPost("register")]
+        public ActionResult<User> RegisterEvent(RawUser user)
+        {
+            if(!ModelState.IsValid)
+            {
+                return StatusCode(400, "Failed to create models");
+            }
+            else
+            {
+                User newUser = testLogic.CreateUser(user);
+                if(newUser == null) {
+                    return StatusCode(401, "Failed to add to database");
+                }
+                return newUser;
+            }
+        }
     }
 }

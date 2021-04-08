@@ -30,5 +30,17 @@ namespace Repository
             var getBackuser = context.Users.FirstOrDefault(n => Guid.Equals(newUser.Id, n.Id));
             return getBackuser;
         }
+
+        public User GetUserByID(Guid id)
+        {
+            var user = context.Users.FirstOrDefault(n => Guid.Equals(n.Id, id));
+            return user;
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            var user = context.Users.FirstOrDefault(n => n.Email == email);
+            return user;
+        }
     }
 }
