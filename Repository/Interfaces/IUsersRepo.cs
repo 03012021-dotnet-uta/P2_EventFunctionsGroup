@@ -13,6 +13,7 @@ namespace Repository.Interfaces
     /// interface and respective repo class.
     /// These will implement the IDisposable interface
     /// since using database context is unmanaged.
+    /// Ideas implemented here learned from https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
     /// </summary>
     public interface IUserRepository : IDisposable
     {

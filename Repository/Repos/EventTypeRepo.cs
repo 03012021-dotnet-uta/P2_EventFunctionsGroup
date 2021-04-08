@@ -14,6 +14,7 @@ namespace Repository.Repos
     /// respective interface.
     /// It also implements Disposal pattern since it
     /// contains unmanaged resources.
+    /// Ideas implemented here learned from https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
     /// </summary>
     public class EventTypeRepo : IEventTypeRepository, IDisposable
     {
