@@ -16,8 +16,16 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd 'AngularTest/angular-tour-of-heroes/'
+    cd 'AngularTest/angular-tour-of-heroes/''
     npm install -g @angular/cli
     npm install
     ng build --prod
   displayName: 'npm install and build'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/AngularTest/angular-tour-of-heroes/dist/AngularTest/angular-tour-of-heroes/'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
