@@ -2,16 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PizzaBox.Repository;
+using Repository.Contexts;
 
 namespace WebApi
 {
@@ -31,13 +35,25 @@ namespace WebApi
             {
                 options.AddPolicy(name: "dev", builder =>
                 {
-                    builder.WithOrigins("functioningevents.azurewebsites.net")
+                    builder.WithOrigins("eventsfunctions.azurewebsites.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
             });
 
             string connectionString = Configuration.GetConnectionString("eventfunctionsdb");
+            string testConnectionString = Configuration.GetConnectionString("testdb");
+
+            services.AddDbContext<EventFunctionsContext>(options =>
+			{
+				if (!options.IsConfigured)
+                {
+                    options.UseSqlServer(testConnectionString);
+                }
+			});
+
+            services.AddScoped<TestLogic>();
+            services.AddScoped<TestRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
