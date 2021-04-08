@@ -15,9 +15,6 @@ steps:
    
   displayName: 'Install Dependencies'
 
-- script: 'npm run test-ci'
-  displayName: 'Run Tests'
-
 - script: |
    npm run build
    
