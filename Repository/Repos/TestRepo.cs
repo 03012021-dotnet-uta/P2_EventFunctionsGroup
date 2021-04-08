@@ -10,12 +10,10 @@ namespace Repository
     public class TestRepository
     {
         private readonly EventFunctionsContext context;
-        //private readonly StoreContext sContext;
 
-        public TestRepository(EventFunctionsContext c)//, StoreContext sc)
+        public TestRepository(EventFunctionsContext c)
         {
             context = c;
-            //sContext = sc;
         }
 
         public List<User> GetUsers() 
@@ -23,6 +21,14 @@ namespace Repository
             var allUsers = context.Users.ToList();
 
             return allUsers;
+        }
+
+        public User AddUser(User newUser)
+        {
+            context.Add<User>(newUser);
+            context.SaveChanges();
+            var getBackuser = context.Users.FirstOrDefault(n => Guid.Equals(newUser.Id, n.Id));
+            return getBackuser;
         }
     }
 }

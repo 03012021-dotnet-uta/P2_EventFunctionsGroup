@@ -31,9 +31,18 @@ namespace WebApi.Controllers
         [HttpPost("register")]
         public ActionResult<User> RegisterUser(RawUser user)
         {
-            User newUser = testLogic.CreateUser(user);
-
-            return newUser;
+            if(!ModelState.IsValid)
+            {
+                return StatusCode(400, "Failed to create models");
+            }
+            else
+            {
+                User newUser = testLogic.CreateUser(user);
+                if(newUser == null) {
+                    return StatusCode(401, "Failed to add to database");
+                }
+                return newUser;
+            }
         }        
     }
 }
