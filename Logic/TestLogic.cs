@@ -32,5 +32,55 @@ namespace Logic
             newUser = testRepo.AddUser(newUser);
             return newUser;
         }
+
+        public User GetUserByEmail(string email, string password)
+        {
+            if(IfUserExists(email))
+            {
+                return null;
+            }
+            User getUser = testRepo.GetUserByEmail(email);
+            byte[] enteredPassword = mapper.PasswordHash(password, getUser.PasswordSalt);
+            if(CompareHash(enteredPassword, getUser.Password))
+            {
+                return getUser;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private bool CompareHash(byte[] enteredPassword, byte[] password)
+        {
+            if(password.Length != enteredPassword.Length)
+            {
+                return false;
+            }
+            else
+            {
+                for(int i = 0; i < password.Length; i++)
+                {
+                    if(password[i] != enteredPassword[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        private bool IfUserExists(string email)
+        {
+            User getUser = testRepo.GetUserByEmail(email);
+            if(getUser == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
