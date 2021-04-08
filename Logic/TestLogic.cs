@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Domain.Models;
-using PizzaBox.Repository;
+using Domain.RawModels;
+using Repository;
 
 namespace Logic
 {
     public class TestLogic
     {
         private readonly TestRepository customerRepo;
+        private readonly Mapper mapper = new Mapper();
         public TestLogic(TestRepository r)
         {
             customerRepo = r;
@@ -22,6 +24,13 @@ namespace Logic
             List<User> users = customerRepo.GetUsers();
 
             return users;
+        }
+
+        public User CreateUser(RawUser user)
+        {
+            User newUser = new User();//mapper.RawToUser(user);
+
+            return newUser;
         }
     }
 }

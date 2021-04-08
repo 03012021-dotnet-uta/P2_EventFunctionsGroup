@@ -7,14 +7,9 @@ namespace Domain.Models
 {
     public class Event
     {
-        public Event()
-        {
-            UsersEvents = new HashSet<UsersEvent>();
-        }
-
-        public int Id { get; set; }
-        public int EventTypeId { get; set; }
-        public int LocationId { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
+        //public int EventTypeId { get; set; }
+        //public int LocationId { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
@@ -25,7 +20,8 @@ namespace Domain.Models
 
         public virtual EventType EventType { get; set; }
         public virtual Location Location { get; set; }
-//        public virtual User Manager { get; set; }
+        public virtual User Manager { get; set; }
+        public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<UsersEvent> UsersEvents { get; set; }
     }
 }

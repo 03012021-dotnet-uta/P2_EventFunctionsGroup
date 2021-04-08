@@ -5,12 +5,10 @@ using System.Collections.Generic;
 
 namespace Domain.Models
 {
-
     public class UsersEvent
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public int EventId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid EventId { get; set; }
 
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }

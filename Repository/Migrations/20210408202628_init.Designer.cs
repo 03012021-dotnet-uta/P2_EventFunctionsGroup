@@ -10,8 +10,8 @@ using Repository.Contexts;
 namespace Repository.Migrations
 {
     [DbContext(typeof(EventFunctionsContext))]
-    [Migration("20210408002207_CreateDB")]
-    partial class CreateDB
+    [Migration("20210408202628_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,10 +23,9 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
@@ -37,11 +36,14 @@ namespace Repository.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EventTypeId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -61,15 +63,16 @@ namespace Repository.Migrations
 
                     b.HasIndex("LocationId");
 
+                    b.HasIndex("ManagerId");
+
                     b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Domain.Models.EventType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -81,10 +84,9 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Models.Location", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -108,22 +110,21 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Models.Review", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -136,10 +137,9 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsEventManager")
                         .HasColumnType("bit");
@@ -147,11 +147,11 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Password")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PasswordSalt")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
@@ -160,20 +160,13 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Models.UsersEvent", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
+                    b.HasKey("EventId", "UserId");
 
                     b.HasIndex("UserId");
 
@@ -183,35 +176,33 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Models.Event", b =>
                 {
                     b.HasOne("Domain.Models.EventType", "EventType")
-                        .WithMany("Events")
-                        .HasForeignKey("EventTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("EventTypeId");
 
                     b.HasOne("Domain.Models.Location", "Location")
-                        .WithMany("Events")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
+                    b.HasOne("Domain.Models.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId");
 
                     b.Navigation("EventType");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Domain.Models.Review", b =>
                 {
                     b.HasOne("Domain.Models.Event", "Event")
                         .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventId");
 
                     b.HasOne("Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Event");
 
@@ -240,16 +231,6 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Models.Event", b =>
                 {
                     b.Navigation("UsersEvents");
-                });
-
-            modelBuilder.Entity("Domain.Models.EventType", b =>
-                {
-                    b.Navigation("Events");
-                });
-
-            modelBuilder.Entity("Domain.Models.Location", b =>
-                {
-                    b.Navigation("Events");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>

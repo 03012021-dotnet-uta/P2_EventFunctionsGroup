@@ -7,14 +7,9 @@ namespace Domain.Models
 {
     public class EventType
     {
-        public EventType()
-        {
-            Events = new HashSet<Event>();
-        }
-
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
 
-        public virtual ICollection<Event> Events { get; set; }
+        //public virtual ICollection<Event> Events { get; set; }
     }
 }
