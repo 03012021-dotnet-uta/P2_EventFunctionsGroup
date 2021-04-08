@@ -9,13 +9,13 @@ using Domain.Models;
 namespace Repository.Repos
 {
     /// <summary>
-    /// This is the Repo class for Users
+    /// This is the Repo class for Reviews
     /// It implements the CRUD functions from its
     /// respective interface.
     /// It also implements Disposal pattern since it
     /// contains unmanaged resources.
     /// </summary>
-    public class UserRepo : IUserRepository, IDisposable
+    public class ReviewRepo : IReviewRepository, IDisposable
     {
     
         /// <summary>
@@ -28,7 +28,7 @@ namespace Repository.Repos
         /// Empty constructor to instantiate the context
         /// and then assign to context variable
         /// </summary>
-        public UserRepo() 
+        public ReviewRepo() 
         {
             context = new EventFunctionsContext();
         }
@@ -37,7 +37,7 @@ namespace Repository.Repos
         /// Pass in context using Dependency Injection
         /// and assign to context variable
         /// </summary>
-        public UserRepo(EventFunctionsContext eventFunctionsContext) 
+        public ReviewRepo(EventFunctionsContext eventFunctionsContext) 
         {
             context = eventFunctionsContext;
         }
@@ -45,36 +45,35 @@ namespace Repository.Repos
         /// <summary>
         /// Insert a new item to context
         /// </summary>
-        public void InsertUser(User user) 
+        public void InsertReview(Review review) 
         {
-            context.Users.Add(user);
+            context.Reviews.Add(review);
         }
 
         /// <summary>
-        /// Get the Users from database and present back to context
+        /// Get the Reviews from database and present back to context
         /// </summary>
-        public ICollection<User> GetAllUsers() 
+        public ICollection<Review> GetAllReviews() 
         {
-            return context.Users.ToList();
+            return context.Reviews.ToList();
         }
 
         /// <summary>
         /// Update an item in context and database
         /// </summary>
-        /// <param name="user"></param>
-        public void UpdateUser(User user) 
+        public void UpdateReview(Review review) 
         {
-            context.Entry(user).State = EntityState.Modified;
+            context.Entry(review).State = EntityState.Modified;
         }
 
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteUser(int userId)
+        public void DeleteReview(int reviewId)
         {
-            User user = context.Users.Find(userId);
-            context.Entry(user).State = EntityState.Deleted;
-            context.Users.Remove(user);
+            Review review = context.Reviews.Find(reviewId);
+            context.Entry(review).State = EntityState.Deleted;
+            context.Reviews.Remove(review);
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace Repository.Interfaces
 {
 
     /// <summary>
-    /// This is the Interface for the User Repository.
+    /// This is the Interface for the Event Repository.
     /// It contains the methods that the Repo must
     /// implement, which are based on CRUD operations.
     /// Each main class of the programm will have its own
@@ -14,28 +14,28 @@ namespace Repository.Interfaces
     /// These will implement the IDisposable interface
     /// since using database context is unmanaged.
     /// </summary>
-    public interface IUserRepository : IDisposable
+    public interface IEventRepository : IDisposable
     {
 
         /// <summary>
-        /// Create User
+        /// Create EventRepo
         /// </summary>
-        void InsertUser(User user);
+        void InsertEvent(Event eventName);
 
         /// <summary>
-        /// Read all users
+        /// Read all EventRepos
         /// </summary>
-        ICollection<User> GetAllUsers();
+        ICollection<Event> GetAllEvents();
 
         /// <summary>
-        /// Update a user
+        /// Update an EventRepo
         /// </summary>
-        void UpdateUser(User user);
+        void UpdateEvent(Event eventName);
 
         /// <summary>
-        /// Delete a user
+        /// Delete an EventRepo
         /// </summary>
-        void DeleteUser(int userId);
+        void DeleteEvent(int eventId);
 
         /// <summary>
         /// Save changes
