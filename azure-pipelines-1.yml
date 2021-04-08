@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd 'AngularTest/angular-tour-of-heroes/''
+    cd 'AngularTest/angular-tour-of-heroes/'
     npm install -g @angular/cli
     npm install
     ng build --prod
