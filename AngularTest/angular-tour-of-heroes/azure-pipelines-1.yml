@@ -10,51 +10,33 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+- script: |
+   npm install
+   
+  displayName: 'Install Dependencies'
 
-- task: CmdLine@2
-  inputs:
-    script: 'cd $(System.DefaultWorkingDirectory)/''AngularTest/angular-tour-of-heroes/'''
+- script: 'npm run test-ci'
+  displayName: 'Run Tests'
 
-- script:
-    npm install -g @angular/cli
-    npm install
-    ng build --prod
-  displayName: 'npm install and build'
+- script: |
+   npm run build
+   
+  displayName: 'Build the Project'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/dist'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
 
 - task: ArchiveFiles@2
+  displayName: 'Archive Files'
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: staticwebsite'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Angular'
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
-    appType: 'webApp'
-    WebAppName: 'functioningevents'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-
-- task: AzureStaticWebApp@0
-  inputs:
-    app_location: '$(Build.ArtifactStagingDirectory)'
-
-# - task: AzureWebApp@1
-#   inputs:
-#     azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
-#     appType: 'webApp'
-#     appName: 'functioningevents'
-#     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-#     deploymentMethod: 'auto'
+    ArtifactName: staticwebsite
 
