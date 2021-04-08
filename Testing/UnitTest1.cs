@@ -1,5 +1,7 @@
 using System;
 using Logic;
+using PizzaBox.Repository;
+using Repository.Contexts;
 using Xunit;
 
 namespace Testing
@@ -9,7 +11,9 @@ namespace Testing
         [Fact]
         public void Test1()
         {
-            Class1 test = new Class1();
+            EventFunctionsContext context = new EventFunctionsContext();
+            TestRepository testRepo = new TestRepository(context);
+            TestLogic test = new TestLogic(testRepo);
             string testString = test.test();
 
             Assert.Equal("test", testString);
