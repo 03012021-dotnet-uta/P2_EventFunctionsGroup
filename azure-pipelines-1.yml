@@ -24,7 +24,7 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/AngularTest/angular-tour-of-heroes/dist/AngularTest/angular-tour-of-heroes/'
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/AngularTest/angular-tour-of-heroes/dist/'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
