@@ -46,6 +46,10 @@ steps:
     WebAppName: 'functioningevents'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
 
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: '$(Build.ArtifactStagingDirectory)'
+
 # - task: AzureWebApp@1
 #   inputs:
 #     azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
