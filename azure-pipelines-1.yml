@@ -29,3 +29,12 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1 (508e33e7-82f6-4bdd-8693-aac68277e78d)'
+    appType: 'webApp'
+    WebAppName: 'eventsfunctions'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+
