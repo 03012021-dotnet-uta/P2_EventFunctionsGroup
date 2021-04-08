@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain.Models
 {
     public class User
     {
-        public Guid UserID { get; set; } = Guid.NewGuid();
-        public string Fname { get; set; }
-        public string  Lname { get; set; }
-        public bool IsManager { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        public User()
+        {
+            UsersEvents = new HashSet<UsersEvent>();
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+        public string PasswordSalt { get; set; }
+        public bool IsEventManager { get; set; }
+
+        public virtual ICollection<UsersEvent> UsersEvents { get; set; }
+
     }
 }
