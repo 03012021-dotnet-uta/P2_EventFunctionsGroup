@@ -8,11 +8,11 @@ namespace Logic
 {
     public class TestLogic
     {
-        private readonly TestRepository customerRepo;
+        private readonly TestRepository testRepo;
         private readonly Mapper mapper = new Mapper();
         public TestLogic(TestRepository r)
         {
-            customerRepo = r;
+            testRepo = r;
         }
 
         public string test()
@@ -21,15 +21,15 @@ namespace Logic
         }
 
         public List<User> GetUsers() {
-            List<User> users = customerRepo.GetUsers();
+            List<User> users = testRepo.GetUsers();
 
             return users;
         }
 
         public User CreateUser(RawUser user)
         {
-            User newUser = new User();//mapper.RawToUser(user);
-
+            User newUser = mapper.RawToUser(user);
+            newUser = testRepo.AddUser(newUser);
             return newUser;
         }
     }
