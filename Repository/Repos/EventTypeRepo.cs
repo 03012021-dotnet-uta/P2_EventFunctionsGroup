@@ -9,13 +9,13 @@ using Domain.Models;
 namespace Repository.Repos
 {
     /// <summary>
-    /// This is the Repo class for Users
+    /// This is the Repo class for EventTypes
     /// It implements the CRUD functions from its
     /// respective interface.
     /// It also implements Disposal pattern since it
     /// contains unmanaged resources.
     /// </summary>
-    public class UserRepo : IUserRepository, IDisposable
+    public class EventTypeRepo : IEventTypeRepository, IDisposable
     {
     
         /// <summary>
@@ -28,7 +28,7 @@ namespace Repository.Repos
         /// Empty constructor to instantiate the context
         /// and then assign to context variable
         /// </summary>
-        public UserRepo() 
+        public EventTypeRepo() 
         {
             context = new EventFunctionsContext();
         }
@@ -37,7 +37,7 @@ namespace Repository.Repos
         /// Pass in context using Dependency Injection
         /// and assign to context variable
         /// </summary>
-        public UserRepo(EventFunctionsContext eventFunctionsContext) 
+        public EventTypeRepo(EventFunctionsContext eventFunctionsContext) 
         {
             context = eventFunctionsContext;
         }
@@ -45,36 +45,36 @@ namespace Repository.Repos
         /// <summary>
         /// Insert a new item to context
         /// </summary>
-        public void InsertUser(User user) 
+        public void InsertEventType(EventType eventType) 
         {
-            context.Users.Add(user);
+            context.EventTypes.Add(eventType);
         }
 
         /// <summary>
-        /// Get the Users from database and present back to context
+        /// Get the EventTypes from database and present back to context
         /// </summary>
-        public ICollection<User> GetAllUsers() 
+        public ICollection<EventType> GetAllEventTypes() 
         {
-            return context.Users.ToList();
+            return context.EventTypes.ToList();
         }
 
         /// <summary>
         /// Update an item in context and database
         /// </summary>
-        /// <param name="user"></param>
-        public void UpdateUser(User user) 
+        /// <param name="eventtype"></param>
+        public void UpdateEventType(EventType eventType) 
         {
-            context.Entry(user).State = EntityState.Modified;
+            context.Entry(eventType).State = EntityState.Modified;
         }
 
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteUser(int userId)
+        public void DeleteEventType(int eventTypeId)
         {
-            User user = context.Users.Find(userId);
-            context.Entry(user).State = EntityState.Deleted;
-            context.Users.Remove(user);
+            EventType eventType = context.EventTypes.Find(eventTypeId);
+            context.Entry(eventType).State = EntityState.Deleted;
+            context.EventTypes.Remove(eventType);
         }
 
         /// <summary>

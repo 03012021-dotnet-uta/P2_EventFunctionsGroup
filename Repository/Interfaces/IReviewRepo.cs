@@ -6,7 +6,7 @@ namespace Repository.Interfaces
 {
 
     /// <summary>
-    /// This is the Interface for the User Repository.
+    /// This is the Interface for the Review Repository.
     /// It contains the methods that the Repo must
     /// implement, which are based on CRUD operations.
     /// Each main class of the programm will have its own
@@ -14,28 +14,28 @@ namespace Repository.Interfaces
     /// These will implement the IDisposable interface
     /// since using database context is unmanaged.
     /// </summary>
-    public interface IUserRepository : IDisposable
+    public interface IReviewRepository : IDisposable
     {
 
         /// <summary>
-        /// Create User
+        /// Create Review
         /// </summary>
-        void InsertUser(User user);
+        void InsertReview(Review review);
 
         /// <summary>
-        /// Read all users
+        /// Read all Reviews
         /// </summary>
-        ICollection<User> GetAllUsers();
+        ICollection<Review> GetAllReviews();
 
         /// <summary>
-        /// Update a user
+        /// Update a Review
         /// </summary>
-        void UpdateUser(User user);
+        void UpdateReview(Review review);
 
         /// <summary>
-        /// Delete a user
+        /// Delete a Review
         /// </summary>
-        void DeleteUser(int userId);
+        void DeleteReview(int reviewId);
 
         /// <summary>
         /// Save changes

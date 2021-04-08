@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Domain.Models;
-
+  
 namespace Repository.Interfaces 
 {
 
     /// <summary>
-    /// This is the Interface for the User Repository.
+    /// This is the Interface for the Location Repository.
     /// It contains the methods that the Repo must
     /// implement, which are based on CRUD operations.
     /// Each main class of the programm will have its own
@@ -14,28 +14,28 @@ namespace Repository.Interfaces
     /// These will implement the IDisposable interface
     /// since using database context is unmanaged.
     /// </summary>
-    public interface IUserRepository : IDisposable
+    public interface ILocationRepository : IDisposable
     {
 
         /// <summary>
-        /// Create User
+        /// Create Location
         /// </summary>
-        void InsertUser(User user);
+        void InsertLocation(Location location);
 
         /// <summary>
-        /// Read all users
+        /// Read all locations
         /// </summary>
-        ICollection<User> GetAllUsers();
+        ICollection<Location> GetAllLocations();
 
         /// <summary>
-        /// Update a user
+        /// Update a location
         /// </summary>
-        void UpdateUser(User user);
+        void UpdateLocation(Location location);
 
         /// <summary>
-        /// Delete a user
+        /// Delete a location
         /// </summary>
-        void DeleteUser(int userId);
+        void DeleteLocation(int locationId);
 
         /// <summary>
         /// Save changes

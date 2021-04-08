@@ -9,13 +9,13 @@ using Domain.Models;
 namespace Repository.Repos
 {
     /// <summary>
-    /// This is the Repo class for Users
+    /// This is the Repo class for UsersEvent
     /// It implements the CRUD functions from its
     /// respective interface.
     /// It also implements Disposal pattern since it
     /// contains unmanaged resources.
     /// </summary>
-    public class UserRepo : IUserRepository, IDisposable
+    public class UsersEventRepo : IUsersEventRepository, IDisposable
     {
     
         /// <summary>
@@ -28,7 +28,7 @@ namespace Repository.Repos
         /// Empty constructor to instantiate the context
         /// and then assign to context variable
         /// </summary>
-        public UserRepo() 
+        public UsersEventRepo() 
         {
             context = new EventFunctionsContext();
         }
@@ -37,7 +37,7 @@ namespace Repository.Repos
         /// Pass in context using Dependency Injection
         /// and assign to context variable
         /// </summary>
-        public UserRepo(EventFunctionsContext eventFunctionsContext) 
+        public UsersEventRepo(EventFunctionsContext eventFunctionsContext) 
         {
             context = eventFunctionsContext;
         }
@@ -45,36 +45,35 @@ namespace Repository.Repos
         /// <summary>
         /// Insert a new item to context
         /// </summary>
-        public void InsertUser(User user) 
+        public void InsertUsersEvent(UsersEvent userEvent) 
         {
-            context.Users.Add(user);
+            context.UsersEvents.Add(userEvent);
         }
 
         /// <summary>
-        /// Get the Users from database and present back to context
+        /// Get the UsersEvents from database and present back to context
         /// </summary>
-        public ICollection<User> GetAllUsers() 
+        public ICollection<UsersEvent> GetAllUsersEvents() 
         {
-            return context.Users.ToList();
+            return context.UsersEvents.ToList();
         }
 
         /// <summary>
         /// Update an item in context and database
         /// </summary>
-        /// <param name="user"></param>
-        public void UpdateUser(User user) 
+        public void UpdateUsersEvent(UsersEvent userEvent) 
         {
-            context.Entry(user).State = EntityState.Modified;
+            context.Entry(userEvent).State = EntityState.Modified;
         }
 
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteUser(int userId)
+        public void DeleteUsersEvent(int userEventId)
         {
-            User user = context.Users.Find(userId);
-            context.Entry(user).State = EntityState.Deleted;
-            context.Users.Remove(user);
+            UsersEvent userEvent = context.UsersEvents.Find(userEventId);
+            context.Entry(userEvent).State = EntityState.Deleted;
+            context.UsersEvents.Remove(userEvent);
         }
 
         /// <summary>
