@@ -5,7 +5,7 @@ using Domain.Models;
 using Microsoft.Data.SqlClient;
 using Repository.Contexts;
 
-namespace PizzaBox.Repository
+namespace Repository
 {
     public class TestRepository
     {

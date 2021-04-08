@@ -1,6 +1,6 @@
 using System;
 using Logic;
-using PizzaBox.Repository;
+using Repository;
 using Repository.Contexts;
 using Xunit;
 

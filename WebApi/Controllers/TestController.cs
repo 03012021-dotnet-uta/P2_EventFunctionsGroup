@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.RawModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,5 +27,13 @@ namespace WebApi.Controllers
             List<User> allUsers = testLogic.GetUsers();
             return Ok(allUsers);
         }
+
+        [HttpPost("register")]
+        public ActionResult<User> RegisterUser(RawUser user)
+        {
+            User newUser = testLogic.CreateUser(user);
+
+            return newUser;
+        }        
     }
 }
