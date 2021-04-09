@@ -18,6 +18,10 @@ namespace WebApi.Controllers
             userLogic = sL;
         }
 
+        /// <summary>
+        /// Gets all existing users in database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("all")]
         public ActionResult<List<User>> GetAll()
         {
@@ -25,6 +29,11 @@ namespace WebApi.Controllers
             return allUsers;
         }
 
+        /// <summary>
+        /// Registers a new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public ActionResult<User> RegisterUser(RawUser user)
         {
@@ -42,6 +51,38 @@ namespace WebApi.Controllers
             }
         }        
 
+        /// <summary>
+        /// Tries to logs in a user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [HttpGet("login/{email}/{password}")]
+        public ActionResult<User> LogIn(string email, string password)
+        {
+            if(!ModelState.IsValid)
+            {
+                return StatusCode(400, "Failed to create models");
+            }
+            else
+            {
+                User getUser = userLogic.GetUserByEmail(email, password);
+                if(getUser == null)
+                {
+                    return StatusCode(450, "Invalid login");
+                }
+                else
+                {
+                    return Ok(getUser);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get all user information based off their id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public ActionResult<User> GetByID(Guid id)
         {
