@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Logic;
@@ -84,7 +85,7 @@ namespace WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public ActionResult<User> GetByID(Guid id)
+        public async Task<ActionResult<User>> GetByID(Guid id)
         {
             if(!ModelState.IsValid)
             {
@@ -92,7 +93,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                User getUser = userLogic.GetUserByID(id);
+                User getUser = await userLogic.GetUserByID(id);
                 if(getUser == null)
                 {
                     return StatusCode(400, "Couldn't find user");

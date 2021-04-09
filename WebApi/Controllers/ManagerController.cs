@@ -36,10 +36,25 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("createevent")]
-        public ActionResult<Event> CreateNewEvent(RawEvent userEvent)
+        public async Task<ActionResult<Event>> CreateNewEvent(RawEvent userEvent)
         {
-            Event newEvent = managerLogic.CreateNewEvent(userEvent);
-            return newEvent;
+            if(!ModelState.IsValid)
+            {
+                return StatusCode(400, "Failed to create models");
+            }
+            else
+            {
+                Event newEvent = await managerLogic.CreateNewEvent(userEvent);
+                if(newEvent == null)
+                {
+                    return StatusCode(400, "Couldn't find user");
+                }
+                else
+                {
+                    return newEvent;
+                }
+                
+            }
         }
 
         /// <summary>

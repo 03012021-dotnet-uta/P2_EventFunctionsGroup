@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Repository;
@@ -69,9 +70,9 @@ namespace Logic
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public User GetUserByID(Guid id)
+        public async Task<User> GetUserByID(Guid id)
         {
-            User getUser = testRepo.GetUserByID(id);
+            User getUser = await testRepo.GetUserByID(id);
             return getUser;
         }
 
