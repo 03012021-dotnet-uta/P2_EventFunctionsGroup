@@ -35,7 +35,7 @@ namespace WebApi
             {
                 options.AddPolicy(name: "dev", builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins("https://eventsfunctions.azurewebsites.net", "https://eventsfunctionfe.azurewebsites.net/")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
@@ -75,10 +75,10 @@ namespace WebApi
 
             app.UseRewriter(new RewriteOptions()
                 .AddRedirect("^$", "index.html"));
-            
-            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

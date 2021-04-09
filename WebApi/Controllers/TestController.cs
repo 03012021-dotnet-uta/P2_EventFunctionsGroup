@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("login/{email}/{password}")]
-        public ActionResult<List<User>> LogIn(string email, string password)
+        public ActionResult<User> LogIn(string email, string password)
         {
             if(!ModelState.IsValid)
             {
