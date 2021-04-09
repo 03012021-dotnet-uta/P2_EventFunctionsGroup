@@ -66,6 +66,9 @@ namespace Logic
             newEvent.EventType = eventType;
             newEvent.Location = loc;
             newEvent.Manager = manager;
+            newEvent.Revenue = 0;
+            newEvent.TotalCost = 0;
+            newEvent.TotalTicketsSold = 0;
             return newEvent;
         }
 

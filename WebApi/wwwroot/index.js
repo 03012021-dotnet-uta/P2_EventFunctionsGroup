@@ -15,12 +15,14 @@ button.addEventListener("click", async () => {
     let address = {
         name: "Test",
         Date: new Date(),
-        Desription: "This is just a test",
+        description: "This is just a test",
         Capacity: 50,
-        street: "836 King St",
-        zip: 91776,
-        city: "San Gabriel",
-        state: "CA"
+        street: "1111 S Figueroa St",
+        zip: 90015,
+        city: "Los Angeles",
+        state: "CA",
+        eventtype: 'ea3bf8bf-5e12-45b0-bd9a-209defc23e9c',
+        managerid: '28318984-7a0b-4cac-a61d-c0c2471acdb9'
     }
     let events = ['Sports', 'Music', 'Private', 'Conference', 'Expo', 'Other']
     let addressjson = JSON.stringify(address);
@@ -80,12 +82,12 @@ button.addEventListener("click", async () => {
     //     console.log("Failed to fetch page: ", err);
     // });
     // mapbox://styles/mapbox/streets-v11
-    // let stylejson = `https://api.mapbox.com/styles/v1/notasalad?${mapboxtoken}`;
-    // let pin = `pin-s-l+000(${mapReponse.features[0].center[0]},${mapReponse.features[0].center[1]})`
-    // let thediv = document.getElementById("map");
-    // let pic = document.createElement("img");
-    // pic.src = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${pin}/${mapReponse.features[0].center[0]}, ${mapReponse.features[0].center[1]}, 15, 0/400x400?${mapboxtoken}`;
-    // thediv.appendChild(pic);
+    let stylejson = `https://api.mapbox.com/styles/v1/notasalad?${mapboxtoken}`;
+    let pin = `pin-s-l+000(${mapReponse.features[0].center[0]},${mapReponse.features[0].center[1]})`
+    let thediv = document.getElementById("map");
+    let pic = document.createElement("img");
+    pic.src = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${pin}/${mapReponse.features[0].center[0]}, ${mapReponse.features[0].center[1]}, 15, 0/400x400?${mapboxtoken}`;
+    thediv.appendChild(pic);
 
     // await fetch('api/Test/typeinit', {
     //     method: 'POST',

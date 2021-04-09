@@ -47,7 +47,7 @@ namespace WebApi.Controllers
                 Event newEvent = await managerLogic.CreateNewEvent(userEvent);
                 if(newEvent == null)
                 {
-                    return StatusCode(400, "Couldn't find user");
+                    return StatusCode(450, "Failed to make event. Invalid inputs.");
                 }
                 else
                 {
@@ -95,9 +95,10 @@ namespace WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("eventtypes")]
-        public ActionResult<string> GetEventTypes()
+        public ActionResult<List<EventType>> GetEventTypes()
         {
-            return "Manager API Get";
+            List<EventType> allTypes = managerLogic.GetEventTypes();
+            return allTypes;
         }
     }
 }

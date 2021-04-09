@@ -18,7 +18,9 @@ namespace Logic
 
         public async Task<Event> CreateNewEvent(RawEvent userEvent)
         {
+            Console.WriteLine(userEvent.EventType);
             EventType type = await testRepo.GetEventTypeByID(userEvent.EventType);
+            Console.WriteLine(type);
             if(type is null)
             {
                 return null;
@@ -28,6 +30,13 @@ namespace Logic
             Event newEvent = await mapper.RawToEvent(userEvent, type, loc, manager);
             newEvent = testRepo.AddEvent(newEvent);
             return newEvent;
+        }
+
+        public List<EventType> GetEventTypes()
+        {
+            List<EventType> allTypes = testRepo.GetAllEventTypes();
+
+            return allTypes;
         }
     }
 }
