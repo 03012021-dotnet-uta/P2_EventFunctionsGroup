@@ -31,6 +31,12 @@ namespace Repository
             return getType;
         }
 
+        public List<Event> GetAllEvents()
+        {
+            List<Event> allEvents = context.Events.ToList();
+            return allEvents;
+        }
+
         public void AddLocation(Location loc)
         {
             context.Add<Location>(loc);

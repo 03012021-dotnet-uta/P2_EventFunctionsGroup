@@ -19,6 +19,17 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
+        /// Gets all events(past and future)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("all")]
+        public ActionResult<List<Event>> GetAll()
+        {
+            List<Event> allUsers = eventLogic.GetAll();
+            return allUsers;
+        }
+
+        /// <summary>
         /// Gets all upcoming events
         /// </summary>
         /// <returns></returns>

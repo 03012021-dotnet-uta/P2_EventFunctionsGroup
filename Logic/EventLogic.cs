@@ -25,6 +25,12 @@ namespace Logic
             return upcomingEvents;
         }
 
+        public List<Event> GetAll()
+        {
+            List<Event> allEvents = testRepo.GetAllEvents();
+            return allEvents;
+        }
+
         /// <summary>
         /// Gets all reviews of an event based off eventID
         /// </summary>
