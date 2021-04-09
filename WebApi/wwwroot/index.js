@@ -1,6 +1,6 @@
 const button = document.getElementById("add");
 
-button.addEventListener("click", () => {
+button.addEventListener("click", async () => {
     let user = {
         firstName: "Another",
         lastName: "Test",
@@ -8,7 +8,7 @@ button.addEventListener("click", () => {
         password: "Nick"
     }
 
-    fetch('https://eventfunctionsp2.azurewebsites.net/api/User/register', {
+    await fetch('api/User/register', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -32,6 +32,21 @@ button.addEventListener("click", () => {
 
     console.log("---------------------")
     fetch('https://eventfunctionsp2.azurewebsites.net/api/User/all')
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
+    console.log("---------------------")
+    fetch(`api/User/login/${user.email}/${user.password}`)
     .then(response => {
         if(!response.ok) {
             throw new Error(`Network reponse was not ok (${reponse.status})`);

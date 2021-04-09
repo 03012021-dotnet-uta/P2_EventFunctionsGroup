@@ -39,7 +39,8 @@ namespace Repository
 
         public User GetUserByEmail(string email)
         {
-            var user = context.Users.FirstOrDefault(n => n.Email == email);
+            User user = context.Users.FirstOrDefault(n => n.Email == email);
+
             return user;
         }
     }
