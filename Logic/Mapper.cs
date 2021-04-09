@@ -35,5 +35,12 @@ namespace Logic
             var hashedPassword = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             return hashedPassword;
         }
+
+        internal EventType StringToEventType(string t)
+        {
+            EventType newType = new EventType();
+            newType.Name = t;
+            return newType;
+        }
     }
 }

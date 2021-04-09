@@ -54,6 +54,8 @@ namespace WebApi
 			});
 
             services.AddScoped<TestLogic>();
+            services.AddScoped<UserLogic>();
+            services.AddScoped<ManagerLogic>();
             services.AddScoped<TestRepository>();
             services.AddScoped<UserLogic>();
     

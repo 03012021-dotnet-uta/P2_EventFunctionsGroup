@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Repository;
@@ -31,6 +32,17 @@ namespace Logic
             User newUser = mapper.RawToUser(user);
             newUser = testRepo.AddUser(newUser);
             return newUser;
+        }
+
+        public List<EventType> InitTypes(List<string> types)
+        {
+            foreach(string t in types)
+            {
+                EventType et = mapper.StringToEventType(t);
+                testRepo.InitEventTypes(et);
+            }
+            List<EventType> allTypes = testRepo.GetAllEventTypes();
+            return allTypes;
         }
 
         public User GetUserByEmail(string email, string password)

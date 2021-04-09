@@ -20,67 +20,11 @@ namespace WebApi.Controllers
             testLogic = sL;
         }
 
-
-        [HttpGet]
-        public ActionResult<List<User>> Get()
-        {
-            List<User> allUsers = testLogic.GetUsers();
-            return Ok(allUsers);
-        }
-
-        [HttpGet("login/{email}/{password}")]
-        public ActionResult<User> LogIn(string email, string password)
-        {
-            if(!ModelState.IsValid)
-            {
-                return StatusCode(400, "Failed to create models");
-            }
-            else
-            {
-                User getUser = testLogic.GetUserByEmail(email, password);
-                if(getUser == null)
-                {
-                    return StatusCode(450, "Invalid login");
-                }
-                else
-                {
-                    return Ok(getUser);
-                }
-            }
-        }
-
-        [HttpPost("register")]
-        public ActionResult<User> RegisterUser(RawUser user)
-        {
-            if(!ModelState.IsValid)
-            {
-                return StatusCode(400, "Failed to create models");
-            }
-            else
-            {
-                User newUser = testLogic.CreateUser(user);
-                if(newUser == null) {
-                    return StatusCode(401, "Failed to add to database");
-                }
-                return newUser;
-            }
-        }
-        
-        [HttpPost("register")]
-        public ActionResult<User> RegisterEvent(RawUser user)
-        {
-            if(!ModelState.IsValid)
-            {
-                return StatusCode(400, "Failed to create models");
-            }
-            else
-            {
-                User newUser = testLogic.CreateUser(user);
-                if(newUser == null) {
-                    return StatusCode(401, "Failed to add to database");
-                }
-                return newUser;
-            }
-        }
+        // [HttpPost("typeinit")]
+        // public ActionResult<List<EventType>> InitTypes(List<String> types)
+        // {
+        //     List<EventType> newEvents = testLogic.InitTypes(types);
+        //     return newEvents;
+        // }
     }
 }
