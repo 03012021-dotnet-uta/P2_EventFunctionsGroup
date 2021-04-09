@@ -21,7 +21,7 @@ namespace Logic
                 newUser.FName = rUser.firstName;
                 newUser.LName = rUser.lastName;
                 newUser.IsEventManager = false;
-                newUser.Email = rUser.email;
+                newUser.Email = rUser.email.ToLower();
                 newUser.PasswordSalt = hmac.Key;
                 newUser.Password = PasswordHash(rUser.password, newUser.PasswordSalt);
             }

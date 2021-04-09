@@ -2,9 +2,9 @@ const button = document.getElementById("add");
 
 button.addEventListener("click", () => {
     let user = {
-        firstName: "Testing",
+        firstName: "Another",
         lastName: "Test",
-        email: "anothermail@gmail.com",
+        email: "testmail@gmail.com",
         password: "Nick"
     }
 
@@ -29,4 +29,21 @@ button.addEventListener("click", () => {
     .catch(function(err) {
         console.log("Failed to fetch page: ", err);
     });
+
+    console.log("---------------------")
+    fetch('https://eventfunctionsp2.azurewebsites.net/api/User/all')
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
 })
+
