@@ -35,7 +35,8 @@ namespace WebApi
             {
                 options.AddPolicy(name: "dev", builder =>
                 {
-                    builder.WithOrigins("https://eventsfunctions.azurewebsites.net", "https://eventsfunctionfe.azurewebsites.net/")
+                    //builder.WithOrigins("https://eventsfunctions.azurewebsites.net", "https://eventsfunctionfe.azurewebsites.net/")
+                    builder.AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });

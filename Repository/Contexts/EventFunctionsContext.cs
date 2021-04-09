@@ -15,24 +15,22 @@ namespace Repository.Contexts
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsersEvent> UsersEvents { get; set; }
-        public EventFunctionsContext()
+        public EventFunctionsContext() : base()
         {
         }
 
-        public EventFunctionsContext(DbContextOptions<EventFunctionsContext> options)
-            : base(options)
+        public EventFunctionsContext(DbContextOptions<EventFunctionsContext> options) : base(options)
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-
-                optionsBuilder.UseSqlServer("Server=tcp:eventfunctions.database.windows.net,1433;Initial Catalog=testDB4;Persist Security Info=False;User ID=event;Password=functions1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-           }
-        }
+//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//         {
+//             if (!optionsBuilder.IsConfigured)
+//             {
+// 
+//                 optionsBuilder.UseSqlServer("Server=tcp:eventfunctions.database.windows.net,1433;Initial Catalog=testDB4;Persist Security Info=False;User ID=event;Password=functions1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+//            }
+//         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Event>(
