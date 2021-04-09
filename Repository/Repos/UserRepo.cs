@@ -60,6 +60,14 @@ namespace Repository.Repos
         }
 
         /// <summary>
+        /// Get an entity by its UserId
+        /// </summary>
+        public User GetUserById(int userId)
+        {
+            return context.Users.Find(userId);
+        }
+
+        /// <summary>
         /// Update an item in context and database
         /// </summary>
         /// <param name="user"></param>

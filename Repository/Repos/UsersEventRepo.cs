@@ -60,6 +60,14 @@ namespace Repository.Repos
         }
 
         /// <summary>
+        /// Get an entity by its UsersEventId
+        /// </summary>
+        public UsersEvent GetUsersEventById(int usersEventId)
+        {
+            return context.UsersEvents.Find(usersEventId);
+        } 
+
+        /// <summary>
         /// Update an item in context and database
         /// </summary>
         public void UpdateUsersEvent(UsersEvent userEvent) 

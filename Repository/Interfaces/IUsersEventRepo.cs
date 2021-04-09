@@ -29,6 +29,11 @@ namespace Repository.Interfaces
         ICollection<UsersEvent> GetAllUsersEvents();
 
         /// <summary>
+        /// Read an entity by their UsersEventId
+        /// </summary>
+        UsersEvent GetUsersEventById(int usersEventId);
+
+        /// <summary>
         /// Update a UserEvent
         /// </summary>
         void UpdateUsersEvent(UsersEvent usersEvent);

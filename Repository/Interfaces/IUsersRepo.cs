@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Repository.Interfaces 
 {
-
+ 
     /// <summary>
     /// This is the Interface for the User Repository.
     /// It contains the methods that the Repo must
@@ -28,6 +28,11 @@ namespace Repository.Interfaces
         /// </summary>
         ICollection<User> GetAllUsers();
 
+        /// <summary>
+        /// Read an entity by their UserId
+        /// </summary>
+        User GetUserById(int userId);
+        
         /// <summary>
         /// Update a user
         /// </summary>
