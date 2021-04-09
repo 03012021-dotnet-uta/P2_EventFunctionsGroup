@@ -22,7 +22,7 @@ namespace WebApi.Controllers
         public ActionResult<List<User>> GetAll()
         {
             List<User> allUsers = userLogic.GetUsers();
-            return Ok(allUsers);
+            return allUsers;
         }
 
         [HttpPost("register")]
