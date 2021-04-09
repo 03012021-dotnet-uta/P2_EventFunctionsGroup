@@ -42,7 +42,7 @@ namespace WebApi
             //     });
             // });
 
-            string connectionString = Configuration.GetConnectionString("eventfunctionsdb");
+            string connectionString = Configuration.GetConnectionString("localdb");
             string testConnectionString = Configuration.GetConnectionString("testdb");
 
             services.AddDbContext<EventFunctionsContext>(options =>

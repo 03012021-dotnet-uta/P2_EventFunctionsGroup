@@ -83,7 +83,7 @@ namespace Logic
         /// <returns></returns>
         public User GetUserByEmail(string email, string password)
         {
-            if(IfUserExists(email))
+            if(!IfUserExists(email))
             {
                 return null;
             }

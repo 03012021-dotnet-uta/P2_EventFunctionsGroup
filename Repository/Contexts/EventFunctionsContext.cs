@@ -23,14 +23,14 @@ namespace Repository.Contexts
         {
         }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// 
-//                 optionsBuilder.UseSqlServer("Server=tcp:eventfunctions.database.windows.net,1433;Initial Catalog=testDB4;Persist Security Info=False;User ID=event;Password=functions1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-//            }
-//         }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     if (!optionsBuilder.IsConfigured)
+        //     {
+
+        //         optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=TestEF;Trusted_Connection=True;");
+        //    }
+        // }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Event>(
