@@ -31,16 +31,16 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors((options) =>
-            {
-                options.AddPolicy(name: "dev", builder =>
-                {
-                    //builder.WithOrigins("https://eventsfunctions.azurewebsites.net", "https://eventsfunctionfe.azurewebsites.net/")
-                    builder.AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-                });
-            });
+            // services.AddCors((options) =>
+            // {
+            //     options.AddPolicy(name: "dev", builder =>
+            //     {
+            //         //builder.WithOrigins("https://eventsfunctions.azurewebsites.net", "https://eventsfunctionfe.azurewebsites.net/")
+            //         builder.AllowAnyOrigin()
+            //         .AllowAnyHeader()
+            //         .AllowAnyMethod();
+            //     });
+            // });
 
             string connectionString = Configuration.GetConnectionString("eventfunctionsdb");
             string testConnectionString = Configuration.GetConnectionString("testdb");
@@ -74,16 +74,16 @@ namespace WebApi
             }
             app.UseStatusCodePages();
 
+            app.UseHttpsRedirection();
+
             app.UseRewriter(new RewriteOptions()
                 .AddRedirect("^$", "index.html"));
-
-            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseCors("dev");//you must have this for cors to work
+            //app.UseCors("dev");//you must have this for cors to work
 
             app.UseAuthorization();
 
