@@ -21,7 +21,8 @@ namespace Logic
         /// <returns></returns>
         public List<Event> GetUpcomingEvents()
         {
-            throw new NotImplementedException();
+            List<Event> upcomingEvents = testRepo.GetUpcomingEvents(DateTime.UtcNow);
+            return upcomingEvents;
         }
 
         /// <summary>
@@ -51,7 +52,24 @@ namespace Logic
         /// <returns></returns>
         public List<Event> GetAllSignedUpEvents(Guid id)
         {
-            throw new NotImplementedException();
+            ICollection<Event> allEvents = testRepo.GetSignedUpEvents(id);
+            List<Event> filteredEvents = new List<Event>();
+            foreach(Event e in allEvents)
+            {
+                filteredEvents.Add(e);
+            }
+            return filteredEvents;
+        }
+
+        /// <summary>
+        /// Gets an event based off its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Event GetEventById(Guid id)
+        {
+            Event getEvent = testRepo.GetEventByID(id);
+            return getEvent;
         }
     }
 }

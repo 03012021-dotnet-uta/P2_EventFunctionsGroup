@@ -1,9 +1,12 @@
+using System;
+
 namespace Domain.RawModels
 {
     public class RawPreviewEvent
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
+        public DateTime Date { get; set; }
+        public string Location { get; set; }
     }
 }

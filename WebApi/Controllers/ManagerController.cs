@@ -26,9 +26,10 @@ namespace WebApi.Controllers
         /// <param name="id">Manager ID</param>
         /// <returns></returns>
         [HttpGet("getevents/{id}")]
-        public ActionResult<string> GetAllCreatedEvents(Guid id)
+        public ActionResult<List<RawPreviewEvent>> GetAllCreatedEvents(Guid id)
         {
-            return "Manager API Get";
+            List<RawPreviewEvent> allEvents = managerLogic.GetAllEvents(id);
+            return allEvents;
         }
 
         /// <summary>
