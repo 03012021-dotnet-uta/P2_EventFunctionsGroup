@@ -8,7 +8,7 @@ button.addEventListener("click", () => {
         password: "Nick"
     }
 
-    fetch('https://eventfunctionsp2.azurewebsites.net/api/Test/register', {
+    fetch('https://eventfunctionsp2.azurewebsites.net/api/User/register', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
