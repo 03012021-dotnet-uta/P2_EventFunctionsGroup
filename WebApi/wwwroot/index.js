@@ -2,9 +2,9 @@ const button = document.getElementById("add");
 
 button.addEventListener("click", () => {
     let user = {
-        firstName: "Nick",
+        firstName: "Testing",
         lastName: "Test",
-        email: "someemail@gmail.com",
+        email: "anothermail@gmail.com",
         password: "Nick"
     }
 
