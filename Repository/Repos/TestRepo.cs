@@ -43,5 +43,17 @@ namespace Repository
 
             return user;
         }
+
+        public List<EventType> GetAllEventTypes()
+        {
+            List<EventType> allTypes = context.EventTypes.ToList();
+            return allTypes;
+        }
+
+        public void InitEventTypes(EventType et)
+        {
+            context.Add<EventType>(et);
+            context.SaveChanges();
+        }
     }
 }

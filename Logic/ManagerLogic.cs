@@ -14,5 +14,11 @@ namespace Logic
         {
             testRepo = r;
         }
+
+        public Event CreateNewEvent(RawEvent userEvent)
+        {
+            Event newEvent = new Event();
+            return newEvent;
+        }
     }
 }

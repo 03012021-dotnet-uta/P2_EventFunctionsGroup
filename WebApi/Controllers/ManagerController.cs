@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Models;
+using Domain.RawModels;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,9 +21,9 @@ namespace WebApi.Controllers
         }
         
         /// <summary>
-        /// Gets all the created events
+        /// Gets all the created events by the manager
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Manager ID</param>
         /// <returns></returns>
         [HttpGet("getevents/{id}")]
         public ActionResult<string> GetAllCreatedEvents(Guid id)
@@ -34,9 +36,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("createevent")]
-        public ActionResult<string> CreateNewEvent()
+        public ActionResult<Event> CreateNewEvent(RawEvent userEvent)
         {
-            return "Manager API Get";
+            Event newEvent = managerLogic.CreateNewEvent(userEvent);
+            return newEvent;
         }
 
         /// <summary>
@@ -63,10 +66,21 @@ namespace WebApi.Controllers
         /// <summary>
         /// Gets estimated revenue data based off event type
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Manager ID</param>
         /// <returns></returns>
         [HttpGet("getestdata")]
         public ActionResult<string> GetEstimatedData(Guid id)
+        {
+            return "Manager API Get";
+        }
+
+        /// <summary>
+        /// Gets all the event types in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("eventtypes")]
+        public ActionResult<string> GetEventTypes()
         {
             return "Manager API Get";
         }
