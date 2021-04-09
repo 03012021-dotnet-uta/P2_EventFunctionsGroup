@@ -29,6 +29,11 @@ namespace Repository.Interfaces
         ICollection<EventType> GetAllEventTypes();
 
         /// <summary>
+        /// Read an entity by their EventTypeId
+        /// </summary>
+        EventType GetEventTypeById(int eventTypeId);
+
+        /// <summary>
         /// Update an EventType
         /// </summary>
         void UpdateEventType(EventType eventType);

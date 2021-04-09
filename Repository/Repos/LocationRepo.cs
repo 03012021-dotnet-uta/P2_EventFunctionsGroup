@@ -59,6 +59,14 @@ namespace Repository.Repos
         }
 
         /// <summary>
+        /// Get an entity by its LocationId
+        /// </summary>
+        public Location GetLocationById(int locationId)
+        {
+            return context.Locations.Find(locationId);
+        }
+
+        /// <summary>
         /// Update an item in context and database
         /// </summary>
         public void UpdateLocation(Location location) 

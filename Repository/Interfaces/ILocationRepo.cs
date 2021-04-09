@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Domain.Models;
-  
+   
 namespace Repository.Interfaces 
 {
 
@@ -27,6 +27,11 @@ namespace Repository.Interfaces
         /// Read all locations
         /// </summary>
         ICollection<Location> GetAllLocations();
+
+        /// <summary>
+        /// Read an entity by their LocationId
+        /// </summary>
+        Location GetLocationById(int locationId);
 
         /// <summary>
         /// Update a location

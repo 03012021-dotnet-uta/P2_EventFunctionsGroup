@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Repository.Interfaces 
 {
-
+  
     /// <summary>
     /// This is the Interface for the Review Repository.
     /// It contains the methods that the Repo must
@@ -27,6 +27,11 @@ namespace Repository.Interfaces
         /// Read all Reviews
         /// </summary>
         ICollection<Review> GetAllReviews();
+
+        /// <summary>
+        /// Read an entity by their ReviewId
+        /// </summary>
+        Review GetReviewById(int reviewId);
 
         /// <summary>
         /// Update a Review
