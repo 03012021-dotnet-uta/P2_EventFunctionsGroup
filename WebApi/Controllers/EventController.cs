@@ -64,5 +64,17 @@ namespace WebApi.Controllers
             List<Review> allUsers = eventLogic.GetAllReviews(id);
             return allUsers;
         }
+
+        /// <summary>
+        /// Gets details about an event based off id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("eventdetail/{id}")]
+        public ActionResult<Event> GetEventDetails(Guid id)
+        {
+            Event getEvent = eventLogic.GetEventById(id);
+            return getEvent;
+        }
     }
 }

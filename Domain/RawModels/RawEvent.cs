@@ -5,7 +5,7 @@ namespace Domain.RawModels
     public class RawEvent
     {
         public string Name { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Description { get; set; }
         public int Capacity { get; set; }
         public string Street { get; set; }

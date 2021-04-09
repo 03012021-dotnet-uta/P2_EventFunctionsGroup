@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.RawModels;
 using Microsoft.Data.SqlClient;
 using Repository.Contexts;
 
@@ -51,6 +52,19 @@ namespace Repository
             return getBackuser;
         }
 
+        public List<Event> GetAllManagerEvents(Guid id)
+        {
+            var allEvents = context.Events.Where(n => Guid.Equals(n.Manager, id)).ToList();
+
+            return allEvents;
+        }
+
+        public ICollection<Event> GetSignedUpEvents(Guid id)
+        {
+            List<ICollection<Event>> myEvents = context.Users.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
+            return myEvents[0];
+        }
+
         public async Task<User> GetUserByID(Guid id)
         {
             var user = context.Users.FirstOrDefault(n => Guid.Equals(n.Id, id));
@@ -64,6 +78,12 @@ namespace Repository
             return user;
         }
 
+        public Event GetEventByID(Guid id)
+        {
+            Event theEvent = context.Events.FirstOrDefault(n => Guid.Equals(n.Id, id));
+            return theEvent;
+        }
+
         public List<EventType> GetAllEventTypes()
         {
             List<EventType> allTypes = context.EventTypes.ToList();
@@ -75,5 +95,12 @@ namespace Repository
             context.Add<EventType>(et);
             context.SaveChanges();
         }
+
+        public List<Event> GetUpcomingEvents(DateTime now)
+        {
+            List<Event> allEvents = context.Events.Where(n => n.Date > now).ToList();
+            return allEvents;
+        }
+
     }
 }

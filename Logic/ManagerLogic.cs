@@ -32,6 +32,17 @@ namespace Logic
             return newEvent;
         }
 
+        public List<RawPreviewEvent> GetAllEvents(Guid id)
+        {
+            List<Event> allEvents = testRepo.GetAllManagerEvents(id);
+            List<RawPreviewEvent> allRawEvents = new List<RawPreviewEvent>();
+            foreach(Event e in allEvents)
+            {
+                allRawEvents.Add(mapper.EventToPreview(e));
+            }
+            return allRawEvents;
+        }
+
         public List<EventType> GetEventTypes()
         {
             List<EventType> allTypes = testRepo.GetAllEventTypes();

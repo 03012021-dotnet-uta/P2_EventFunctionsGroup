@@ -27,30 +27,45 @@ button.addEventListener("click", async () => {
     let events = ['Sports', 'Music', 'Private', 'Conference', 'Expo', 'Other']
     let addressjson = JSON.stringify(address);
 
-    await fetch(`api/Manager/createevent`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify(address),
-    })
-    .then(response => {
-        if(!response.ok) {
-            throw new Error(`Network reponse was not ok (${reponse.status})`);
-        }
-        else
-            return response.json();
-    })
-    .then((jsonReponse) => {
-        console.log(jsonReponse);
-        //mapReponse = jsonReponse;
-    })
-    .catch(function(err) {
-        console.log("Failed to fetch page: ", err);
-    });
+    // await fetch(`api/Manager/createevent`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type':'application/json'
+    //     },
+    //     body: JSON.stringify(address),
+    // })
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    //     //mapReponse = jsonReponse;
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
 
-    await fetch(`${mapboxurl}/geocoding/v5/mapbox.places/${address.street}%20${address.zip}%20${address.city}%20${address.state}.json?country=US&${mapboxtoken}`)
+    // await fetch(`${mapboxurl}/geocoding/v5/mapbox.places/${address.street}%20${address.zip}%20${address.city}%20${address.state}.json?country=US&${mapboxtoken}`)
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    //     mapReponse = jsonReponse;
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
+    await fetch(`api/Event/allupcoming`)
     .then(response => {
         if(!response.ok) {
             throw new Error(`Network reponse was not ok (${reponse.status})`);

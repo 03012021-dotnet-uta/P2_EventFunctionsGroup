@@ -56,11 +56,21 @@ namespace Logic
             }
         }
 
+        internal RawPreviewEvent EventToPreview(Event e)
+        {
+            RawPreviewEvent newPreview = new RawPreviewEvent();
+            newPreview.Id = e.Id;
+            newPreview.Name = e.Name;
+            newPreview.Date = e.Date;
+            newPreview.Location = e.Location.Name + " " + e.Location.Address;
+            return newPreview;
+        }
+
         internal async Task<Event> RawToEvent(RawEvent userEvent, EventType eventType, Location loc, User manager)
         {
             Event newEvent = new Event();
             newEvent.Name = userEvent.Name;
-            newEvent.Date = userEvent.Date;
+            newEvent.Date = DateTime.Parse(userEvent.Date);
             newEvent.Description = userEvent.Description;
             newEvent.Capacity = userEvent.Capacity;
             newEvent.EventType = eventType;
