@@ -1,6 +1,7 @@
   using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain.Models;
 using Microsoft.Data.SqlClient;
 using Repository.Contexts;
@@ -23,6 +24,25 @@ namespace Repository
             return allUsers;
         }
 
+        public async Task<EventType> GetEventTypeByID(Guid eventType)
+        {
+            EventType getType = context.EventTypes.FirstOrDefault(n => Guid.Equals(n.Id, eventType));
+            return getType;
+        }
+
+        public void AddLocation(Location loc)
+        {
+            context.Add<Location>(loc);
+            context.SaveChanges();
+        }
+
+        public Event AddEvent(Event newEvent)
+        {
+            context.Add<Event>(newEvent);
+            context.SaveChanges();
+            return context.Events.FirstOrDefault(n => Guid.Equals(n.Id, newEvent.Id));
+        }
+
         public User AddUser(User newUser)
         {
             context.Add<User>(newUser);
@@ -31,7 +51,7 @@ namespace Repository
             return getBackuser;
         }
 
-        public User GetUserByID(Guid id)
+        public async Task<User> GetUserByID(Guid id)
         {
             var user = context.Users.FirstOrDefault(n => Guid.Equals(n.Id, id));
             return user;
