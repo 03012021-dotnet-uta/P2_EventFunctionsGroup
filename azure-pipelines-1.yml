@@ -21,9 +21,8 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'eventfunctionsangular'
-    scannerMode: 'MSBuild'
-    projectKey: 'eventfunctionsangular_EventFunctions_P2_Angular'
-    projectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
+    scannerMode: 'CLI'
+    configMode: 'file'
 
 - script: |
     cd 'AngularTest'
@@ -31,8 +30,6 @@ steps:
     npm install
     ng build --prod
   displayName: 'npm install and build'
-
-- task: SonarCloudAnalyze@1
 
 - task: PublishCodeCoverageResults@1
   inputs:
