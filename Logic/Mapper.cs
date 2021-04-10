@@ -82,6 +82,17 @@ namespace Logic
             return detailEvent;
         }
 
+        internal UsersEvent signUpById(Guid uid, Guid eid, User user, Event tEvent)
+        {
+            UsersEvent newUserEvent = new UsersEvent();
+            newUserEvent.UserId = uid;
+            newUserEvent.User = user;
+            newUserEvent.EventId = eid;
+            newUserEvent.Event = tEvent;
+
+            return newUserEvent;
+        }
+
         private string GetLocationMapString(Location location)
         {
             string longt = location.Longtitude.ToString();

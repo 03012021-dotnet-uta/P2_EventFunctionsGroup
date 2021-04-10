@@ -59,6 +59,12 @@ namespace Repository
             return getBackuser;
         }
 
+        public List<Event> GetPreviousEvents(DateTime now)
+        {
+            List<Event> allEvents = context.Events.Where(n => n.Date < now).ToList();
+            return allEvents;
+        }
+
         public List<Event> GetAllManagerEvents(Guid id)
         {
             var allEvents = context.Events.Where(n => Guid.Equals(n.Manager, id)).ToList();
@@ -69,10 +75,11 @@ namespace Repository
         public ICollection<Event> GetSignedUpEvents(Guid id)
         {
             List<ICollection<Event>> myEvents = context.Users.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
+            
             return myEvents[0];
         }
 
-        public async Task<User> GetUserByID(Guid id)
+        public User GetUserByID(Guid id)
         {
             var user = context.Users.FirstOrDefault(n => Guid.Equals(n.Id, id));
             return user;
@@ -96,6 +103,13 @@ namespace Repository
         {
             Event theEvent = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).FirstOrDefault(n => Guid.Equals(n.Id, id));
             return theEvent;
+        }
+
+        public void SignUp(UsersEvent signupUser)
+        {
+            context.Add<UsersEvent>(signupUser);
+            context.SaveChanges();
+
         }
 
         public List<EventType> GetAllEventTypes()

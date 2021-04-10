@@ -72,7 +72,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<User> GetUserByID(Guid id)
         {
-            User getUser = await testRepo.GetUserByID(id);
+            User getUser = await Task.Run(() => testRepo.GetUserByID(id));
             return getUser;
         }
 

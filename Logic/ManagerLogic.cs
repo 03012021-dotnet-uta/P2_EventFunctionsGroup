@@ -18,15 +18,13 @@ namespace Logic
 
         public async Task<Event> CreateNewEvent(RawEvent userEvent)
         {
-            Console.WriteLine(userEvent.EventType);
             EventType type = await testRepo.GetEventTypeByID(userEvent.EventType);
-            Console.WriteLine(type);
             if(type is null)
             {
                 return null;
             }
             Location loc = await mapper.AddressToLocation(userEvent);
-            User manager = await testRepo.GetUserByID(userEvent.ManagerID);
+            User manager = await Task.Run(() => testRepo.GetUserByID(userEvent.ManagerID));
             Event newEvent = await mapper.RawToEvent(userEvent, type, loc, manager);
             newEvent = testRepo.AddEvent(newEvent);
             return newEvent;

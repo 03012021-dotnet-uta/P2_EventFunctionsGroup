@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Repository;
@@ -19,16 +21,24 @@ namespace Logic
         /// Gets all events that are coming up
         /// </summary>
         /// <returns></returns>
-        public List<Event> GetUpcomingEvents()
+        public async Task<List<RawPreviewEvent>> GetUpcomingEventsAsync()
         {
             List<Event> upcomingEvents = testRepo.GetUpcomingEvents(DateTime.UtcNow);
-            return upcomingEvents;
+            List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(upcomingEvents);
+
+            return returnEvents;
         }
 
-        public List<Event> GetAll()
+        /// <summary>
+        /// Gets all events in the database(past and future)
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<RawPreviewEvent>> GetAllAsync()
         {
             List<Event> allEvents = testRepo.GetAllEvents();
-            return allEvents;
+            List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(allEvents);
+
+            return returnEvents;
         }
 
         /// <summary>
@@ -46,9 +56,12 @@ namespace Logic
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
-        public List<Event> GetAllPreviousEvents(Guid id)
+        public async Task<List<RawPreviewEvent>> GetAllPreviousEventsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            List<Event> previousEvents = testRepo.GetPreviousEvents(DateTime.UtcNow);
+            List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(previousEvents);
+
+            return returnEvents;
         }
 
         /// <summary>
@@ -56,15 +69,14 @@ namespace Logic
         /// </summary>
         /// /// <param name="id">User ID</param>
         /// <returns></returns>
-        public List<Event> GetAllSignedUpEvents(Guid id)
+        public async Task<List<RawPreviewEvent>> GetAllSignedUpEventsAsync(Guid id)
         {
-            ICollection<Event> allEvents = testRepo.GetSignedUpEvents(id);
-            List<Event> filteredEvents = new List<Event>();
-            foreach(Event e in allEvents)
-            {
-                filteredEvents.Add(e);
-            }
-            return filteredEvents;
+            ICollection<Event> allEvents = await Task.Run(() => testRepo.GetSignedUpEvents(id));
+            List<Event> filteredEvents = allEvents.ToList();
+
+            List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
+
+            return returnEvents;
         }
 
         /// <summary>
@@ -79,6 +91,52 @@ namespace Logic
             RawDetailEvent detailEvent = mapper.EventToDetail(getEvent, totalAttend);
             
             return detailEvent;
+        }
+
+        /// <summary>
+        /// Signs up a user for an event based off their IDs
+        /// </summary>
+        /// <param name="uid">User ID</param>
+        /// <param name="eid">Event ID</param>
+        /// <returns></returns>
+        public bool EventSignUp(Guid uid, Guid eid)
+        {
+            Event tEvent = testRepo.GetEventByID(eid);
+            if(tEvent == null)
+            {
+                return false;
+            }
+            User user = testRepo.GetUserByID(uid);
+            if(user == null)
+            {
+                return false;
+            }
+
+            UsersEvent signupUser = mapper.signUpById(uid, eid, user, tEvent);
+            testRepo.SignUp(signupUser);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Async converts a list of events to rawpreviewevents
+        /// </summary>
+        /// <param name="allEvents">List of Events</param>
+        /// <returns></returns>
+        private async Task<List<RawPreviewEvent>> ConvertAllEventsAsync(List<Event> allEvents)
+        {
+            List<RawPreviewEvent> returnEvents = new List<RawPreviewEvent>();
+            List<Task<RawPreviewEvent>> tasks = new List<Task<RawPreviewEvent>>();
+            foreach(Event e in allEvents)
+            {
+                tasks.Add(Task.Run(() => mapper.EventToPreview(e)));
+            }
+            var results = await Task.WhenAll(tasks);
+            foreach(var item in results)
+            {
+                returnEvents.Add(item);
+            }
+            return returnEvents;
         }
     }
 }
