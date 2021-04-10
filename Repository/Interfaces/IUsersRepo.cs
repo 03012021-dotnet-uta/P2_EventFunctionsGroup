@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Repository.Interfaces 
 {
-
+ 
     /// <summary>
     /// This is the Interface for the User Repository.
     /// It contains the methods that the Repo must

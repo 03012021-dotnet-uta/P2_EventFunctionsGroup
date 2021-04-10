@@ -60,9 +60,16 @@ namespace Repository.Repos
         }
 
         /// <summary>
+        /// Get an entity by its EventId
+        /// </summary>
+        public Event GetEventById(int eventId)
+        {
+            return context.Events.Find(eventId);
+        }
+
+        /// <summary>
         /// Update an item in context and database
         /// </summary>
-        /// <param name="event"></param>
         public void UpdateEvent(Event eventName) 
         {
             context.Entry(eventName).State = EntityState.Modified;

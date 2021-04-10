@@ -54,6 +54,9 @@ namespace Repository.Repos
             return context.EventTypes.ToList();
         }
 
+        /// <summary>
+        /// Update an item in context and database
+        /// </summary>
         public void UpdateEventType(EventType eventType) 
         {
             context.Entry(eventType).State = EntityState.Modified;
