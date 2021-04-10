@@ -34,12 +34,12 @@ steps:
     ng build --prod
   displayName: 'npm install and build'
 
+- task: SonarCloudAnalyze@1
+
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '**/coburtura/coverage.xml'
-
-- task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1
   inputs:
