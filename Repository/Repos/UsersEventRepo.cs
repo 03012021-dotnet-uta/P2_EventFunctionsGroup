@@ -16,7 +16,7 @@ namespace Repository.Repos
     /// contains unmanaged resources.
     /// Ideas implemented here learned from https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
     /// </summary>
-    public class UsersEventRepo : IUsersEventRepository, IDisposable
+    public class UsersEventRepo : IUsersEventRepository
     {
     
         /// <summary>
@@ -99,12 +99,9 @@ namespace Repository.Repos
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this.disposed && disposing)
             {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
+                context.Dispose();
             }
 
             this.disposed = true;

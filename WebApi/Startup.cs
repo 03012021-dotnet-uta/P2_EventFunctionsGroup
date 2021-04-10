@@ -57,7 +57,6 @@ namespace WebApi
             services.AddScoped<UserLogic>();
             services.AddScoped<ManagerLogic>();
             services.AddScoped<EventLogic>();
-            services.AddScoped<TestRepository>();
             services.AddScoped<EventRepo>();
             services.AddScoped<EventTypeRepo>();
             services.AddScoped<LocationRepo>();

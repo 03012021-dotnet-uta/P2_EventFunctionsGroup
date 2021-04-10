@@ -17,11 +17,6 @@ namespace Logic
             userRepo = r;
         }
 
-        public string test()
-        {
-            return "test";
-        }
-
         /// <summary>
         /// Getse all users from the database
         /// </summary>

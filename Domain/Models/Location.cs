@@ -13,7 +13,5 @@ namespace Domain.Models
         public double Longtitude { get; set; }
         public double Latitude { get; set; }
         public int MaxCapacity { get; set; }
-
-        //public virtual ICollection<Event> Events { get; set; }
     }
 }

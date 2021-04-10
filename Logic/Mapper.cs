@@ -43,7 +43,6 @@ namespace Logic
                 Location newLoc = new Location();
                 string jsonContent = await response.Content.ReadAsStringAsync();
                 JObject json = JObject.Parse(jsonContent);
-                //Console.WriteLine(json["features"][0]["center"][0] + " - " + json["features"][0]["center"][1]);
                 newLoc.Name = userEvent.Street;
                 newLoc.Address = userEvent.City + " " + userEvent.State + " " + userEvent.ZipCode;
                 newLoc.Longtitude = (double)json["features"][0]["center"][0];
@@ -71,7 +70,6 @@ namespace Logic
             RawDetailEvent detailEvent = new RawDetailEvent();
             detailEvent.Name = getEvent.Name;
             detailEvent.Date = getEvent.Date;
-            Console.WriteLine("-----" + getEvent.Location);
             detailEvent.Location = getEvent.Location.Name + " " + getEvent.Location.Address;
             detailEvent.Description = getEvent.Description;
             detailEvent.EventType = getEvent.EventType.Name;
