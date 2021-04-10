@@ -46,17 +46,17 @@ namespace Repository.Repos
         /// <summary>
         /// Insert a new item to context
         /// </summary>
-        public void InsertEvent(Event eventName) 
+        public Event InsertEvent(Event eventName) 
         {
-            context.Events.Add(eventName);
+            context.Add<Event>(eventName);
+            Save();
+            return context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).FirstOrDefault(n => Guid.Equals(n.Id, eventName.Id));
         }
 
-        /// <summary>
-        /// Get the Events from database and present back to context
-        /// </summary>
-        public ICollection<Event> GetAllEvents() 
+        public List<Event> GetAllEvents() 
         {
-            return context.Events.ToList();
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).ToList();
+            return allEvents;
         }
 
         /// <summary>
@@ -85,9 +85,41 @@ namespace Repository.Repos
             context.Events.Remove(tempEvent);
         }
 
-        /// <summary>
-        /// Save changes back to database
-        /// </summary>
+        public Event GetEventByID(Guid id)
+        {
+            Event theEvent = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).FirstOrDefault(n => Guid.Equals(n.Id, id));
+            return theEvent;
+        }
+
+        public List<Event> GetAllManagerEvents(Guid id)
+        {
+            var allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => Guid.Equals(n.Manager.Id, id)).ToList();
+
+            return allEvents;
+        }
+        public List<Event> GetUpcomingEvents(DateTime now)
+        {
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => n.Date > now).ToList();
+            return allEvents;
+        }
+        public List<Event> GetPreviousEvents(DateTime now)
+        {
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => n.Date < now).ToList();
+            return allEvents;
+        }
+        public ICollection<Event> GetSignedUpEvents(Guid id)
+        {
+            List<ICollection<Event>> myEvents = context.Users.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
+            
+            return myEvents[0];
+        }
+        public int GetTotalAttend(Guid id)
+        {
+            var allUsers = context.Events.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Users).ToList();
+            int total = allUsers[0].Count();
+            return total;
+        }
+
         public void Save() 
         {
             context.SaveChanges();

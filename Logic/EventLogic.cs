@@ -5,16 +5,21 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Repository;
+using Repository.Repos;
 
 namespace Logic
 {
     public class EventLogic
     {
-        private readonly TestRepository testRepo;
+        private readonly EventRepo eventRepo;
+        private readonly UserRepo userRepo;
+        private readonly UsersEventRepo usersEventRepo;
         private readonly Mapper mapper = new Mapper();
-        public EventLogic(TestRepository r)
+        public EventLogic(EventRepo r, UserRepo u, UsersEventRepo ue)
         {
-            testRepo = r;
+            eventRepo = r;
+            userRepo = u;
+            usersEventRepo = ue;
         }
 
         /// <summary>
@@ -23,7 +28,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetUpcomingEventsAsync()
         {
-            List<Event> upcomingEvents = await Task.Run(() => testRepo.GetUpcomingEvents(DateTime.UtcNow));
+            List<Event> upcomingEvents = await Task.Run(() => eventRepo.GetUpcomingEvents(DateTime.UtcNow));
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(upcomingEvents);
 
             return returnEvents;
@@ -35,7 +40,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllAsync()
         {
-            List<Event> allEvents = await Task.Run(() => testRepo.GetAllEvents());
+            List<Event> allEvents = await Task.Run(() => eventRepo.GetAllEvents());
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(allEvents);
 
             return returnEvents;
@@ -58,7 +63,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllPreviousEventsAsync(Guid id)
         {
-            List<Event> previousEvents = await Task.Run(() => testRepo.GetPreviousEvents(DateTime.UtcNow));
+            List<Event> previousEvents = await Task.Run(() => eventRepo.GetPreviousEvents(DateTime.UtcNow));
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(previousEvents);
 
             return returnEvents;
@@ -71,11 +76,11 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllSignedUpEventsAsync(Guid id)
         {
-            ICollection<Event> allEvents = await Task.Run(() => testRepo.GetSignedUpEvents(id));
-            List<Event> filteredEvents = new List<Event>();allEvents.ToList();
+            ICollection<Event> allEvents = await Task.Run(() => eventRepo.GetSignedUpEvents(id));
+            List<Event> filteredEvents = new List<Event>();
             foreach(Event e in allEvents)
             {
-                await Task.Run(() => filteredEvents.Add(testRepo.GetEventByID(e.Id)));
+                await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
             }
 
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
@@ -90,8 +95,8 @@ namespace Logic
         /// <returns></returns>
         public RawDetailEvent GetEventById(Guid id)
         {
-            Event getEvent = testRepo.GetEventByID(id);
-            int totalAttend = testRepo.GetTotalAttend(id);
+            Event getEvent = eventRepo.GetEventByID(id);
+            int totalAttend = eventRepo.GetTotalAttend(id);
             RawDetailEvent detailEvent = mapper.EventToDetail(getEvent, totalAttend);
             
             return detailEvent;
@@ -105,19 +110,19 @@ namespace Logic
         /// <returns></returns>
         public bool EventSignUp(Guid uid, Guid eid)
         {
-            Event tEvent = testRepo.GetEventByID(eid);
+            Event tEvent = eventRepo.GetEventByID(eid);
             if(tEvent == null)
             {
                 return false;
             }
-            User user = testRepo.GetUserByID(uid);
+            User user = userRepo.GetUserByID(uid);
             if(user == null)
             {
                 return false;
             }
 
             UsersEvent signupUser = mapper.signUpById(uid, eid, user, tEvent);
-            testRepo.SignUp(signupUser);
+            usersEventRepo.InsertUsersEvent(signupUser);
 
             return true;
         }

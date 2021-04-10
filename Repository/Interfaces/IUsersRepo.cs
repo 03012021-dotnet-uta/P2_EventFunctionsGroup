@@ -19,34 +19,44 @@ namespace Repository.Interfaces
     {
 
         /// <summary>
-        /// Create User
+        /// Insert a new item to context
         /// </summary>
-        void InsertUser(User user);
+        /// <param name="user">New User</param>
+        User InsertUser(User user);
 
         /// <summary>
-        /// Read all users
+        /// Get the Users from database and present back to context
         /// </summary>
-        ICollection<User> GetAllUsers();
+        List<User> GetAllUsers();
 
         /// <summary>
-        /// Read an entity by their UserId
-        /// </summary>
-        User GetUserById(int userId);
-        
-        /// <summary>
-        /// Update a user
+        /// Update an item in context and database
         /// </summary>
         void UpdateUser(User user);
 
         /// <summary>
-        /// Delete a user
+        /// Delete an item from context and database
         /// </summary>
         void DeleteUser(int userId);
 
         /// <summary>
-        /// Save changes
+        /// Save changes back to database
         /// </summary>
         void Save();
+
+        /// <summary>
+        /// Gets user by email
+        /// </summary>
+        /// <param name="email">User email</param>
+        /// <returns></returns>
+        User GetUserByEmail(string email);
+
+        /// <summary>
+        /// Gets user by ID
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns></returns>
+        User GetUserByID(Guid id);
 
     }
 }
