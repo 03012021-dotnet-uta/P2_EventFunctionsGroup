@@ -126,7 +126,7 @@ namespace Repository
 
         public List<Event> GetUpcomingEvents(DateTime now)
         {
-            List<Event> allEvents = context.Events.Where(n => n.Date > now).ToList();
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => n.Date > now).ToList();
             return allEvents;
         }
 
