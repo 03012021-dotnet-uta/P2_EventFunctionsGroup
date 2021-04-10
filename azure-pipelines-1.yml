@@ -22,7 +22,10 @@ steps:
     SonarCloud: 'SonarCloud'
     organization: 'eventfunctionsangular'
     scannerMode: 'CLI'
-    configMode: 'file'
+    configMode: 'manual'
+    cliProjectKey: 'eventfunctionsangular_EventFunctions_P2_Angular'
+    cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
+    cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
 
 - script: |
     cd 'AngularTest'
