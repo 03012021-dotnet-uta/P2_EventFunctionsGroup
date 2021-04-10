@@ -43,34 +43,24 @@ namespace Repository.Repos
             context = eventFunctionsContext;
         }
 
-        /// <summary>
-        /// Insert a new item to context
-        /// </summary>
-        public void InsertUser(User user) 
+        public User InsertUser(User user) 
         {
-            context.Users.Add(user);
+            context.Add<User>(user);
+            Save();
+            var getBackuser = context.Users.FirstOrDefault(n => Guid.Equals(user.Id, n.Id));
+            return getBackuser;
         }
 
-        /// <summary>
-        /// Get the Users from database and present back to context
-        /// </summary>
-        public ICollection<User> GetAllUsers() 
+        public List<User> GetAllUsers() 
         {
             return context.Users.ToList();
         }
 
-        /// <summary>
-        /// Update an item in context and database
-        /// </summary>
-        /// <param name="user"></param>
         public void UpdateUser(User user) 
         {
             context.Entry(user).State = EntityState.Modified;
         }
 
-        /// <summary>
-        /// Delete an item from context and database
-        /// </summary>
         public void DeleteUser(int userId)
         {
             User user = context.Users.Find(userId);
@@ -78,12 +68,22 @@ namespace Repository.Repos
             context.Users.Remove(user);
         }
 
-        /// <summary>
-        /// Save changes back to database
-        /// </summary>
         public void Save() 
         {
             context.SaveChanges();
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            User user = context.Users.FirstOrDefault(n => n.Email == email);
+
+            return user;
+        }
+
+        public User GetUserByID(Guid id)
+        {
+            var user = context.Users.FirstOrDefault(n => Guid.Equals(n.Id, id));
+            return user;
         }
 
         /// <summary>

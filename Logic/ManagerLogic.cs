@@ -4,35 +4,40 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Repository;
+using Repository.Repos;
 
 namespace Logic
 {
     public class ManagerLogic
     {
-        private readonly TestRepository testRepo;
+        private readonly UserRepo userRepo;
+        private readonly EventRepo eventRepo;
+        private readonly EventTypeRepo eventTypeRepo;
         private readonly Mapper mapper = new Mapper();
-        public ManagerLogic(TestRepository r)
+        public ManagerLogic(UserRepo r, EventRepo e, EventTypeRepo et)
         {
-            testRepo = r;
+            userRepo = r;
+            eventRepo = e;
+            eventTypeRepo = et;
         }
 
         public async Task<Event> CreateNewEvent(RawEvent userEvent)
         {
-            EventType type = await testRepo.GetEventTypeByID(userEvent.EventType);
+            EventType type = await eventTypeRepo.GetEventTypeByIDAsync(userEvent.EventType);
             if(type is null)
             {
                 return null;
             }
             Location loc = await mapper.AddressToLocation(userEvent);
-            User manager = await Task.Run(() => testRepo.GetUserByID(userEvent.ManagerID));
+            User manager = await Task.Run(() => userRepo.GetUserByID(userEvent.ManagerID));
             Event newEvent = await mapper.RawToEvent(userEvent, type, loc, manager);
-            newEvent = testRepo.AddEvent(newEvent);
+            newEvent = eventRepo.InsertEvent(newEvent);
             return newEvent;
         }
 
         public List<RawPreviewEvent> GetAllEvents(Guid id)
         {
-            List<Event> allEvents = testRepo.GetAllManagerEvents(id);
+            List<Event> allEvents = eventRepo.GetAllManagerEvents(id);
             List<RawPreviewEvent> allRawEvents = new List<RawPreviewEvent>();
             foreach(Event e in allEvents)
             {
@@ -43,7 +48,7 @@ namespace Logic
 
         public List<EventType> GetEventTypes()
         {
-            List<EventType> allTypes = testRepo.GetAllEventTypes();
+            List<EventType> allTypes = eventTypeRepo.GetAllEventTypes();
 
             return allTypes;
         }

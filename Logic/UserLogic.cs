@@ -4,16 +4,17 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Repository;
+using Repository.Repos;
 
 namespace Logic
 {
     public class UserLogic
     {
-        private readonly TestRepository testRepo;
+        private readonly UserRepo userRepo;
         private readonly Mapper mapper = new Mapper();
-        public UserLogic(TestRepository r)
+        public UserLogic(UserRepo r)
         {
-            testRepo = r;
+            userRepo = r;
         }
 
         public string test()
@@ -26,7 +27,7 @@ namespace Logic
         /// </summary>
         /// <returns></returns>
         public List<User> GetUsers() {
-            List<User> users = testRepo.GetUsers();
+            List<User> users = userRepo.GetAllUsers();
 
             return users;
         }
@@ -43,7 +44,7 @@ namespace Logic
                 return null;
             }
             User newUser = mapper.RawToUser(user);
-            newUser = testRepo.AddUser(newUser);
+            newUser = userRepo.InsertUser(newUser);
             return newUser;
         }
 
@@ -54,7 +55,7 @@ namespace Logic
         /// <returns></returns>
         private bool IfUserExists(string email)
         {
-            User getUser = testRepo.GetUserByEmail(email.ToLower());
+            User getUser = userRepo.GetUserByEmail(email.ToLower());
             if(getUser == null)
             {
                 return false;
@@ -72,7 +73,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<User> GetUserByID(Guid id)
         {
-            User getUser = await Task.Run(() => testRepo.GetUserByID(id));
+            User getUser = await Task.Run(() => userRepo.GetUserByID(id));
             return getUser;
         }
 
@@ -88,7 +89,7 @@ namespace Logic
             {
                 return null;
             }
-            User getUser = testRepo.GetUserByEmail(email);
+            User getUser = userRepo.GetUserByEmail(email);
             byte[] enteredPassword = mapper.PasswordHash(password, getUser.PasswordSalt);
             if(CompareHash(enteredPassword, getUser.Password))
             {

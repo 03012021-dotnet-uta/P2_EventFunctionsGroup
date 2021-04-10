@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Contexts;
 using Repository.Interfaces;
 using Domain.Models;
+using System.Threading.Tasks;
 
 namespace Repository.Repos
 {
@@ -43,44 +44,34 @@ namespace Repository.Repos
             context = eventFunctionsContext;
         }
 
-        /// <summary>
-        /// Insert a new item to context
-        /// </summary>
         public void InsertEventType(EventType eventType) 
         {
             context.EventTypes.Add(eventType);
         }
 
-        /// <summary>
-        /// Get the EventTypes from database and present back to context
-        /// </summary>
-        public ICollection<EventType> GetAllEventTypes() 
+        public List<EventType> GetAllEventTypes() 
         {
             return context.EventTypes.ToList();
         }
 
-        /// <summary>
-        /// Update an item in context and database
-        /// </summary>
-        /// <param name="eventtype"></param>
         public void UpdateEventType(EventType eventType) 
         {
             context.Entry(eventType).State = EntityState.Modified;
         }
 
-        /// <summary>
-        /// Delete an item from context and database
-        /// </summary>
         public void DeleteEventType(int eventTypeId)
         {
             EventType eventType = context.EventTypes.Find(eventTypeId);
             context.Entry(eventType).State = EntityState.Deleted;
             context.EventTypes.Remove(eventType);
         }
+        
+        public async Task<EventType> GetEventTypeByIDAsync(Guid eventType)
+        {
+            EventType getType = await Task.Run(() => context.EventTypes.FirstOrDefault(n => Guid.Equals(n.Id, eventType)));
+            return getType;
+        }
 
-        /// <summary>
-        /// Save changes back to database
-        /// </summary>
         public void Save() 
         {
             context.SaveChanges();

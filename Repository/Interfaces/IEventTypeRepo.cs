@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Repository.Interfaces 
@@ -19,29 +20,36 @@ namespace Repository.Interfaces
     {
 
         /// <summary>
-        /// Create EventType
+        /// Insert a new item to context
         /// </summary>
         void InsertEventType(EventType eventType);
 
         /// <summary>
-        /// Read all EventTypes
+        /// Get the EventTypes from database and present back to context
         /// </summary>
-        ICollection<EventType> GetAllEventTypes();
+        List<EventType> GetAllEventTypes();
 
         /// <summary>
-        /// Update an EventType
+        /// Update an item in context and database
         /// </summary>
         void UpdateEventType(EventType eventType);
 
         /// <summary>
-        /// Delete an EventType
+        /// Delete an item from context and database
         /// </summary>
         void DeleteEventType(int eventTypeId);
 
         /// <summary>
-        /// Save changes
+        /// Save changes back to database
         /// </summary>
         void Save();
+
+        /// <summary>
+        /// Async gets an eventtype by ID
+        /// </summary>
+        /// <param name="eventType"></param>
+        /// <returns></returns>
+        Task<EventType> GetEventTypeByIDAsync(Guid eventType);
 
     }
 }

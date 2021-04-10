@@ -49,6 +49,7 @@ namespace Repository.Repos
         public void InsertUsersEvent(UsersEvent userEvent) 
         {
             context.UsersEvents.Add(userEvent);
+            Save();
         }
 
         /// <summary>

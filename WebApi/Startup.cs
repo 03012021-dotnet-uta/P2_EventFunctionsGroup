@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Repository.Contexts;
+using Repository.Repos;
 
 namespace WebApi
 {
@@ -53,11 +54,16 @@ namespace WebApi
                 }
 			});
 
-            services.AddScoped<TestLogic>();
             services.AddScoped<UserLogic>();
             services.AddScoped<ManagerLogic>();
             services.AddScoped<EventLogic>();
             services.AddScoped<TestRepository>();
+            services.AddScoped<EventRepo>();
+            services.AddScoped<EventTypeRepo>();
+            services.AddScoped<LocationRepo>();
+            services.AddScoped<ReviewRepo>();
+            services.AddScoped<UserRepo>();
+            services.AddScoped<UsersEventRepo>();
     
             //services.AddScoped<TestRepository>();
 
