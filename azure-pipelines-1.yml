@@ -17,12 +17,31 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'eventfunctionsangular'
+    scannerMode: 'MSBuild'
+    projectKey: 'eventfunctionsangular_EventFunctions_P2_Angular'
+    projectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
+
 - script: |
     cd 'AngularTest'
     npm install -g @angular/cli
     npm install
     ng build --prod
   displayName: 'npm install and build'
+
+- task: SonarCloudAnalyze@1
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '**/coburtura/coverage.xml'
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: ArchiveFiles@2
   inputs:
