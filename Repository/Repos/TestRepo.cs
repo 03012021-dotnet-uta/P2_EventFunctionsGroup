@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Repository.Contexts;
 
 namespace Repository
@@ -84,9 +85,16 @@ namespace Repository
             return user;
         }
 
+        public int GetTotalAttend(Guid id)
+        {
+            var allUsers = context.Events.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Users).ToList();
+            int total = allUsers[0].Count();
+            return total;
+        }
+
         public Event GetEventByID(Guid id)
         {
-            Event theEvent = context.Events.FirstOrDefault(n => Guid.Equals(n.Id, id));
+            Event theEvent = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).FirstOrDefault(n => Guid.Equals(n.Id, id));
             return theEvent;
         }
 

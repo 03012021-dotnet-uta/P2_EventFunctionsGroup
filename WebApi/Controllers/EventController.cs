@@ -82,9 +82,9 @@ namespace WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("eventdetail/{id}")]
-        public ActionResult<Event> GetEventDetails(Guid id)
+        public ActionResult<RawDetailEvent> GetEventDetails(Guid id)
         {
-            Event getEvent = eventLogic.GetEventById(id);
+            RawDetailEvent getEvent = eventLogic.GetEventById(id);
             return getEvent;
         }
     }
