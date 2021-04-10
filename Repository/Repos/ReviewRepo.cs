@@ -59,6 +59,14 @@ namespace Repository.Repos
         }
 
         /// <summary>
+        /// Get an entity by its ReviewId
+        /// </summary>
+        public Review GetReviewById(int reviewId)
+        {
+            return context.Reviews.Find(reviewId);
+        }        
+
+        /// <summary>
         /// Update an item in context and database
         /// </summary>
         public void UpdateReview(Review review) 

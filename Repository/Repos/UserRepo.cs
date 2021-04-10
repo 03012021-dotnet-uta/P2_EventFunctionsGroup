@@ -56,6 +56,10 @@ namespace Repository.Repos
             return context.Users.ToList();
         }
 
+        /// <summary>
+        /// Update an item in context and database
+        /// </summary>
+        /// <param name="user"></param>
         public void UpdateUser(User user) 
         {
             context.Entry(user).State = EntityState.Modified;
