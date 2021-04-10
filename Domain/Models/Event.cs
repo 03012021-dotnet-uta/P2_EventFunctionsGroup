@@ -8,8 +8,6 @@ namespace Domain.Models
     public class Event
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        //public int EventTypeId { get; set; }
-        //public int LocationId { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }

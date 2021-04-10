@@ -16,7 +16,7 @@ namespace Repository.Repos
     /// contains unmanaged resources.
     /// Ideas implemented here learned from https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
     /// </summary>
-    public class EventRepo : IEventRepository, IDisposable
+    public class EventRepo : IEventRepository
     {
     
         /// <summary>
@@ -116,7 +116,7 @@ namespace Repository.Repos
         public int GetTotalAttend(Guid id)
         {
             var allUsers = context.Events.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Users).ToList();
-            int total = allUsers[0].Count();
+            int total = allUsers[0].Count;
             return total;
         }
 
@@ -138,12 +138,9 @@ namespace Repository.Repos
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this.disposed && disposing)
             {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
+                context.Dispose();
             }
 
             this.disposed = true;
