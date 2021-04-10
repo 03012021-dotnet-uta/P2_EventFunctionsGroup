@@ -72,7 +72,11 @@ namespace Logic
         public async Task<List<RawPreviewEvent>> GetAllSignedUpEventsAsync(Guid id)
         {
             ICollection<Event> allEvents = await Task.Run(() => testRepo.GetSignedUpEvents(id));
-            List<Event> filteredEvents = allEvents.ToList();
+            List<Event> filteredEvents = new List<Event>();allEvents.ToList();
+            foreach(Event e in allEvents)
+            {
+                await Task.Run(() => filteredEvents.Add(testRepo.GetEventByID(e.Id)));
+            }
 
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
 
