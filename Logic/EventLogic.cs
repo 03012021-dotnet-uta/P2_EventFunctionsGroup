@@ -23,7 +23,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetUpcomingEventsAsync()
         {
-            List<Event> upcomingEvents = testRepo.GetUpcomingEvents(DateTime.UtcNow);
+            List<Event> upcomingEvents = await Task.Run(() => testRepo.GetUpcomingEvents(DateTime.UtcNow));
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(upcomingEvents);
 
             return returnEvents;
@@ -35,7 +35,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllAsync()
         {
-            List<Event> allEvents = testRepo.GetAllEvents();
+            List<Event> allEvents = await Task.Run(() => testRepo.GetAllEvents());
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(allEvents);
 
             return returnEvents;
@@ -58,7 +58,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllPreviousEventsAsync(Guid id)
         {
-            List<Event> previousEvents = testRepo.GetPreviousEvents(DateTime.UtcNow);
+            List<Event> previousEvents = await Task.Run(() => testRepo.GetPreviousEvents(DateTime.UtcNow));
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(previousEvents);
 
             return returnEvents;
