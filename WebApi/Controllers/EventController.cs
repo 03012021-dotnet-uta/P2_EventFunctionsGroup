@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 using Domain.RawModels;
 using Logic;
@@ -23,9 +24,9 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        public ActionResult<List<Event>> GetAll()
+        public async Task<ActionResult<List<RawPreviewEvent>>> GetAllAsync()
         {
-            List<Event> allUsers = eventLogic.GetAll();
+            List<RawPreviewEvent> allUsers = await eventLogic.GetAllAsync();
             return allUsers;
         }
 
@@ -34,9 +35,9 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("allupcoming")]
-        public ActionResult<List<Event>> GetAllUpcoming()
+        public async Task<ActionResult<List<RawPreviewEvent>>> GetAllUpcomingAsync()
         {
-            List<Event> allUsers = eventLogic.GetUpcomingEvents();
+            List<RawPreviewEvent> allUsers = await eventLogic.GetUpcomingEventsAsync();
             return allUsers;
         }
 
@@ -46,9 +47,9 @@ namespace WebApi.Controllers
         /// <param name="id">User ID</param>
         /// <returns></returns>
         [HttpGet("allsigned/{id}")]
-        public ActionResult<List<Event>> GetAllSignedUpEvents(Guid id)
+        public async Task<ActionResult<List<RawPreviewEvent>>> GetAllSignedUpEventsAsync(Guid id)
         {
-            List<Event> allUsers = eventLogic.GetAllSignedUpEvents(id);
+            List<RawPreviewEvent> allUsers = await eventLogic.GetAllSignedUpEventsAsync(id);
             return allUsers;
         }
 
@@ -58,9 +59,9 @@ namespace WebApi.Controllers
         /// <param name="id">User ID</param>
         /// <returns></returns>
         [HttpGet("allprevious/{id}")]
-        public ActionResult<List<Event>> GetAllPreviousEvents(Guid id)
+        public async Task<ActionResult<List<RawPreviewEvent>>> GetAllPreviousEventsAsync(Guid id)
         {
-            List<Event> allUsers = eventLogic.GetAllPreviousEvents(id);
+            List<RawPreviewEvent> allUsers = await eventLogic.GetAllPreviousEventsAsync(id);
             return allUsers;
         }
 
@@ -86,6 +87,23 @@ namespace WebApi.Controllers
         {
             RawDetailEvent getEvent = eventLogic.GetEventById(id);
             return getEvent;
+        }
+        
+        /// <summary>
+        /// Signs up a user for an event
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="eid"></param>
+        /// <returns></returns>
+        [HttpGet("signup/{uid}/{eid}")]
+        public ActionResult<bool> SignupForEvent(Guid uid, Guid eid)
+        {
+            if(!eventLogic.EventSignUp(uid, eid))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
