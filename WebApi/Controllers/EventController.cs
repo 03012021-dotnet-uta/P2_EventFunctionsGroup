@@ -92,18 +92,18 @@ namespace WebApi.Controllers
         /// <summary>
         /// Signs up a user for an event
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="eid"></param>
+        /// <param name="uid">User ID</param>
+        /// <param name="eid">Event ID</param>
         /// <returns></returns>
         [HttpGet("signup/{uid}/{eid}")]
         public ActionResult<bool> SignupForEvent(Guid uid, Guid eid)
         {
             if(!eventLogic.EventSignUp(uid, eid))
             {
-                return false;
+                return StatusCode(450, "Failed to signup. Couldn't find user or event.");
             }
 
-            return true;
+            return StatusCode(200, "User has been signed up for the event.");
         }
     }
 }

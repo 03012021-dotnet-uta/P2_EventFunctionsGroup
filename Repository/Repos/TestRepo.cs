@@ -28,13 +28,13 @@ namespace Repository
 
         public async Task<EventType> GetEventTypeByID(Guid eventType)
         {
-            EventType getType = context.EventTypes.FirstOrDefault(n => Guid.Equals(n.Id, eventType));
+            EventType getType = await Task.Run(() => context.EventTypes.FirstOrDefault(n => Guid.Equals(n.Id, eventType)));
             return getType;
         }
 
         public List<Event> GetAllEvents()
         {
-            List<Event> allEvents = context.Events.ToList();
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).ToList();
             return allEvents;
         }
 
@@ -61,7 +61,7 @@ namespace Repository
 
         public List<Event> GetPreviousEvents(DateTime now)
         {
-            List<Event> allEvents = context.Events.Where(n => n.Date < now).ToList();
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => n.Date < now).ToList();
             return allEvents;
         }
 
@@ -126,7 +126,7 @@ namespace Repository
 
         public List<Event> GetUpcomingEvents(DateTime now)
         {
-            List<Event> allEvents = context.Events.Where(n => n.Date > now).ToList();
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => n.Date > now).ToList();
             return allEvents;
         }
 

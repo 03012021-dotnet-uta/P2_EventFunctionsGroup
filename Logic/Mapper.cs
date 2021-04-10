@@ -106,7 +106,7 @@ namespace Logic
 
         internal async Task<Event> RawToEvent(RawEvent userEvent, EventType eventType, Location loc, User manager)
         {
-            Event newEvent = new Event();
+            Event newEvent = await Task.Run(() => new Event());
             newEvent.Name = userEvent.Name;
             newEvent.Date = DateTime.Parse(userEvent.Date);
             newEvent.Description = userEvent.Description;
