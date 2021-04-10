@@ -69,12 +69,12 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">Event ID</param>
         /// <returns></returns>
-        [HttpGet("allreviews/{id}")]
-        public ActionResult<List<Review>> GetAllReviews(Guid id)
-        {
-            List<Review> allUsers = eventLogic.GetAllReviews(id);
-            return allUsers;
-        }
+        // [HttpGet("allreviews/{id}")]
+        // public ActionResult<List<Review>> GetAllReviews(Guid id)
+        // {
+        //     List<Review> allUsers = eventLogic.GetAllReviews(id);
+        //     return allUsers;
+        // }
 
         /// <summary>
         /// Gets details about an event based off id
@@ -82,9 +82,9 @@ namespace WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("eventdetail/{id}")]
-        public ActionResult<Event> GetEventDetails(Guid id)
+        public ActionResult<RawDetailEvent> GetEventDetails(Guid id)
         {
-            Event getEvent = eventLogic.GetEventById(id);
+            RawDetailEvent getEvent = eventLogic.GetEventById(id);
             return getEvent;
         }
     }

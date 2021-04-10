@@ -27,28 +27,28 @@ button.addEventListener("click", async () => {
     let events = ['Sports', 'Music', 'Private', 'Conference', 'Expo', 'Other']
     let addressjson = JSON.stringify(address);
 
-    await fetch(`api/Manager/createevent`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify(address),
-    })
-    .then(response => {
-        if(!response.ok) {
-            throw new Error(`Network reponse was not ok (${reponse.status})`);
-        }
-        else
-            return response.json();
-    })
-    .then((jsonReponse) => {
-        console.log(jsonReponse);
-        //mapReponse = jsonReponse;
-    })
-    .catch(function(err) {
-        console.log("Failed to fetch page: ", err);
-    });
+    // await fetch(`api/Manager/createevent`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type':'application/json'
+    //     },
+    //     body: JSON.stringify(address),
+    // })
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    //     //mapReponse = jsonReponse;
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
 
     // await fetch(`${mapboxurl}/geocoding/v5/mapbox.places/${address.street}%20${address.zip}%20${address.city}%20${address.state}.json?country=US&${mapboxtoken}`)
     // .then(response => {
@@ -75,7 +75,7 @@ button.addEventListener("click", async () => {
     })
     .then((jsonReponse) => {
         console.log(jsonReponse);
-        mapReponse = jsonReponse;
+        //mapReponse = jsonReponse;
     })
     .catch(function(err) {
         console.log("Failed to fetch page: ", err);
@@ -97,13 +97,30 @@ button.addEventListener("click", async () => {
     //     console.log("Failed to fetch page: ", err);
     // });
     // mapbox://styles/mapbox/streets-v11
-    let stylejson = `https://api.mapbox.com/styles/v1/notasalad?${mapboxtoken}`;
-    let pin = `pin-s-l+000(${mapReponse.features[0].center[0]},${mapReponse.features[0].center[1]})`
+    //let stylejson = `https://api.mapbox.com/styles/v1/notasalad?${mapboxtoken}`;
+    //let pin = `pin-s-l+000(${mapReponse.features[0].center[0]},${mapReponse.features[0].center[1]})`
     let thediv = document.getElementById("map");
     let pic = document.createElement("img");
-    pic.src = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${pin}/${mapReponse.features[0].center[0]}, ${mapReponse.features[0].center[1]}, 15, 0/400x400?${mapboxtoken}`;
-    thediv.appendChild(pic);
+    //pic.src = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${pin}/${mapReponse.features[0].center[0]}, ${mapReponse.features[0].center[1]}, 15, 0/400x400?${mapboxtoken}`;
+    //thediv.appendChild(pic);
 
+    await fetch(`api/Event/eventdetail/a52d49d4-58a2-4488-a13a-9e6a1c9725a6`)
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+        pic.src = jsonReponse.locationMap;
+        thediv.appendChild(pic);
+        //mapReponse = jsonReponse;
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
     // await fetch('api/Test/typeinit', {
     //     method: 'POST',
     //     headers: {

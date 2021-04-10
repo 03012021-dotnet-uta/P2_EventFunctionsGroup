@@ -70,12 +70,15 @@ namespace Logic
         /// <summary>
         /// Gets an event based off its id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Store ID</param>
         /// <returns></returns>
-        public Event GetEventById(Guid id)
+        public RawDetailEvent GetEventById(Guid id)
         {
             Event getEvent = testRepo.GetEventByID(id);
-            return getEvent;
+            int totalAttend = testRepo.GetTotalAttend(id);
+            RawDetailEvent detailEvent = mapper.EventToDetail(getEvent, totalAttend);
+            
+            return detailEvent;
         }
     }
 }
