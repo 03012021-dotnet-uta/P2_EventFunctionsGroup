@@ -89,6 +89,28 @@ namespace Logic
             return detailEvent;
         }
 
+        internal Review RawToReview(RawReview review, User theUser, Event theEvent)
+        {
+            Review newReview = new Review();
+            newReview.Rating = review.Rating;
+            newReview.Description = review.Description;
+            newReview.User = theUser;
+            newReview.Event = theEvent;
+
+            return newReview;
+        }
+
+        internal RawReviewToFE ReviewToRaw(Review newReview, string user, string eventName)
+        {
+            RawReviewToFE review = new RawReviewToFE();
+            review.User = user;
+            review.Event = eventName;
+            review.Rating = newReview.Rating;
+            review.Description = newReview.Description;
+
+            return review;
+        }
+
         internal RawUser UserToRaw(User e)
         {
             RawUser newUser = new RawUser();

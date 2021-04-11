@@ -48,6 +48,7 @@ namespace Repository.Repos
         public void InsertReview(Review review) 
         {
             context.Reviews.Add(review);
+            Save();
         }
 
         /// <summary>
@@ -61,9 +62,9 @@ namespace Repository.Repos
         /// <summary>
         /// Get an entity by its ReviewId
         /// </summary>
-        public Review GetReviewById(int reviewId)
+        public List<Review> GetReviewAllByEventId(Guid id)
         {
-            return context.Reviews.Find(reviewId);
+            return context.Reviews.Include(x => x.User).Include(x => x.Event).Where(x => Guid.Equals(id, x.Event.Id)).ToList();
         }        
 
         /// <summary>

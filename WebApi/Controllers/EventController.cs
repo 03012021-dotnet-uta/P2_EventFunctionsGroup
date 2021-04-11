@@ -70,12 +70,20 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">Event ID</param>
         /// <returns></returns>
-        // [HttpGet("allreviews/{id}")]
-        // public ActionResult<List<Review>> GetAllReviews(Guid id)
-        // {
-        //     List<Review> allUsers = eventLogic.GetAllReviews(id);
-        //     return allUsers;
-        // }
+        [HttpGet("allreviews/{id}")]
+        public async Task<ActionResult<List<RawReviewToFE>>> GetAllReviews(Guid id)
+        {
+            List<RawReviewToFE> allUsers = await eventLogic.GetAllReviews(id);
+            return allUsers;
+        }
+
+        [HttpPost("review")]
+        public ActionResult<RawReviewToFE> CreateReview(RawReview review)
+        {
+            RawReviewToFE newReview = eventLogic.CreateReview(review);
+
+            return newReview;
+        }
 
         /// <summary>
         /// Gets details about an event based off id
@@ -86,6 +94,10 @@ namespace WebApi.Controllers
         public ActionResult<RawDetailEvent> GetEventDetails(Guid id)
         {
             RawDetailEvent getEvent = eventLogic.GetEventById(id);
+            if(getEvent == null)
+            {
+                return StatusCode(450, "Invalid Inputs. Unable to create review.");
+            }
             return getEvent;
         }
         

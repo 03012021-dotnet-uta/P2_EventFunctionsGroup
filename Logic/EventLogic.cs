@@ -14,12 +14,14 @@ namespace Logic
         private readonly EventRepo eventRepo;
         private readonly UserRepo userRepo;
         private readonly UsersEventRepo usersEventRepo;
+        private readonly ReviewRepo reviewRepo;
         private readonly Mapper mapper = new Mapper();
-        public EventLogic(EventRepo r, UserRepo u, UsersEventRepo ue)
+        public EventLogic(EventRepo r, UserRepo u, UsersEventRepo ue, ReviewRepo rr)
         {
             eventRepo = r;
             userRepo = u;
             usersEventRepo = ue;
+            reviewRepo = rr;
         }
 
         /// <summary>
@@ -51,9 +53,12 @@ namespace Logic
         /// </summary>
         /// <param name="id">Event ID</param>
         /// <returns></returns>
-        public List<Review> GetAllReviews(Guid id)
+        public async Task<List<RawReviewToFE>> GetAllReviews(Guid id)
         {
-            throw new NotImplementedException();
+            List<Review> allReviews = reviewRepo.GetReviewAllByEventId(id);
+            List<RawReviewToFE> allReviewsRaw = await ConvertAllReviewsASync(allReviews);
+
+            return allReviewsRaw;
         }
 
         /// <summary>
@@ -86,6 +91,28 @@ namespace Logic
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
 
             return returnEvents;
+        }
+
+        public RawReviewToFE CreateReview(RawReview review)
+        {
+            User theUser = userRepo.GetUserByID(review.UserId);
+            if(theUser == null)
+            {
+                return null;
+            }
+            Event theEvent = eventRepo.GetEventByID(review.EventId);
+            if(theEvent == null)
+            {
+                return null;
+            }
+            if(review.Rating > 5)
+            {
+                return null;
+            }
+            Review newReview = mapper.RawToReview(review, theUser, theEvent);
+            reviewRepo.InsertReview(newReview);
+            RawReviewToFE rawToFE = mapper.ReviewToRaw(newReview, theUser.FName + " " + theUser.LName, theEvent.Name);
+            return rawToFE;
         }
 
         /// <summary>
@@ -153,6 +180,22 @@ namespace Logic
                 returnEvents.Add(item);
             }
             return returnEvents;
+        }
+
+        private async Task<List<RawReviewToFE>> ConvertAllReviewsASync(List<Review> allReviews)
+        {
+            List<RawReviewToFE> returnReviews = new List<RawReviewToFE>();
+            List<Task<RawReviewToFE>> tasks = new List<Task<RawReviewToFE>>();
+            foreach(Review r in allReviews)
+            {
+                tasks.Add(Task.Run(() => mapper.ReviewToRaw(r, r.User.FName + " " + r.User.LName, r.Event.Name)));
+            }
+            var results = await Task.WhenAll(tasks);
+            foreach(var item in results)
+            {
+                returnReviews.Add(item);
+            }
+            return returnReviews;
         }
     }
 }
