@@ -31,7 +31,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Read an entity by their ReviewId
         /// </summary>
-        Review GetReviewById(int reviewId);
+        List<Review> GetReviewAllByEventId(Guid reviewId);
 
         /// <summary>
         /// Update a Review

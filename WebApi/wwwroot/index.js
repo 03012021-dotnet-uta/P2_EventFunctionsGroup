@@ -29,16 +29,61 @@ button.addEventListener("click", async () => {
         uid: "c3955591-4d58-4d2d-adb9-8469957bf6b8",
         eid: "c2123ab5-f0c0-4abc-90d8-017e6bdce141"
     }
+
+    let review = {
+        UserId: "2ace2306-c43a-4423-a1b4-4030f91e2727",
+        EventId: "c2123ab5-f0c0-4abc-90d8-017e6bdce141",
+        Rating: 3,
+        Description: "This is a test review return"
+    }
     let events = ['Sports', 'Music', 'Private', 'Conference', 'Expo', 'Other']
     let addressjson = JSON.stringify(address);
 
-    await fetch('api/Manager/createevent', {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type':'application/json'
-    },
-    body: JSON.stringify(address),
+    // await fetch('api/Manager/createevent', {
+    // method: 'POST',
+    // headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type':'application/json'
+    // },
+    // body: JSON.stringify(address),
+    // })
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
+
+    // await fetch('api/Event/review', {
+    // method: 'POST',
+    // headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type':'application/json'
+    // },
+    // body: JSON.stringify(review),
+    // })
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
+
+    await fetch(`api/Event/allreviews/c2123ab5-f0c0-4abc-90d8-017e6bdce141`, {
     })
     .then(response => {
         if(!response.ok) {
@@ -49,6 +94,7 @@ button.addEventListener("click", async () => {
     })
     .then((jsonReponse) => {
         console.log(jsonReponse);
+        //mapReponse = jsonReponse;
     })
     .catch(function(err) {
         console.log("Failed to fetch page: ", err);
