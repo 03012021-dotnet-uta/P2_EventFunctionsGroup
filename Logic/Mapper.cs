@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,6 +28,7 @@ namespace Logic
                 newUser.LName = rUser.lastName;
                 newUser.IsEventManager = false;
                 newUser.Email = rUser.email.ToLower();
+                newUser.Events = new List<Event>();
                 newUser.PasswordSalt = hmac.Key;
                 newUser.Password = PasswordHash(rUser.password, newUser.PasswordSalt);
             }
@@ -36,13 +38,20 @@ namespace Logic
         internal async Task<Location> AddressToLocation(RawEvent userEvent)
         {
             HttpClient client = new HttpClient();
-            string path = _mapboxurl + "/geocoding/v5/mapbox.places/"+userEvent.Street+"%20"+userEvent.ZipCode+"%20"+userEvent.City+"%20"+userEvent+userEvent.State+".json?country=US&"+_mapboxtoken;
+            string addressLocation = userEvent.Street + " " + userEvent.ZipCode + " " + userEvent.City + " " + userEvent.State;
+            string correct = addressLocation.Replace(" ", "%20");
+            string path = _mapboxurl + "geocoding/v5/mapbox.places/"+correct+".json?country=US&types=address&"+_mapboxtoken;
             HttpResponseMessage response = await client.GetAsync(path);
             if(response.IsSuccessStatusCode)
             {
                 Location newLoc = new Location();
                 string jsonContent = await response.Content.ReadAsStringAsync();
                 JObject json = JObject.Parse(jsonContent);
+                JToken token = json["features"];
+                if(!token.HasValues)
+                {
+                    return null;
+                }
                 newLoc.Name = userEvent.Street;
                 newLoc.Address = userEvent.City + " " + userEvent.State + " " + userEvent.ZipCode;
                 newLoc.Longtitude = (double)json["features"][0]["center"][0];
@@ -80,6 +89,15 @@ namespace Logic
             return detailEvent;
         }
 
+        internal RawUser UserToRaw(User e)
+        {
+            RawUser newUser = new RawUser();
+            newUser.firstName = e.FName;
+            newUser.lastName = e.LName;
+            newUser.email = e.Email;
+            return newUser;
+        }
+
         internal UsersEvent signUpById(Guid uid, Guid eid, User user, Event tEvent)
         {
             UsersEvent newUserEvent = new UsersEvent();
@@ -115,6 +133,7 @@ namespace Logic
             newEvent.Revenue = 0;
             newEvent.TotalCost = 0;
             newEvent.TotalTicketsSold = 0;
+            newEvent.Users = new List<User>();
             return newEvent;
         }
 

@@ -39,6 +39,14 @@ namespace Repository.Interfaces
         void UpdateLocation(Location location);
 
         /// <summary>
+        /// Gets a location based off long/lat
+        /// </summary>
+        /// <param name="longtitude"></param>
+        /// <param name="latitude"></param>
+        /// <returns></returns>
+        Location GetLocationByCoord(double longtitude, double latitude);
+
+        /// <summary>
         /// Delete a location
         /// </summary>
         void DeleteLocation(int locationId);

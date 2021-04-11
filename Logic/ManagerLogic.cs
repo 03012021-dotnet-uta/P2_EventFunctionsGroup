@@ -13,12 +13,16 @@ namespace Logic
         private readonly UserRepo userRepo;
         private readonly EventRepo eventRepo;
         private readonly EventTypeRepo eventTypeRepo;
+        private readonly LocationRepo locationRepo;
+        private readonly UsersEventRepo usersEventRepo;
         private readonly Mapper mapper = new Mapper();
-        public ManagerLogic(UserRepo r, EventRepo e, EventTypeRepo et)
+        public ManagerLogic(UserRepo r, EventRepo e, EventTypeRepo et, LocationRepo lr, UsersEventRepo ue)
         {
             userRepo = r;
             eventRepo = e;
             eventTypeRepo = et;
+            locationRepo = lr;
+            usersEventRepo = ue;
         }
 
         public async Task<Event> CreateNewEvent(RawEvent userEvent)
@@ -28,9 +32,17 @@ namespace Logic
             {
                 return null;
             }
-            Location loc = await mapper.AddressToLocation(userEvent);
+            Location existLoc = await Task.Run(() => locationRepo.GetLocationByAddress(userEvent.Street, userEvent.City + " " + userEvent.State + " " + userEvent.ZipCode));
+            if(existLoc == null)
+            {
+                existLoc = await mapper.AddressToLocation(userEvent);
+                if(existLoc == null)
+                {
+                    return null;
+                }
+            }
             User manager = await Task.Run(() => userRepo.GetUserByID(userEvent.ManagerID));
-            Event newEvent = await mapper.RawToEvent(userEvent, type, loc, manager);
+            Event newEvent = await mapper.RawToEvent(userEvent, type, existLoc, manager);
             newEvent = eventRepo.InsertEvent(newEvent);
             return newEvent;
         }
@@ -51,6 +63,30 @@ namespace Logic
             List<EventType> allTypes = eventTypeRepo.GetAllEventTypes();
 
             return allTypes;
+        }
+
+        public async Task<List<RawUser>> GetAllAttending(Guid eid)
+        {
+            List<User> allAttending = await Task.Run(() => eventRepo.GetAllAttending(eid));
+            List<RawUser> allUsers = await ConvertAllUsersToRawAsync(allAttending);
+
+            return allUsers;
+        }
+
+        private async Task<List<RawUser>> ConvertAllUsersToRawAsync(List<User> allUsers)
+        {
+            List<RawUser> returnUsers = new List<RawUser>();
+            List<Task<RawUser>> tasks = new List<Task<RawUser>>();
+            foreach(User e in allUsers)
+            {
+                tasks.Add(Task.Run(() => mapper.UserToRaw(e)));
+            }
+            var results = await Task.WhenAll(tasks);
+            foreach(var item in results)
+            {
+                returnUsers.Add(item);
+            }
+            return returnUsers;
         }
     }
 }

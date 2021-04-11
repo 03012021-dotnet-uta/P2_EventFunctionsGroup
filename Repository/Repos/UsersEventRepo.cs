@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Contexts;
 using Repository.Interfaces;
 using Domain.Models;
+using System.Threading.Tasks;
 
 namespace Repository.Repos
 {
@@ -74,6 +75,13 @@ namespace Repository.Repos
         public void UpdateUsersEvent(UsersEvent userEvent) 
         {
             context.Entry(userEvent).State = EntityState.Modified;
+        }
+
+        public List<UsersEvent> GetAllAttending(Guid eid)
+        {
+            List<UsersEvent> allAttending = context.UsersEvents.Include(x => x.User).Where(x => x.EventId == eid).ToList();
+
+            return allAttending;
         }
 
         /// <summary>

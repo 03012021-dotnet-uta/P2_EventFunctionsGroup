@@ -86,7 +86,7 @@ namespace Repository.Repos
 
         public User GetUserByID(Guid id)
         {
-            var user = context.Users.FirstOrDefault(n => Guid.Equals(n.Id, id));
+            var user = context.Users.Include(x => x.Events).FirstOrDefault(n => Guid.Equals(n.Id, id));
             return user;
         }
 

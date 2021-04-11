@@ -13,24 +13,46 @@ button.addEventListener("click", async () => {
         password: "123456"
     }
     let address = {
-        name: "Test",
+        name: "Random Event",
         Date: "2021-04-16T18:11",
-        description: "This is just a test",
-        Capacity: 50,
-        street: "1111 S Figueroa St",
-        zip: 90015,
-        city: "Los Angeles",
-        state: "CA",
-        eventtype: 'ea3bf8bf-5e12-45b0-bd9a-209defc23e9c',
+        description: "This is a test for zipcode fix",
+        Capacity: 10000,
+        street: "73 Iroquois Lane",
+        ZipCode: 11710,
+        city: "Bellmore",
+        state: "NY",
+        eventtype: 'a9ea5da4-07ec-40c4-be96-9b1c204d0899',
         managerid: '28318984-7a0b-4cac-a61d-c0c2471acdb9'
     }
 
     let userSignup = {
-        uid: "2ace2306-c43a-4423-a1b4-4030f91e2727",
+        uid: "c3955591-4d58-4d2d-adb9-8469957bf6b8",
         eid: "c2123ab5-f0c0-4abc-90d8-017e6bdce141"
     }
     let events = ['Sports', 'Music', 'Private', 'Conference', 'Expo', 'Other']
     let addressjson = JSON.stringify(address);
+
+    await fetch('api/Manager/createevent', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(address),
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
 
     // await fetch(`api/Event/signup/${userSignup.uid}/${userSignup.eid}`, {
     // })
@@ -48,7 +70,25 @@ button.addEventListener("click", async () => {
     // .catch(function(err) {
     //     console.log("Failed to fetch page: ", err);
     // });
+
     await fetch(`api/Event/allsigned/${userSignup.uid}`, {
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+        //mapReponse = jsonReponse;
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
+
+    await fetch(`api/Manager/allattend/${userSignup.eid}`, {
     })
     .then(response => {
         if(!response.ok) {

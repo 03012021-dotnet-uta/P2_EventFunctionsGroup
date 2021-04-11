@@ -27,7 +27,6 @@ namespace Repository.Contexts
         // {
         //     if (!optionsBuilder.IsConfigured)
         //     {
-
         //         optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=TestEF;Trusted_Connection=True;");
         //    }
         // }
@@ -42,6 +41,15 @@ namespace Repository.Contexts
                         j => j.HasOne(k => k.User).WithMany(y => y.UsersEvents),
                         j => j.HasOne(k => k.Event).WithMany(y => y.UsersEvents));
                     eb.HasOne(u => u.Manager);
+                });
+            modelBuilder.Entity<User>(
+                eb =>
+                {
+                    eb.HasKey(ky => new {ky.Id});
+                    eb.HasMany(u => u.Events)
+                    .WithMany(g => g.Users).UsingEntity<UsersEvent>(
+                        j => j.HasOne(k => k.Event).WithMany(y => y.UsersEvents),
+                        j => j.HasOne(k => k.User).WithMany(y => y.UsersEvents));
                 });
 
             modelBuilder.Entity<UsersEvent>(

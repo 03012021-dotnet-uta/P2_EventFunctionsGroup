@@ -90,5 +90,12 @@ namespace Repository.Interfaces
         /// <returns></returns>
         int GetTotalAttend(Guid id);
 
+        /// <summary>
+        /// Gets a list of all users attending an event by EventID
+        /// </summary>
+        /// <param name="eid">Event ID</param>
+        /// <returns></returns>
+        List<User> GetAllAttending(Guid eid);
+
     }
 }

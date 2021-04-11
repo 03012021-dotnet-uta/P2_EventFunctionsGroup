@@ -67,6 +67,13 @@ namespace Repository.Repos
             return context.Events.Find(eventId);
         }
 
+        public List<User> GetAllAttending(Guid eid)
+        {
+            var allAttending = context.Events.Include(x => x.Users).Where(x => Guid.Equals(x.Id, eid)).Select(x => x.Users).ToList();
+
+            return allAttending[0].ToList();
+        }
+
         /// <summary>
         /// Update an item in context and database
         /// </summary>
@@ -87,7 +94,7 @@ namespace Repository.Repos
 
         public Event GetEventByID(Guid id)
         {
-            Event theEvent = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).FirstOrDefault(n => Guid.Equals(n.Id, id));
+            Event theEvent = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Include(x => x.Users).FirstOrDefault(n => Guid.Equals(n.Id, id));
             return theEvent;
         }
 
