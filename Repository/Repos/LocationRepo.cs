@@ -23,7 +23,6 @@ namespace Repository.Repos
         /// </summary>
         private readonly EventFunctionsContext context;
 
-
         /// <summary>
         /// Empty constructor to instantiate the context
         /// and then assign to context variable
@@ -64,6 +63,19 @@ namespace Repository.Repos
         public Location GetLocationById(int locationId)
         {
             return context.Locations.Find(locationId);
+        }
+
+        public Location GetLocationByCoord(double longtitude, double latitude)
+        {
+            Location findLoc = context.Locations.Where(n => n.Longtitude == longtitude).Where(n => n.Latitude == latitude).FirstOrDefault();
+
+            return findLoc;
+        }
+        public Location GetLocationByAddress(string street, string v)
+        {
+            Location findLoc = context.Locations.Where(n => n.Name.ToLower() == street.ToLower()).Where(n => n.Address.ToLower() == v.ToLower()).FirstOrDefault();
+        
+            return findLoc;
         }
 
         /// <summary>

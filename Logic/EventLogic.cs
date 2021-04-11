@@ -120,9 +120,16 @@ namespace Logic
             {
                 return false;
             }
-
-            UsersEvent signupUser = mapper.signUpById(uid, eid, user, tEvent);
-            usersEventRepo.InsertUsersEvent(signupUser);
+            if(tEvent.TotalTicketsSold >= tEvent.Capacity)
+            {
+                return false;
+            }
+            tEvent.TotalTicketsSold++;
+            tEvent.Users.Add(user);
+            user.Events.Add(tEvent);
+            eventRepo.Save();
+            //UsersEvent signupUser = mapper.signUpById(uid, eid, user, tEvent);
+            //usersEventRepo.InsertUsersEvent(signupUser);
 
             return true;
         }

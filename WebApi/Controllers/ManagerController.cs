@@ -48,7 +48,7 @@ namespace WebApi.Controllers
                 Event newEvent = await managerLogic.CreateNewEvent(userEvent);
                 if(newEvent == null)
                 {
-                    return StatusCode(450, "Failed to make event. Invalid inputs.");
+                    return StatusCode(450, "Failed to make event. Invalid inputs(Possibly could not find address).");
                 }
                 else
                 {
@@ -56,6 +56,19 @@ namespace WebApi.Controllers
                 }
                 
             }
+        }
+
+        /// <summary>
+        /// Gets all users attending an event based off event id
+        /// </summary>
+        /// <param name="eid"></param>
+        /// <returns></returns>
+        [HttpGet("allattend/{id}")]
+        public async Task<ActionResult<List<RawUser>>> GetAllAttending(Guid id)
+        {
+            List<RawUser> allUsers = await managerLogic.GetAllAttending(id);
+
+            return allUsers;
         }
 
         /// <summary>

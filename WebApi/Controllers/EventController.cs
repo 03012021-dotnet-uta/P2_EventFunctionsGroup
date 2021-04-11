@@ -100,7 +100,7 @@ namespace WebApi.Controllers
         {
             if(!eventLogic.EventSignUp(uid, eid))
             {
-                return StatusCode(450, "Failed to signup. Couldn't find user or event.");
+                return StatusCode(450, "Failed to signup. Event may be full. Please refresh and try again.");
             }
 
             return StatusCode(200, "User has been signed up for the event.");
