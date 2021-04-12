@@ -8,14 +8,23 @@ trigger:
     include:
     - main
 
-pool:
-  vmImage: ubuntu-latest
+pool: Default
+  # vmImage: ubuntu-latest
 
 steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
+
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'LocalDirectory'
+    jdkFile: 'C:/Users/Home/Downloads/jdk-11.0.10_windows-x64_bin'
+    jdkDestinationDirectory: '/builds/binaries/externals'
+    cleanDestinationDirectory: true
 
 - task: SonarCloudPrepare@1
   inputs:
