@@ -26,7 +26,8 @@ steps:
   inputs:
     script: |
       echo Write your commands here
-      npm install --prefix ./AngularTest/
+      cd "AngularTest"
+      npm install -g @angular/cli
       echo Hello world
 
 - task: Npm@1
