@@ -45,6 +45,15 @@ steps:
     echo 'Finished'
   displayName: 'npm install and build'
 
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      cd "$(System.DefaultWorkingDirectory)/AngularTest"
+      echo Hello world
+      ng build --prod --verbose
+      echo 'Finished'
+
 - task: SonarCloudAnalyze@1
 
 - task: PublishCodeCoverageResults@1
