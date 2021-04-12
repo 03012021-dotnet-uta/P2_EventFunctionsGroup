@@ -57,7 +57,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'nicholasvvong0056_EventFunctions_P2'
     projectName: 'EventFunctions_P2'
-    cliSources: 'Testing'
+    extraProperties: sonar.exclusions=**/AngularTest/**
 
 #this will restore and build the directory.
 - task: DotNetCoreCLI@2
