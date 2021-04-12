@@ -37,7 +37,7 @@ steps:
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
 
 - script: |
-    cd '$(System.DefaultWorkingDirectory)/AngularTest'
+    cd 'C:/Users/Home/Desktop/agent1/_work/2/s/AngularTest'
     npm install -g @angular/cli
     npm install
     ng build --prod
