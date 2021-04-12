@@ -22,7 +22,12 @@ steps:
   inputs:
     versionSpec: '14.x'
 
-
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      npm install --prefix ./AngularTest/
+      echo Hello world
 
 - task: Npm@1
   inputs:
