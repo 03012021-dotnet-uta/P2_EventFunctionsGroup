@@ -46,7 +46,7 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: '$(Build.SourcesDirectory)/AngularTest'
+    workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
     customCommand: 'ng build --prod'
 
 - task: SonarCloudAnalyze@1
