@@ -22,7 +22,7 @@ steps:
     versionSpec: '11'
     jdkArchitectureOption: 'x64'
     jdkSourceOption: 'LocalDirectory'
-    jdkFile: 'C:/Users/Home/Downloads/jdk-11.0.10_windows-x64_bin'
+    jdkFile: 'C:/Users/Home/Downloads/jdk-11.0.10_windows-x64_bin.zip'
     jdkDestinationDirectory: '/builds/binaries/externals'
     cleanDestinationDirectory: true
 
