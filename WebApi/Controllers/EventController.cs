@@ -115,7 +115,7 @@ namespace WebApi.Controllers
                 return StatusCode(450, "Failed to signup. Event may be full. Please refresh and try again.");
             }
 
-            return StatusCode(200, "User has been signed up for the event.");
+            return true;
         }
     }
 }
