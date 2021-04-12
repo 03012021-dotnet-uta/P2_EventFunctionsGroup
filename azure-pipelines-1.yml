@@ -47,6 +47,12 @@ steps:
     ng build --prod
   displayName: 'npm install and build'
 
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'AngularTest'
+    customCommand: 'ng build --prod'
+
 - task: SonarCloudAnalyze@1
 
 - task: PublishCodeCoverageResults@1
