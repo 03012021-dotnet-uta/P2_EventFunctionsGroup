@@ -40,9 +40,9 @@ steps:
     echo "$(System.DefaultWorkingDirectory)"
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
     echo "$(System.DefaultWorkingDirectory)"
-    npm install -g @angular/cli
     npm install
-    ng build
+    npm install -g @angular/cli
+    ng build --prod
   displayName: 'npm install and build'
 
 - task: SonarCloudAnalyze@1
