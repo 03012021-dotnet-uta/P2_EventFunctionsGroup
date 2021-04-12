@@ -14,7 +14,7 @@ pool: Default
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '14.x'
+    versionSpec: '10.x'
   displayName: 'Install Node.js'
 
 - task: JavaToolInstaller@0
@@ -37,11 +37,7 @@ steps:
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
 
 - script: |
-    echo "$(System.DefaultWorkingDirectory)"
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
-    echo "$(System.DefaultWorkingDirectory)"
-    npm uninstall -g @angular-cli
-    npm cache clean
     npm install -g @angular/cli
     npm install
     ng build --prod
