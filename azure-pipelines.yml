@@ -78,7 +78,7 @@ steps:
     projects: '*.sln'
     arguments: '--configuration $(buildConfiguration) --collect "Code Coverage"'
     testRunTitle: 'Dotnet tests running'
-    workingDirectory: 'WebApi'
+    workingDirectory: 'Testing'
 
 - task: PublishCodeCoverageResults@1
   inputs:
