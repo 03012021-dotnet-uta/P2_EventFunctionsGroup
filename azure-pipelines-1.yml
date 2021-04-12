@@ -37,13 +37,15 @@ steps:
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
 
 - script: |
-    cd 'AngularTest'
+    cd '$(System.DefaultWorkingDirectory)/AngularTest'
     npm install -g @angular/cli
     npm install
     ng build --prod
   displayName: 'npm install and build'
 
 - task: SonarCloudAnalyze@1
+
+
 
 - task: PublishCodeCoverageResults@1
   inputs:
