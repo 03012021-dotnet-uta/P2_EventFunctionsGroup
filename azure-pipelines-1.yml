@@ -42,19 +42,15 @@ steps:
     npm install
     npm update
     echo 'Start'
-    ng build --prod --verbose
+    npm build --prod
     echo 'Finished'
   displayName: 'npm install and build'
 
-- task: CmdLine@2
+- task: Npm@1
   inputs:
-    script: |
-      echo Write your commands here
-      cd "$(System.DefaultWorkingDirectory)/AngularTest"
-      npm install --save-dev @angular-devkit/build-angular
-      echo Hello world
-      ng build --prod --verbose
-      echo 'Finished'
+    command: 'custom'
+    workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
+    customCommand: 'run-script build --prod'
 
 - task: SonarCloudAnalyze@1
 
