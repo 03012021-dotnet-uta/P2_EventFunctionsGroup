@@ -35,6 +35,14 @@ steps:
     version: '2.x'
     # performMultiLevelLookup: true
 
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'LocalDirectory'
+    jdkFile: 'C://Users/Home/Downloads/jdk-11.0.10_windows-x64_bin.zip'
+    jdkDestinationDirectory: '/builds/binaries/externals'
+    cleanDestinationDirectory: true
 
 - task: NuGetToolInstaller@1
 
@@ -77,11 +85,11 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '**/coburtura/coverage.xml'
 
-# - task: SonarCloudAnalyze@1
+- task: SonarCloudAnalyze@1
 
-# - task: SonarCloudPublish@1
-#   inputs:
-#     pollingTimeoutSec: '300'
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
   inputs:
