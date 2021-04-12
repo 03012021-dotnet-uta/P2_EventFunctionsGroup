@@ -40,8 +40,10 @@ steps:
     echo "$(System.DefaultWorkingDirectory)"
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
     echo "$(System.DefaultWorkingDirectory)"
-    npm install
+    npm uninstall -g @angular-cli
+    npm cache clean
     npm install -g @angular/cli
+    npm install
     ng build --prod
   displayName: 'npm install and build'
 
