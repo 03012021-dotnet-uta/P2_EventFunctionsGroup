@@ -57,7 +57,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'nicholasvvong0056_EventFunctions_P2'
     projectName: 'EventFunctions_P2'
-    extraProperties: sonar.exclusions=AngularTest/**
+    extraProperties: sonar.exclusions=**/AngularTest/**
 
 #this will restore and build the directory.
 - task: DotNetCoreCLI@2
@@ -76,10 +76,12 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: '*.sln'
+    projects: 'Testing/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code Coverage"'
     testRunTitle: 'Dotnet tests running'
-    workingDirectory: 'Testing'
+
+
+
 
 - task: PublishCodeCoverageResults@1
   inputs:
