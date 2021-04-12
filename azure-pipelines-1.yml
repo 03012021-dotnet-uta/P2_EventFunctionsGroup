@@ -40,7 +40,9 @@ steps:
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
     npm install -g @angular/cli
     npm install
+    echo 'Start'
     ng build --prod --verbose
+    echo 'Finished'
   displayName: 'npm install and build'
 
 - task: SonarCloudAnalyze@1
