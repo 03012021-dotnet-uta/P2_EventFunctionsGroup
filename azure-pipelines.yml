@@ -61,7 +61,9 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'nicholasvvong0056_EventFunctions_P2'
     projectName: 'EventFunctions_P2'
-    extraProperties: sonar.exclusions=**/AngularTest/*
+    extraProperties: |
+      sonar.exclusions=**/AngularTest/*
+      sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
 #this will restore and build the directory.
 - task: DotNetCoreCLI@2
@@ -81,11 +83,8 @@ steps:
   inputs:
     command: 'test'
     projects: 'Testing/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code Coverage"'
+    arguments: '--configuration $(buildConfiguration) --collect "xplat code coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
     testRunTitle: 'Dotnet tests running'
-
-
-
 
 - task: PublishCodeCoverageResults@1
   inputs:
