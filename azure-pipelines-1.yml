@@ -43,6 +43,19 @@ steps:
     ng build --prod --verbose
   displayName: 'npm install and build'
 
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
+    verbose: true
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
+    customCommand: 'run build --prod'
+    verbose: true
+
 # - task: SonarCloudAnalyze@1
 
 # - task: PublishCodeCoverageResults@1
