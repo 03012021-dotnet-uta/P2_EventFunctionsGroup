@@ -50,7 +50,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
-    customCommand: 'run-script build --prod'
+    customCommand: 'run-script build-prod'
 
 - task: SonarCloudAnalyze@1
 
