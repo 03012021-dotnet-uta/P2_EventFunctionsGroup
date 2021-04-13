@@ -78,7 +78,7 @@ namespace Logic
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public User GetUserByEmail(string email, string password)
+        public RawUserLogin GetUserByEmail(string email, string password)
         {
             if(!IfUserExists(email))
             {
@@ -88,7 +88,8 @@ namespace Logic
             byte[] enteredPassword = mapper.PasswordHash(password, getUser.PasswordSalt);
             if(CompareHash(enteredPassword, getUser.Password))
             {
-                return getUser;
+                RawUserLogin returnUser = mapper.UserToRawLogin(getUser);
+                return returnUser;
             }
             else
             {
