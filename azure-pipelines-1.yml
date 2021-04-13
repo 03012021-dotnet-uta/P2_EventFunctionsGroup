@@ -66,11 +66,11 @@ steps:
     workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
     verbose: true
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
-    customCommand: 'install puppeteer --save-dev'
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
+#     customCommand: 'install puppeteer --save-dev'
 
 - task: Npm@1
   inputs:
@@ -83,7 +83,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
-    customCommand: 'run test -- --watch=false --karmaConfig karma.conf.ci.js'
+    customCommand: 'run test -- --watch=false --code-coverage'
     # customCommand: 'run test -- --watch=false --source-map=false --browsers=ChromeHeadless --code-coverage'
 
 - task: SonarCloudAnalyze@1
