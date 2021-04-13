@@ -59,7 +59,7 @@ namespace WebApi.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpGet("login/{email}/{password}")]
-        public ActionResult<User> LogIn(string email, string password)
+        public ActionResult<RawUserLogin> LogIn(string email, string password)
         {
             if(!ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                User getUser = userLogic.GetUserByEmail(email, password);
+                RawUserLogin getUser = userLogic.GetUserByEmail(email, password);
                 if(getUser == null)
                 {
                     return StatusCode(450, "Invalid login");

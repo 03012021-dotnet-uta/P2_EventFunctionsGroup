@@ -74,6 +74,25 @@ namespace Logic
             return newPreview;
         }
 
+        internal RawUserLogin UserToRawLogin(User getUser)
+        {
+            RawUserLogin returnUser = new RawUserLogin();
+            returnUser.id = getUser.Id;
+            returnUser.firstName = getUser.FName;
+            returnUser.lastName = getUser.LName;
+            returnUser.email = getUser.Email;
+            returnUser.IsEventManager = getUser.IsEventManager;
+            if(getUser.IsEventManager)
+            {
+                returnUser.Role = 1;
+            }
+            else
+            {
+                returnUser.Role = 0;
+            }
+            return returnUser;
+        }
+
         internal RawDetailEvent EventToDetail(Event getEvent, int totalAttending)
         {
             RawDetailEvent detailEvent = new RawDetailEvent();
