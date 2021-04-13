@@ -85,6 +85,7 @@ namespace Logic
             detailEvent.Manager = getEvent.Manager.FName + " " + getEvent.Manager.LName;
             detailEvent.Capacity = getEvent.Capacity;
             detailEvent.CurrentAttending = totalAttending;
+            detailEvent.TicketPrice = getEvent.Revenue;
             detailEvent.LocationMap = GetLocationMapString(getEvent.Location);
             return detailEvent;
         }
