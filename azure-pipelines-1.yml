@@ -11,6 +11,10 @@ trigger:
 pool: Default
   # vmImage: ubuntu-latest
 
+variables:
+  buildConfiguration: 'Release'
+  ngBuildConfiguration: '--prod'
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -53,7 +57,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
-    customCommand: 'run build --prod'
+    customCommand: 'run build -- $(ngBuildConfiguration)'
     verbose: true
 
 # - task: SonarCloudAnalyze@1
