@@ -12,6 +12,7 @@ namespace Domain.RawModels
         public string Manager { get; set; }
         public int CurrentAttending { get; set; }
         public int Capacity { get; set; }
+        public decimal TicketPrice { get; set; }
         public string LocationMap { get; set; }
     }
 }

@@ -86,8 +86,19 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
-        [HttpGet("getrevdata")]
+        [HttpGet("getallrevdata")]
         public ActionResult<string> GetAllRevenueInfo(Guid id)
+        {
+            return "Manager API Get";
+        }
+
+        /// <summary>
+        /// Gets total revenue data based off userID
+        /// </summary>
+        /// <param name="id">Event ID</param>
+        /// <returns></returns>
+        [HttpGet("getrevdata/${id}")]
+        public ActionResult<string> GetRevenueForEvent(Guid id)
         {
             return "Manager API Get";
         }
