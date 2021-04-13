@@ -77,7 +77,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(System.DefaultWorkingDirectory)/AngularTest'
-    customCommand: 'run test -- --watch=false'
+    customCommand: 'run test -- --watch=false --source-map=false --code-coverage'
 
 - task: SonarCloudAnalyze@1
 
