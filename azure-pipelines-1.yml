@@ -40,10 +40,7 @@ steps:
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
     npm install -g @angular/cli
     npm install
-    npm update
-    echo 'Start'
     npm build --prod
-    echo 'Finished'
   displayName: 'npm install and build'
 
 - task: Npm@1
