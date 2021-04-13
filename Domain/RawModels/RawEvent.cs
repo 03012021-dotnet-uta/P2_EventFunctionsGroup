@@ -12,6 +12,7 @@ namespace Domain.RawModels
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
+        public decimal TicketPrice { get; set; }
         public Guid ManagerID { get; set; }
         public Guid EventType { get; set; }
     }

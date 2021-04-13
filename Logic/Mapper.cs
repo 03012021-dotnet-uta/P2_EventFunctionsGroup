@@ -152,7 +152,7 @@ namespace Logic
             newEvent.EventType = eventType;
             newEvent.Location = loc;
             newEvent.Manager = manager;
-            newEvent.Revenue = 0;
+            newEvent.Revenue = userEvent.TicketPrice;
             newEvent.TotalCost = 0;
             newEvent.TotalTicketsSold = 0;
             newEvent.Users = new List<User>();
