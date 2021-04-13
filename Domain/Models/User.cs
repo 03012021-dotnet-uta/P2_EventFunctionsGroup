@@ -12,7 +12,6 @@ namespace Domain.Models
         public byte[] Password { get; set; }
         public byte[] PasswordSalt { get; set; }
         public bool IsEventManager { get; set; }
-        public int Role { get; set; }
 
         public virtual ICollection<Event> Events{ get; set; }
         public virtual ICollection<UsersEvent> UsersEvents { get; set; }
