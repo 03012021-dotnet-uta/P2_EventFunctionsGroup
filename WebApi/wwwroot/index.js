@@ -61,27 +61,27 @@ button.addEventListener("click", async () => {
     //     console.log("Failed to fetch page: ", err);
     // });
 
-    // await fetch('api/Event/review', {
-    // method: 'POST',
-    // headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type':'application/json'
-    // },
-    // body: JSON.stringify(review),
-    // })
-    // .then(response => {
-    //     if(!response.ok) {
-    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
-    //     }
-    //     else
-    //         return response.json();
-    // })
-    // .then((jsonReponse) => {
-    //     console.log(jsonReponse);
-    // })
-    // .catch(function(err) {
-    //     console.log("Failed to fetch page: ", err);
-    // });
+    await fetch('api/Event/review', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(review),
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
 
     await fetch(`api/Event/allreviews/c2123ab5-f0c0-4abc-90d8-017e6bdce141`, {
     })
