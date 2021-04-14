@@ -107,7 +107,7 @@ namespace Testing.LogicTests
                 context.SaveChanges();
             }
             
-            List<RawPreviewEvent> createdEvent;
+            List<RawManagerEvent> createdEvent;
             using(var context1 = new EventFunctionsContext(options))
             {
                 context1.Database.EnsureCreated();
