@@ -101,7 +101,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
-        [HttpGet("getallrevdata")]
+        [HttpGet("getallrevdata/{id}")]
         public ActionResult<decimal> GetAllRevenueInfo(Guid id)
         {
             decimal totalRevenue = managerLogic.GetTotalRevenue(id);
