@@ -119,7 +119,7 @@ namespace Repository.Repos
 
         public ICollection<Event> GetSignedUpEvents(Guid id)
         {
-            List<ICollection<Event>> myEvents = context.Users.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
+            List<ICollection<Event>> myEvents = context.Users.Include(x => x.Events).Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
             
             return myEvents[0];
         }

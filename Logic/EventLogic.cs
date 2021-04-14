@@ -75,7 +75,7 @@ namespace Logic
             {
                 if(e.Date < DateTime.Now)
                 {
-                    await Task.Run(() => filteredEvents.Add(e));
+                    await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
                 }
             }
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
