@@ -25,6 +25,11 @@ namespace Logic
             usersEventRepo = ue;
         }
 
+        /// <summary>
+        /// Gets an event from a RawEvent and adds it to the database
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         public async Task<Event> CreateNewEvent(RawEvent userEvent)
         {
             EventType type = await eventTypeRepo.GetEventTypeByIDAsync(userEvent.EventType);
@@ -47,6 +52,11 @@ namespace Logic
             return newEvent;
         }
 
+        /// <summary>
+        /// Gets all events the manager created based off User Id
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <returns></returns>
         public List<RawPreviewEvent> GetAllEvents(Guid id)
         {
             List<Event> allEvents = eventRepo.GetAllManagerEvents(id);
@@ -58,6 +68,10 @@ namespace Logic
             return allRawEvents;
         }
 
+        /// <summary>
+        /// Gets all EventTypes in the database
+        /// </summary>
+        /// <returns></returns>
         public List<EventType> GetEventTypes()
         {
             List<EventType> allTypes = eventTypeRepo.GetAllEventTypes();
@@ -65,6 +79,11 @@ namespace Logic
             return allTypes;
         }
 
+        /// <summary>
+        /// Gets all users that are attending an event using Event Id
+        /// </summary>
+        /// <param name="eid">Event Id</param>
+        /// <returns></returns>
         public async Task<List<RawUser>> GetAllAttending(Guid eid)
         {
             List<User> allAttending = await Task.Run(() => eventRepo.GetAllAttending(eid));
@@ -73,11 +92,21 @@ namespace Logic
             return allUsers;
         }
 
+        /// <summary>
+        /// Deletes an event from the database using EventId
+        /// </summary>
+        /// <param name="id">Event Id</param>
+        /// <returns></returns>
         public bool DeleteEvent(Guid id)
         {
             return eventRepo.DeleteEvent(id);
         }
 
+        /// <summary>
+        /// Converts all Users from database to RawUser for frontend
+        /// </summary>
+        /// <param name="allUsers"></param>
+        /// <returns></returns>
         private async Task<List<RawUser>> ConvertAllUsersToRawAsync(List<User> allUsers)
         {
             List<RawUser> returnUsers = new List<RawUser>();
@@ -94,6 +123,11 @@ namespace Logic
             return returnUsers;
         }
 
+        /// <summary>
+        /// Gets total revenue an event manager has made
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <returns></returns>
         public decimal GetTotalRevenue(Guid id)
         {
             decimal totalRevenue = 0;
@@ -106,6 +140,11 @@ namespace Logic
             return totalRevenue;
         }
 
+        /// <summary>
+        /// Gets total revenue an event has made using Event Id
+        /// </summary>
+        /// <param name="id">Event Id</param>
+        /// <returns></returns>
         public decimal GetEventRevenue(Guid id)
         {
             decimal totalRevenue = 0;
@@ -121,6 +160,11 @@ namespace Logic
             return totalRevenue;
         }
 
+        /// <summary>
+        /// Gets estimated data based off an event type from database
+        /// </summary>
+        /// <param name="id">EventType Id</param>
+        /// <returns></returns>
         public async Task<RawEstData> GetEstDataAsync(Guid id)
         {
             EventType eventType = await Task.Run(() => eventTypeRepo.GetEventTypeByIDAsync(id));

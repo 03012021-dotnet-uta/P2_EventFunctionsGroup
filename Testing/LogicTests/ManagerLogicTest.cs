@@ -333,10 +333,12 @@ namespace Testing.LogicTests
                 UserRepo userRepo = new UserRepo(context1);
                 ManagerLogic test = new ManagerLogic(userRepo, eventRepo, eventTypeRepo, locationRepo, usersEventRepo);
 
+                Event newEvent = context1.Events.FirstOrDefault(x => Guid.Equals(x.Id, testEvent.Id));
+
                 totalRevenue = test.GetEventRevenue(testEvent.Id);
             }
 
-            Assert.Equal(testEvent.Revenue * testEvent.TotalTicketsSold, totalRevenue);
+            Assert.Equal(-1, totalRevenue);
         }
 
         [Fact]
