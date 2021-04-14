@@ -117,5 +117,22 @@ namespace WebApi.Controllers
 
             return true;
         }
+
+        /// <summary>
+        /// Removes a user from the signup list for the event
+        /// </summary>
+        /// <param name="uid">User Id</param>
+        /// <param name="eid">Event Id</param>
+        /// <returns></returns>
+        [HttpDelete("deletesignup/{uid}/{eid}")]
+        public ActionResult<bool> UnregisterFromEvent(Guid uid, Guid eid)
+        {
+            if(!eventLogic.UnregisterFromEvent(uid, eid))
+            {
+                return StatusCode(450, "Failed to unregister. Invalid user/event.");
+            }
+
+            return true;
+        }
     }
 }
