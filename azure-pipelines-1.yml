@@ -90,6 +90,7 @@ steps:
 - task: SonarCloudAnalyze@1
 
 - task: PublishCodeCoverageResults@1
+  condition: succeededOrFailed()
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '*/coverage/cobertura-coverage.xml'
