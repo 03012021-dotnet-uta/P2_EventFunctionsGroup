@@ -128,6 +128,35 @@ namespace Logic
         }
 
         /// <summary>
+        /// Removes a user from an event.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="eid"></param>
+        /// <returns></returns>
+        public bool UnregisterFromEvent(Guid uid, Guid eid)
+        {
+            Event tEvent = eventRepo.GetEventByID(eid);
+            if(tEvent == null)
+            {
+                return false;
+            }
+            User user = userRepo.GetUserByID(uid);
+            if(user == null)
+            {
+                return false;
+            }
+            
+            tEvent.TotalTicketsSold--;
+            tEvent.Users.Remove(user);
+            user.Events.Remove(tEvent);
+            eventRepo.Save();
+            //UsersEvent signupUser = mapper.signUpById(uid, eid, user, tEvent);
+            //usersEventRepo.InsertUsersEvent(signupUser);
+
+            return true;
+        }
+
+        /// <summary>
         /// Gets an event based off its id
         /// </summary>
         /// <param name="id">Store ID</param>
