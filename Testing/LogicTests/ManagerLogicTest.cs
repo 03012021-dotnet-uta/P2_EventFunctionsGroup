@@ -18,7 +18,7 @@ namespace Testing.LogicTests
     public class ManagerLogicTest
     {
         readonly DbContextOptions<EventFunctionsContext> options = new DbContextOptionsBuilder<EventFunctionsContext>()
-            .UseInMemoryDatabase(databaseName: "Test")
+            .UseInMemoryDatabase(databaseName: "Test1")
             .Options;
 
         [Fact]
@@ -338,7 +338,7 @@ namespace Testing.LogicTests
                 totalRevenue = test.GetEventRevenue(testEvent.Id);
             }
 
-            Assert.Equal(-1, totalRevenue);
+            Assert.Equal(20, totalRevenue);
         }
 
         [Fact]
