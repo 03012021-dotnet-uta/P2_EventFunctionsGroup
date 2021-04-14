@@ -157,7 +157,7 @@ namespace Testing.LogicTests
                 eventTypes = test.GetEventTypes();
             }
 
-            Assert.Equal(testEventType.Name, eventTypes[0].Name);
+            Assert.Equal(1, eventTypes.Count);
         }
 
         [Fact]
