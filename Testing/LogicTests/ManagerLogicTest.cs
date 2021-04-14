@@ -207,5 +207,186 @@ namespace Testing.LogicTests
             Assert.Equal(2, eventTypes.Count);
         }
 
+        [Fact]
+        public void Test_DeleteEvent()
+        {
+            EventType testEventType = new EventType();
+            Location testlocation = new Location();
+            User testUser = new User();
+
+            Event testEvent = new Event();
+            testEvent.Name = "Test1";
+            testEvent.EventType = testEventType;
+            testEvent.Location = testlocation;
+            testEvent.Manager = testUser;
+            Event testEvent2 = new Event();
+            testEvent.Name = "Test2";
+            testEvent.EventType = testEventType;
+            testEvent.Location = testlocation;
+            testEvent.Manager = testUser;
+
+            using(var context = new EventFunctionsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                
+                context.Add<Event>(testEvent);
+                context.Add<Event>(testEvent2);
+                context.SaveChanges();
+            }
+            
+            bool deleteTest;
+            using(var context1 = new EventFunctionsContext(options))
+            {
+                context1.Database.EnsureCreated();
+                                
+                EventRepo eventRepo = new EventRepo(context1);
+                EventTypeRepo eventTypeRepo = new EventTypeRepo(context1);
+                LocationRepo locationRepo = new LocationRepo(context1);
+                UsersEventRepo usersEventRepo = new UsersEventRepo(context1);
+                UserRepo userRepo = new UserRepo(context1);
+                ManagerLogic test = new ManagerLogic(userRepo, eventRepo, eventTypeRepo, locationRepo, usersEventRepo);
+
+                deleteTest = test.DeleteEvent(testEvent.Id);
+            }
+
+            Assert.Equal(true, deleteTest);
+        }
+
+        [Fact]
+        public void Test_GetTotalRevenue()
+        {
+            EventType testEventType = new EventType();
+            Location testlocation = new Location();
+            User testUser = new User();
+
+            Event testEvent = new Event();
+            testEvent.Name = "Test1";
+            testEvent.EventType = testEventType;
+            testEvent.Location = testlocation;
+            testEvent.Manager = testUser;
+            testEvent.Revenue = 10;
+            testEvent.TotalTicketsSold = 2;
+
+            using(var context = new EventFunctionsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                
+                context.Add<Event>(testEvent);
+
+                context.SaveChanges();
+            }
+            
+            decimal totalRevenue;
+            using(var context1 = new EventFunctionsContext(options))
+            {
+                context1.Database.EnsureCreated();
+                                
+                EventRepo eventRepo = new EventRepo(context1);
+                EventTypeRepo eventTypeRepo = new EventTypeRepo(context1);
+                LocationRepo locationRepo = new LocationRepo(context1);
+                UsersEventRepo usersEventRepo = new UsersEventRepo(context1);
+                UserRepo userRepo = new UserRepo(context1);
+                ManagerLogic test = new ManagerLogic(userRepo, eventRepo, eventTypeRepo, locationRepo, usersEventRepo);
+
+                totalRevenue = test.GetTotalRevenue(testUser.Id);
+            }
+
+            Assert.Equal(testEvent.Revenue * testEvent.TotalTicketsSold, totalRevenue);
+        }
+
+        [Fact]
+        public void Test_GetEventRevenue()
+        {
+            EventType testEventType = new EventType();
+            Location testlocation = new Location();
+            User testUser = new User();
+
+            Event testEvent = new Event();
+            testEvent.Name = "Test1";
+            testEvent.EventType = testEventType;
+            testEvent.Location = testlocation;
+            testEvent.Manager = testUser;
+            testEvent.Revenue = 10;
+            testEvent.TotalTicketsSold = 2;
+
+            using(var context = new EventFunctionsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                
+                context.Add<Event>(testEvent);
+
+                context.SaveChanges();
+            }
+            
+            decimal totalRevenue;
+            using(var context1 = new EventFunctionsContext(options))
+            {
+                context1.Database.EnsureCreated();
+                                
+                EventRepo eventRepo = new EventRepo(context1);
+                EventTypeRepo eventTypeRepo = new EventTypeRepo(context1);
+                LocationRepo locationRepo = new LocationRepo(context1);
+                UsersEventRepo usersEventRepo = new UsersEventRepo(context1);
+                UserRepo userRepo = new UserRepo(context1);
+                ManagerLogic test = new ManagerLogic(userRepo, eventRepo, eventTypeRepo, locationRepo, usersEventRepo);
+
+                totalRevenue = test.GetEventRevenue(testEvent.Id);
+            }
+
+            Assert.Equal(testEvent.Revenue * testEvent.TotalTicketsSold, totalRevenue);
+        }
+
+        [Fact]
+        public async Task Test_GetEstDataAsync()
+        {
+            EventType testEventType = new EventType();
+            Location testlocation = new Location();
+            User testUser = new User();
+
+            Event testEvent = new Event();
+            testEvent.Name = "Test1";
+            testEvent.EventType = testEventType;
+            testEvent.Location = testlocation;
+            testEvent.Manager = testUser;
+            testEvent.Revenue = 10;
+            testEvent.TotalTicketsSold = 2;
+            Event testEvent1 = new Event();
+            testEvent1.Name = "Test1";
+            testEvent1.EventType = testEventType;
+            testEvent1.Location = testlocation;
+            testEvent1.Manager = testUser;
+            testEvent1.Revenue = 20;
+            testEvent1.TotalTicketsSold = 4;
+
+            using(var context = new EventFunctionsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                
+                context.Add<Event>(testEvent);
+                context.Add<Event>(testEvent1);
+                context.SaveChanges();
+            }
+            
+            RawEstData estimatedData;
+            using(var context1 = new EventFunctionsContext(options))
+            {
+                context1.Database.EnsureCreated();
+                                
+                EventRepo eventRepo = new EventRepo(context1);
+                EventTypeRepo eventTypeRepo = new EventTypeRepo(context1);
+                LocationRepo locationRepo = new LocationRepo(context1);
+                UsersEventRepo usersEventRepo = new UsersEventRepo(context1);
+                UserRepo userRepo = new UserRepo(context1);
+                ManagerLogic test = new ManagerLogic(userRepo, eventRepo, eventTypeRepo, locationRepo, usersEventRepo);
+
+                estimatedData = await Task.Run(() => test.GetEstDataAsync(testEventType.Id));
+            }
+
+            Assert.Equal(3, estimatedData.TicketsSold);
+        }
     }
 }
