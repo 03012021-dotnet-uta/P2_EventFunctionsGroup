@@ -73,6 +73,11 @@ namespace Logic
             return allUsers;
         }
 
+        public bool DeleteEvent(Guid id)
+        {
+            return eventRepo.DeleteEvent(id);
+        }
+
         private async Task<List<RawUser>> ConvertAllUsersToRawAsync(List<User> allUsers)
         {
             List<RawUser> returnUsers = new List<RawUser>();
@@ -87,6 +92,54 @@ namespace Logic
                 returnUsers.Add(item);
             }
             return returnUsers;
+        }
+
+        public decimal GetTotalRevenue(Guid id)
+        {
+            decimal totalRevenue = 0;
+            List<Event> allEvents = eventRepo.GetAllManagerEvents(id);
+            foreach(Event e in allEvents)
+            {
+                totalRevenue += e.Revenue * e.TotalTicketsSold;
+            }
+
+            return totalRevenue;
+        }
+
+        public decimal GetEventRevenue(Guid id)
+        {
+            decimal totalRevenue = 0;
+            Event theEvent = eventRepo.GetEventByID(id);
+            if(theEvent == null)
+            {
+                return -1;
+            }
+            else
+            {
+                totalRevenue = theEvent.Revenue * theEvent.TotalTicketsSold;
+            }
+            return totalRevenue;
+        }
+
+        public async Task<RawEstData> GetEstDataAsync(Guid id)
+        {
+            EventType eventType = await Task.Run(() => eventTypeRepo.GetEventTypeByIDAsync(id));
+            List<Event> allEvents = await Task.Run(() => eventRepo.GetEventsByEventType(id));
+            decimal totalRevenue = 0;
+            decimal totalTickets = 0;
+            decimal totalPrice = 0;
+            foreach(Event e in allEvents)
+            {
+                totalTickets += e.TotalTicketsSold;
+                totalPrice += e.Revenue;
+                totalRevenue += e.TotalTicketsSold * e.Revenue;
+            }
+            RawEstData estData = new RawEstData();
+            estData.EventType = eventType.Name;
+            estData.TicketPrice = totalPrice/allEvents.Count;
+            estData.TicketsSold = totalTickets/allEvents.Count;
+            estData.AverageRevenue = totalRevenue/allEvents.Count;
+            return estData;
         }
     }
 }

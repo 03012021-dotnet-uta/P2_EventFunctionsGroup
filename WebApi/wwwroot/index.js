@@ -37,7 +37,30 @@ button.addEventListener("click", async () => {
         Description: "This is a test review return"
     }
     let events = ['Sports', 'Music', 'Private', 'Conference', 'Expo', 'Other']
+
     let addressjson = JSON.stringify(address);
+
+    await fetch('api/Manager/delete/0ed71712-937a-452b-af63-849542e37375', {
+    method: 'DELETE',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(address),
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(`Network reponse was not ok (${reponse.status})`);
+        }
+        else
+            return response.json();
+    })
+    .then((jsonReponse) => {
+        console.log(jsonReponse);
+    })
+    .catch(function(err) {
+        console.log("Failed to fetch page: ", err);
+    });
 
     // await fetch('api/Manager/createevent', {
     // method: 'POST',
@@ -61,44 +84,44 @@ button.addEventListener("click", async () => {
     //     console.log("Failed to fetch page: ", err);
     // });
 
-    await fetch('api/Event/review', {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type':'application/json'
-    },
-    body: JSON.stringify(review),
-    })
-    .then(response => {
-        if(!response.ok) {
-            throw new Error(`Network reponse was not ok (${reponse.status})`);
-        }
-        else
-            return response.json();
-    })
-    .then((jsonReponse) => {
-        console.log(jsonReponse);
-    })
-    .catch(function(err) {
-        console.log("Failed to fetch page: ", err);
-    });
+    // await fetch('api/Event/review', {
+    // method: 'POST',
+    // headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type':'application/json'
+    // },
+    // body: JSON.stringify(review),
+    // })
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
 
-    await fetch(`api/Event/allreviews/c2123ab5-f0c0-4abc-90d8-017e6bdce141`, {
-    })
-    .then(response => {
-        if(!response.ok) {
-            throw new Error(`Network reponse was not ok (${reponse.status})`);
-        }
-        else
-            return response.json();
-    })
-    .then((jsonReponse) => {
-        console.log(jsonReponse);
-        //mapReponse = jsonReponse;
-    })
-    .catch(function(err) {
-        console.log("Failed to fetch page: ", err);
-    });
+    // await fetch(`api/Event/allreviews/c2123ab5-f0c0-4abc-90d8-017e6bdce141`, {
+    // })
+    // .then(response => {
+    //     if(!response.ok) {
+    //         throw new Error(`Network reponse was not ok (${reponse.status})`);
+    //     }
+    //     else
+    //         return response.json();
+    // })
+    // .then((jsonReponse) => {
+    //     console.log(jsonReponse);
+    //     //mapReponse = jsonReponse;
+    // })
+    // .catch(function(err) {
+    //     console.log("Failed to fetch page: ", err);
+    // });
 
     // await fetch(`api/Event/signup/${userSignup.uid}/${userSignup.eid}`, {
     // })

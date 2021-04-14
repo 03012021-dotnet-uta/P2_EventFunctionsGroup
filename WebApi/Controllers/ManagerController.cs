@@ -81,15 +81,30 @@ namespace WebApi.Controllers
             return "Manager API Get";
         }
 
+        [HttpDelete("delete/{id}")]
+        public ActionResult<bool> DeleteEvent(Guid id)
+        {
+            if(!managerLogic.DeleteEvent(id))
+            {
+                return StatusCode(450, "Failed to delete event.");
+            }
+            return true;
+        }
+
         /// <summary>
         /// Gets total revenue data based off userID
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
         [HttpGet("getallrevdata")]
-        public ActionResult<string> GetAllRevenueInfo(Guid id)
+        public ActionResult<decimal> GetAllRevenueInfo(Guid id)
         {
-            return "Manager API Get";
+            decimal totalRevenue = managerLogic.GetTotalRevenue(id);
+            if(totalRevenue < 0)
+            {
+                return StatusCode(450, "Couldn't find user."); 
+            }
+            return totalRevenue;
         }
 
         /// <summary>
@@ -98,9 +113,14 @@ namespace WebApi.Controllers
         /// <param name="id">Event ID</param>
         /// <returns></returns>
         [HttpGet("getrevdata/${id}")]
-        public ActionResult<string> GetRevenueForEvent(Guid id)
+        public ActionResult<decimal> GetRevenueForEvent(Guid id)
         {
-            return "Manager API Get";
+            decimal totalRevenue = managerLogic.GetEventRevenue(id);
+            if(totalRevenue < 0)
+            {
+                return StatusCode(450, "Couldn't find event."); 
+            }
+            return totalRevenue;
         }
 
         /// <summary>
@@ -109,9 +129,14 @@ namespace WebApi.Controllers
         /// <param name="id">Manager ID</param>
         /// <returns></returns>
         [HttpGet("getestdata")]
-        public ActionResult<string> GetEstimatedData(Guid id)
+        public async Task<ActionResult<RawEstData>> GetEstimatedData(Guid id)
         {
-            return "Manager API Get";
+            RawEstData estData = await Task.Run(() => managerLogic.GetEstDataAsync(id));
+            if(estData is null)
+            {
+                return StatusCode(450, "Could not find event type.");
+            }
+            return estData;
         }
 
         /// <summary>

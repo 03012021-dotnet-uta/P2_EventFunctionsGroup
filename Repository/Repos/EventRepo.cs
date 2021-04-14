@@ -85,11 +85,13 @@ namespace Repository.Repos
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteEvent(int eventId)
+        public bool DeleteEvent(Guid eventId)
         {
             Event tempEvent = context.Events.Find(eventId);
             context.Entry(tempEvent).State = EntityState.Deleted;
             context.Events.Remove(tempEvent);
+            context.SaveChanges();
+            return true;
         }
 
         public Event GetEventByID(Guid id)
@@ -114,6 +116,14 @@ namespace Repository.Repos
             List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(n => n.Date < now).ToList();
             return allEvents;
         }
+
+        public List<Event> GetEventsByEventType(Guid id)
+        {
+            List<Event> allEvents = context.Events.Include(x => x.Location).Include(x => x.EventType).Include(x => x.Manager).Where(x => Guid.Equals(x.EventType.Id, id)).ToList();
+
+            return allEvents;
+        }
+
         public ICollection<Event> GetSignedUpEvents(Guid id)
         {
             List<ICollection<Event>> myEvents = context.Users.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
