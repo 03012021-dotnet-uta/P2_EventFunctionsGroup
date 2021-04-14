@@ -69,7 +69,7 @@ namespace Logic
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllPreviousEventsAsync(Guid id)
         {
-            List<Event> previousEvents = await Task.Run(() => eventRepo.GetPreviousEvents(DateTime.UtcNow));
+            List<Event> previousEvents = await Task.Run(() => eventRepo.GetSignedUpEvents(id).ToList());
             List<Event> filteredEvents = new List<Event>();
             foreach(Event e in previousEvents)
             {
