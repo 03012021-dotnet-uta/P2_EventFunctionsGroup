@@ -37,7 +37,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        void DeleteEventType(int eventTypeId);
+        void DeleteEventType(Guid eventTypeId);
 
         /// <summary>
         /// Save changes back to database
