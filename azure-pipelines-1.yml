@@ -40,8 +40,8 @@ steps:
     cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties: |
-      sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
-      sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/coverage/lcov.info
+      sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/cobertura-coverage.xml
+      sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/lcov.info
 
 - script: |
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
@@ -94,7 +94,7 @@ steps:
   condition: succeededOrFailed()
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './coverage/cobertura-coverage.xml'
+    summaryFileLocation: './AngularTest/coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
 
