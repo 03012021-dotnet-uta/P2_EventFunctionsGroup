@@ -81,6 +81,11 @@ namespace WebApi.Controllers
             return "Manager API Get";
         }
 
+        /// <summary>
+        /// Deleted an event from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("delete/{id}")]
         public ActionResult<bool> DeleteEvent(Guid id)
         {
