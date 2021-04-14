@@ -57,13 +57,14 @@ namespace Logic
         /// </summary>
         /// <param name="id">User Id</param>
         /// <returns></returns>
-        public List<RawPreviewEvent> GetAllEvents(Guid id)
+        public List<RawManagerEvent> GetAllEvents(Guid id)
         {
             List<Event> allEvents = eventRepo.GetAllManagerEvents(id);
-            List<RawPreviewEvent> allRawEvents = new List<RawPreviewEvent>();
+            List<RawManagerEvent> allRawEvents = new List<RawManagerEvent>();
             foreach(Event e in allEvents)
             {
-                allRawEvents.Add(mapper.EventToPreview(e));
+                int currentAttending = eventRepo.GetTotalAttend(e.Id);
+                allRawEvents.Add(mapper.EventToPreviewManager(e, currentAttending));
             }
             return allRawEvents;
         }

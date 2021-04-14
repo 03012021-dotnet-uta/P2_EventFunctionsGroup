@@ -19,6 +19,12 @@ namespace Logic
 
         }
 
+        /// <summary>
+        /// Maps a raw user to an actual user.
+        /// Used for making new users from frontend form
+        /// </summary>
+        /// <param name="rUser">Raw User</param>
+        /// <returns></returns>
         internal User RawToUser(RawUser rUser)
         {
             User newUser = new User();
@@ -35,6 +41,11 @@ namespace Logic
             return newUser;
         }
 
+        /// <summary>
+        /// Used to convert an address into long/lat coords using mapbox api
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         internal async Task<Location> AddressToLocation(RawEvent userEvent)
         {
             HttpClient client = new HttpClient();
@@ -64,6 +75,34 @@ namespace Logic
             }
         }
 
+        /// <summary>
+        /// Used to convert events to a preview list for the manager
+        /// Contains sale and attending information
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="currentAttending"></param>
+        /// <returns></returns>
+        internal RawManagerEvent EventToPreviewManager(Event e, int currentAttending)
+        {
+            RawManagerEvent newPreview = new RawManagerEvent();
+            newPreview.Id = e.Id;
+            newPreview.Name = e.Name;
+            newPreview.Date = e.Date;
+            newPreview.Location = e.Location.Name + " " + e.Location.Address;
+            newPreview.CurrentlyAttending = currentAttending;
+            newPreview.Capacity = e.Capacity;
+            newPreview.TicketPrice = e.Revenue;
+            newPreview.TotalSales = e.Revenue * e.TotalTicketsSold;
+
+            return newPreview;
+        }
+
+        /// <summary>
+        /// Used to convert events to a preview list for the users
+        /// Only shows name, date, location
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         internal RawPreviewEvent EventToPreview(Event e)
         {
             RawPreviewEvent newPreview = new RawPreviewEvent();
@@ -74,6 +113,12 @@ namespace Logic
             return newPreview;
         }
 
+        /// <summary>
+        /// Used to convert a user to a raw user after they login
+        /// Only sends back appropriate information for frontend
+        /// </summary>
+        /// <param name="getUser"></param>
+        /// <returns></returns>
         internal RawUserLogin UserToRawLogin(User getUser)
         {
             RawUserLogin returnUser = new RawUserLogin();
@@ -93,6 +138,14 @@ namespace Logic
             return returnUser;
         }
 
+        /// <summary>
+        /// Used to convert an event to a detailed event
+        /// Provides all the information about an event
+        /// Provides an img src string to display map image
+        /// </summary>
+        /// <param name="getEvent"></param>
+        /// <param name="totalAttending"></param>
+        /// <returns></returns>
         internal RawDetailEvent EventToDetail(Event getEvent, int totalAttending)
         {
             RawDetailEvent detailEvent = new RawDetailEvent();
@@ -109,6 +162,13 @@ namespace Logic
             return detailEvent;
         }
 
+        /// <summary>
+        /// Converts a raw review into a model review
+        /// </summary>
+        /// <param name="review"></param>
+        /// <param name="theUser"></param>
+        /// <param name="theEvent"></param>
+        /// <returns></returns>
         internal Review RawToReview(RawReview review, User theUser, Event theEvent)
         {
             Review newReview = new Review();
@@ -120,6 +180,13 @@ namespace Logic
             return newReview;
         }
 
+        /// <summary>
+        /// Converts a review to be a raw reivew to be displayed by frontend
+        /// </summary>
+        /// <param name="newReview"></param>
+        /// <param name="user"></param>
+        /// <param name="eventName"></param>
+        /// <returns></returns>
         internal RawReviewToFE ReviewToRaw(Review newReview, string user, string eventName)
         {
             RawReviewToFE review = new RawReviewToFE();
@@ -131,6 +198,11 @@ namespace Logic
             return review;
         }
 
+        /// <summary>
+        /// Converts a User to a raw user
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         internal RawUser UserToRaw(User e)
         {
             RawUser newUser = new RawUser();
@@ -140,6 +212,15 @@ namespace Logic
             return newUser;
         }
 
+        /// <summary>
+        /// Creates a UserEvent for when the user signs up
+        /// (Not Used Anymore)
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="eid"></param>
+        /// <param name="user"></param>
+        /// <param name="tEvent"></param>
+        /// <returns></returns>
         internal UsersEvent signUpById(Guid uid, Guid eid, User user, Event tEvent)
         {
             UsersEvent newUserEvent = new UsersEvent();
@@ -151,6 +232,11 @@ namespace Logic
             return newUserEvent;
         }
 
+        /// <summary>
+        /// Converts and creates the image string for the displaying map location based off long/lat coords
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         private string GetLocationMapString(Location location)
         {
             string longt = location.Longtitude.ToString();
@@ -162,6 +248,14 @@ namespace Logic
             return imageString;
         }
 
+        /// <summary>
+        /// Converts a raw event to an Event for when a new event is created
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <param name="eventType"></param>
+        /// <param name="loc"></param>
+        /// <param name="manager"></param>
+        /// <returns></returns>
         internal async Task<Event> RawToEvent(RawEvent userEvent, EventType eventType, Location loc, User manager)
         {
             Event newEvent = await Task.Run(() => new Event());
@@ -178,7 +272,13 @@ namespace Logic
             newEvent.Users = new List<User>();
             return newEvent;
         }
-
+        
+        /// <summary>
+        /// Hashes a password based off password and salt
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
         public byte[] PasswordHash(string password, byte[] salt)
         {
             using HMACSHA512 hmac = new HMACSHA512(key: salt);
@@ -187,6 +287,11 @@ namespace Logic
             return hashedPassword;
         }
 
+        /// <summary>
+        /// Creates an EventType based off name of the eventType
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         internal EventType StringToEventType(string t)
         {
             EventType newType = new EventType();
