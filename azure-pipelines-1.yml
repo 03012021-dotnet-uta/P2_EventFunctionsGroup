@@ -89,13 +89,13 @@ steps:
     # customCommand: 'run test -- --watch=false --source-map=false --browsers=ChromeHeadless --code-coverage'
   continueOnError: true
 
-- task: SonarCloudAnalyze@1
-
 - task: PublishCodeCoverageResults@1
   condition: succeededOrFailed()
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '*/coverage/cobertura-coverage.xml'
+
+- task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1
   inputs:
