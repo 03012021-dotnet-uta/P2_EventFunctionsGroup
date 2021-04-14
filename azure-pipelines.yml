@@ -62,7 +62,7 @@ steps:
     projectKey: 'nicholasvvong0056_EventFunctions_P2'
     projectName: 'EventFunctions_P2'
     extraProperties: |
-      sonar.exclusions=**/AngularTest/**, **/WebApi/**
+      sonar.exclusions=**/AngularTest/**, **/WebApi/**, **/Repository/Migrations/**
       sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
 
 #this will restore and build the directory.
