@@ -40,7 +40,7 @@ steps:
     cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties: |
-      sonar.cs.opencover.reportsPaths=$(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml
+      sonar.cs.opencover.reportsPaths=$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
 
 - script: |
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
@@ -93,7 +93,7 @@ steps:
   condition: succeededOrFailed()
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '*/coverage/cobertura-coverage.xml'
+    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
 
 - task: SonarCloudAnalyze@1
 
