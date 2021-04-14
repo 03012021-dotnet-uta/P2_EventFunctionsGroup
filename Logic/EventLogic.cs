@@ -63,12 +63,20 @@ namespace Logic
 
         /// <summary>
         /// Gets all events a user has been to from database based off userID
+        /// Shows previous/past events only
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllPreviousEventsAsync(Guid id)
         {
             List<Event> previousEvents = await Task.Run(() => eventRepo.GetPreviousEvents(DateTime.UtcNow));
+            foreach(Event e in previousEvents)
+            {
+                if(e.Date < DateTime.Now)
+                {
+                    previousEvents.Remove(e);
+                }
+            }
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(previousEvents);
 
             return returnEvents;
@@ -76,6 +84,7 @@ namespace Logic
 
         /// <summary>
         /// Gets all events a user signed up for from the database based off userID
+        /// Shows future/upcoming events only
         /// </summary>
         /// /// <param name="id">User ID</param>
         /// <returns></returns>
@@ -85,7 +94,10 @@ namespace Logic
             List<Event> filteredEvents = new List<Event>();
             foreach(Event e in allEvents)
             {
-                await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
+                if(e.Date > DateTime.Now)
+                {
+                    await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
+                }
             }
 
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
