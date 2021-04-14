@@ -29,11 +29,6 @@ namespace Repository.Interfaces
         List<Event> GetAllEvents();
 
         /// <summary>
-        /// Read an entity by their EventId
-        /// </summary>
-        Event GetEventById(int eventId);
-
-        /// <summary>
         /// Update an EventRepo
         /// </summary>
         void UpdateEvent(Event eventName);

@@ -30,7 +30,7 @@ namespace Logic
         /// </summary>
         /// <param name="userEvent"></param>
         /// <returns></returns>
-        public async Task<Event> CreateNewEvent(RawEvent userEvent)
+        public async Task<RawDetailEvent> CreateNewEvent(RawEvent userEvent)
         {
             EventType type = await eventTypeRepo.GetEventTypeByIDAsync(userEvent.EventType);
             if(type is null)
@@ -49,7 +49,8 @@ namespace Logic
             User manager = await Task.Run(() => userRepo.GetUserByID(userEvent.ManagerID));
             Event newEvent = await mapper.RawToEvent(userEvent, type, existLoc, manager);
             newEvent = eventRepo.InsertEvent(newEvent);
-            return newEvent;
+            RawDetailEvent returnEvent = await Task.Run(() => mapper.EventToDetail(newEvent, 0));
+            return returnEvent;
         }
 
         /// <summary>

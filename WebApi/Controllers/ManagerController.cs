@@ -37,7 +37,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("createevent")]
-        public async Task<ActionResult<Event>> CreateNewEvent(RawEvent userEvent)
+        public async Task<ActionResult<RawDetailEvent>> CreateNewEvent(RawEvent userEvent)
         {
             if(!ModelState.IsValid)
             {
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                Event newEvent = await managerLogic.CreateNewEvent(userEvent);
+                RawDetailEvent newEvent = await managerLogic.CreateNewEvent(userEvent);
                 if(newEvent == null)
                 {
                     return StatusCode(450, "Failed to make event. Invalid inputs(Possibly could not find address).");
