@@ -109,5 +109,49 @@ namespace Testing.LogicTests
             Assert.Equal(1, allEvents.Count);
         }
 
+        [Fact]
+        public async Task Test_GetUpcomingEventsAsync()
+        {
+            User testUser = new User();
+            Location testLocation = new Location();
+            EventType testEventType = new EventType();
+
+            Event testEvent = new Event();
+            testEvent.Name = "test";
+            testEvent.Date = DateTime.MaxValue;
+            testEvent.Description = "This is just a test";
+            testEvent.Location = testLocation;
+            testEvent.Capacity = 10;
+            testEvent.Revenue = 10;
+            testEvent.Manager = testUser;
+            testEvent.EventType = testEventType;
+
+            using(var context = new EventFunctionsContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                
+                context.Add<Event>(testEvent);
+                
+                context.SaveChanges();
+            }
+            
+            List<RawPreviewEvent> allEvents;
+            using(var context1 = new EventFunctionsContext(options))
+            {
+                context1.Database.EnsureCreated();
+                                
+                EventRepo eventRepo = new EventRepo(context1);
+                ReviewRepo reviewRepo = new ReviewRepo(context1);
+                UsersEventRepo usersEventRepo = new UsersEventRepo(context1);
+                UserRepo userRepo = new UserRepo(context1);
+                EventLogic test = new EventLogic(eventRepo, userRepo, usersEventRepo,reviewRepo);
+
+                allEvents = await Task.Run(() => test.GetAllAsync());
+            }
+
+            Assert.Equal(1, allEvents.Count);
+        }
+
     }
 }
