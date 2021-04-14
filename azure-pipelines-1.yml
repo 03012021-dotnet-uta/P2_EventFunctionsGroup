@@ -40,7 +40,7 @@ steps:
     cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties: |
-      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/cobertura-coverage.xml
+      sonar.cs.opencover.reportsPaths=$(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml
 
 - script: |
     cd "$(System.DefaultWorkingDirectory)/AngularTest"
