@@ -41,7 +41,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Delete an EventRepo
         /// </summary>
-        void DeleteEvent(int eventId);
+        bool DeleteEvent(Guid eventId);
 
         /// <summary>
         /// Save changes back to database
@@ -96,6 +96,13 @@ namespace Repository.Interfaces
         /// <param name="eid">Event ID</param>
         /// <returns></returns>
         List<User> GetAllAttending(Guid eid);
+
+        /// <summary>
+        /// Gets a list of events based off their event type
+        /// </summary>
+        /// <param name="id">Event Type ID</param>
+        /// <returns></returns>
+        List<Event> GetEventsByEventType(Guid id);
 
     }
 }

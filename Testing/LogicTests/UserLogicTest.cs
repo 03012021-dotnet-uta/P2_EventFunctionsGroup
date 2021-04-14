@@ -17,7 +17,7 @@ namespace Testing.LogicTests
 {
     public class UserLogicTest
     {
-        DbContextOptions<EventFunctionsContext> options = new DbContextOptionsBuilder<EventFunctionsContext>()
+        readonly DbContextOptions<EventFunctionsContext> options = new DbContextOptionsBuilder<EventFunctionsContext>()
             .UseInMemoryDatabase(databaseName: "Test")
             .Options;
 
@@ -31,7 +31,7 @@ namespace Testing.LogicTests
             testUser.password = "test";
 
             User insertBack = new User();
-            User getUser = new User();
+            User getUser;
             
             using(var context = new EventFunctionsContext(options))
             {
@@ -70,7 +70,6 @@ namespace Testing.LogicTests
                 context.Database.EnsureCreated();
 
                 UserRepo userRepo = new UserRepo(context);
-                UserLogic test = new UserLogic(userRepo);
                 
                 context.Add<User>(testUser);
                 context.Add<User>(testUser1);
@@ -92,14 +91,14 @@ namespace Testing.LogicTests
         }
 
         [Fact]
-        public async void Test_GetUserByID()
+        public async Task Test_GetUserByID()
         {
             User testUser = new User();
             testUser.Email = "test@gmail.com";
             testUser.FName = "fame";
             testUser.LName = "lame";
 
-            User getUser = new User();
+            User getUser;
             
             using(var context = new EventFunctionsContext(options))
             {
@@ -124,7 +123,7 @@ namespace Testing.LogicTests
         }
 
         [Fact]
-        public async void Test_GetUserByEmail()
+        public async Task Test_GetUserByEmail()
         {
             string testEmail = "test@gmail.com";
             string password = "password";
@@ -140,7 +139,7 @@ namespace Testing.LogicTests
                 testUser.PasswordSalt = hmac.Key;
             }
 
-            RawUserLogin getUser = new RawUserLogin();
+            RawUserLogin getUser;
             
             using(var context = new EventFunctionsContext(options))
             {
