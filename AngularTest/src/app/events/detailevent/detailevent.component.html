@@ -1,16 +1,63 @@
 <h1>Event Detail</h1>
 
-<p>
+<div>
     <strong>Event: </strong> {{revent.name}}<br />
-    <strong>Location: </strong> {{revent.location}}}<br />
+    <strong>Location: </strong> {{revent.location}}<br />
     <strong>Date and Time: </strong> {{revent.date}}<br />
     <strong>Description: </strong> {{revent.description}}<br />
+    <strong>Ticket Price: </strong> {{revent.ticketPrice}}<br />
     <strong>Available Capacity: </strong> {{revent.currentAttending}} / {{revent.capacity}}<br />
     <strong>Contact Person: </strong> {{revent.manager}} <br />
     <img src="{{revent.locationMap}}" style="width:400px; height: 400px" alt=""><br />
+    
+    <div *ngIf="actionRegisterEvent()">
     <button class="btn btn-primary" (click)="onRegisterEvent()">
         Register for this Event
     </button>
-</p>
-<router-outlet></router-outlet>
+    </div>
+    <div *ngIf="actionUnRegisterEvent()">
+        <button class="btn btn-danger" (click)="onUnRegisterEvent()">
+            Cancel Registeration
+        </button>
+    </div>
+</div>
+    <div *ngIf="isSigned()">
+        <br />
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <!-- <div class="form-row"> -->
+                <div class="form-group col-5">
+                    <label>Rating</label>
+                    <select formControlName="rating" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rating.errors }">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div *ngIf="submitted && f.rating.errors" class="invalid-feedback">
+                        <div *ngIf="f.rating.errors.required">Rating is required</div>
+                    </div>
+                </div>
+                
+                <div class="form-group col">
+                    <label>Description</label>
+                    <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is   </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-2">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                   Submit Review
+                </button>
+                <!-- <a routerLink="../" href="" class="btn btn-link">Cancel</a> -->
+            </div>
+        </form>
+    </div>
+    <reviews id={{eventid}}></reviews>
+
+<!-- <app-reviews/[eventid></app-reviews> -->
+<!-- <router-outlet></router-outlet> -->
 
