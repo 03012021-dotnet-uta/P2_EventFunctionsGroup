@@ -51,7 +51,7 @@ namespace Testing.LogicTests
                 context.SaveChanges();
             }
             
-            Event createdEvent;
+            RawDetailEvent createdEvent;
             using(var context1 = new EventFunctionsContext(options))
             {
                 context1.Database.EnsureCreated();
