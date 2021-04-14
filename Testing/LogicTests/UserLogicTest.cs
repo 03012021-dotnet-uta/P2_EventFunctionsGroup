@@ -46,7 +46,7 @@ namespace Testing.LogicTests
             using(var context1 = new EventFunctionsContext(options))
             {
                 context1.Database.EnsureCreated();
-                getUser = context1.Users.FirstOrDefault(x => x.Password == insertBack.Password);
+                getUser = context1.Users.FirstOrDefault(x => x.Id == insertBack.Id);
             }
             
             Assert.Equal(insertBack.FName, getUser.FName);
