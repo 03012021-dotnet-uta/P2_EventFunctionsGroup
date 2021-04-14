@@ -47,6 +47,7 @@ namespace Repository.Repos
         public void InsertEventType(EventType eventType) 
         {
             context.EventTypes.Add(eventType);
+            context.SaveChanges();
         }
 
         public List<EventType> GetAllEventTypes() 
@@ -62,7 +63,7 @@ namespace Repository.Repos
             context.Entry(eventType).State = EntityState.Modified;
         }
 
-        public void DeleteEventType(int eventTypeId)
+        public void DeleteEventType(Guid eventTypeId)
         {
             EventType eventType = context.EventTypes.Find(eventTypeId);
             context.Entry(eventType).State = EntityState.Deleted;
