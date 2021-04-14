@@ -92,7 +92,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '**/coburtura/coverage.xml'
+    summaryFileLocation: '*/coverage/cobertura-coverage.xml'
 
 - task: SonarCloudPublish@1
   inputs:
