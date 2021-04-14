@@ -5,11 +5,10 @@ export class Event {
     description: string;
     datetime: Date;
     street: string;
-    capacity: string;
+    capacity: number;
     city: string;
     state: string;
     zipcode: string;
     managerid: string;
-    ticketPrice: number;
     eventtype: string;
 }

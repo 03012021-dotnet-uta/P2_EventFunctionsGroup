@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '@app/_services';
+import { Router, ActivatedRoute } from '@angular/router';
+import { EventService, AlertService, AccountService } from '@app/_services';
 import { RawPreviewEvent} from './../../_models/RawPreviewEvent';
 
 @Component({
@@ -11,9 +12,11 @@ export class ShoweventsComponent implements OnInit {
   public allRawPreviewEvents =  Array<RawPreviewEvent>();
   
   constructor(
-   
+    private route: ActivatedRoute,
+    private router: Router,
     private eventService: EventService,
-  
+    private alertService: AlertService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -22,7 +25,7 @@ export class ShoweventsComponent implements OnInit {
   }
 
   getAllEvents(){
-    this.eventService.getAllUpcoming().subscribe(x => this.allRawPreviewEvents = x);
+    this.eventService.getAll().subscribe(x => this.allRawPreviewEvents = x);
     console.log(this.allRawPreviewEvents);
   
   }

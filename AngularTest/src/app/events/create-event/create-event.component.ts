@@ -34,11 +34,10 @@ export class CreateEventComponent implements OnInit {
         date: ['', Validators.required],
         eventType:"ea3bf8bf-5e12-45b0-bd9a-209defc23e9c",
         street:[''],
-        ticketPrice: [''],
-        capacity:[''],
+        capacity:786,
         city:[''],
         state:[''],
-        zipCode:[''],
+        zipcode:78672,
         description:[''],
 
     });
