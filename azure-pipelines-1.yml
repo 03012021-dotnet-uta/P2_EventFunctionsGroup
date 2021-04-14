@@ -40,6 +40,7 @@ steps:
     cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties: |
+      sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
       sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/coverage/lcov.info
 
 - script: |
@@ -89,14 +90,13 @@ steps:
     # customCommand: 'run test -- --watch=false --source-map=false --browsers=ChromeHeadless --code-coverage'
   continueOnError: true
 
-- task: SonarCloudAnalyze@1
-
 - task: PublishCodeCoverageResults@1
   condition: succeededOrFailed()
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: './coverage/cobertura-coverage.xml'
-    pathToSources: '$(System.DefaultWorkingDirectory)/AngularTest'
+
+- task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1
   inputs:
