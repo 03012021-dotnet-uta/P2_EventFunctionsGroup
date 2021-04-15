@@ -40,7 +40,7 @@ steps:
     cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties: |
-      sonar.exclusions=**/*.spec.ts
+      sonar.exclusions=**/*.spec.ts,**/e2e/**
       sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/angular-signup-verification-boilerplate/lcov.info
 # sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/cobertura-coverage.xml
 # - script: |
