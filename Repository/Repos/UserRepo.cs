@@ -65,7 +65,7 @@ namespace Repository.Repos
             context.Entry(user).State = EntityState.Modified;
         }
 
-        public void DeleteUser(int userId)
+        public void DeleteUser(Guid userId)
         {
             User user = context.Users.Find(userId);
             context.Entry(user).State = EntityState.Deleted;

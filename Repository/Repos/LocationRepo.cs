@@ -47,6 +47,7 @@ namespace Repository.Repos
         public void InsertLocation(Location location) 
         {
             context.Locations.Add(location);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Repository.Repos
         /// <summary>
         /// Get an entity by its LocationId
         /// </summary>
-        public Location GetLocationById(int locationId)
+        public Location GetLocationById(Guid locationId)
         {
             return context.Locations.Find(locationId);
         }
@@ -89,11 +90,12 @@ namespace Repository.Repos
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteLocation(int locationId)
+        public void DeleteLocation(Guid locationId)
         {
             Location location = context.Locations.Find(locationId);
             context.Entry(location).State = EntityState.Deleted;
             context.Locations.Remove(location);
+            
         }
 
         /// <summary>

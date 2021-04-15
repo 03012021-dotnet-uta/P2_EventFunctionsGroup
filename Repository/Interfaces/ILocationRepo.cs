@@ -31,7 +31,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Read an entity by their LocationId
         /// </summary>
-        Location GetLocationById(int locationId);
+        Location GetLocationById(Guid locationId);
 
         /// <summary>
         /// Update a location
@@ -49,7 +49,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Delete a location
         /// </summary>
-        void DeleteLocation(int locationId);
+        void DeleteLocation(Guid locationId);
 
         /// <summary>
         /// Save changes
