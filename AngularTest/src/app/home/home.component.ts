@@ -23,15 +23,21 @@ export class HomeComponent {
     }
   
     getAllFSignedEvents(){
+      if(this.account.id)
+      { 
       this.eventService.getAllFSigned(this.account.id)
       .subscribe(x => this.allFSignedEvents = x);
       console.log(this.allFSignedEvents);
+      }
     
     }
 
     getAllPSignedEvents(){
+      if(this.account.id)
+      { 
       this.eventService.getAllPSigned(this.account.id)
       .subscribe(x => this.allPSignedEvents = x);
       console.log(this.allPSignedEvents);
+      }
     }
 }
