@@ -4,3 +4,7 @@ export * from './role';
 export * from './event';
 export * from './RawPreviewEvent';
 export * from './rawDetailEvent';
+export * from './review';
+export * from './reviews';
+export * from './rawmanagerevent';
+export * from './eventType';

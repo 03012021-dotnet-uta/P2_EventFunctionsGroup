@@ -5,6 +5,8 @@ import { CreateEventComponent } from './create-event/create-event.component';
 import { LayoutComponent } from './layout.component';
 import { ShoweventsComponent} from './showevents/showevents.component';
 import { DetaileventComponent} from './detailevent/detailevent.component';
+import { ReviewsComponent} from './../reviews/reviews.component';
+
 
 const routes: Routes = [
     {
@@ -13,6 +15,8 @@ const routes: Routes = [
             { path: 'Create', component: CreateEventComponent },
             { path: 'ShowAll', component: ShoweventsComponent },
             { path: 'Details', component: DetaileventComponent },
+            { path: 'Reviews/:id', component: ReviewsComponent},
+           
         ]
     }
 ];

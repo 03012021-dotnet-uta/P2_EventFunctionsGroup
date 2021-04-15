@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Reviews } from '@app/_models/reviews';
+import { Reviews } from '@app/_models';
 import { EventService } from '@app/_services';
 
 @Component({
@@ -20,7 +20,7 @@ export class ReviewsComponent implements OnInit {
   ngOnInit(): void {
     if (!this.id)
       this.id = this.route.snapshot.paramMap.get('id');
-    // this.eventService.getAllReviews(this.id).subscribe(x=> this.reviews = x);
+    this.eventService.getAllReviews(this.id).subscribe(x=> this.reviews = x);
     console.log(this.id);
   }
 

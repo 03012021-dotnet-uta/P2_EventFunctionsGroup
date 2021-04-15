@@ -1,15 +1,17 @@
-﻿<h1 *ngIf="isAddMode">Create Account</h1>
-<h1 *ngIf="!isAddMode">Edit Account</h1>
+﻿<h1 *ngIf="isAddMode">Create Event</h1>
+<h1 *ngIf="!isAddMode">Edit Event</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-row">
         <div class="form-group col">
             <label>Event/Type</label>
             <select formControlName="etype" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.etype.errors }">
-                <option value=""></option>
+                <option *ngFor="let et of eventTypes"
+                        value={{et.id}}>{{et.name}}</option>
+                <!-- <option value=""></option>
                 <option value="Seminar">Seminar</option>
                 <option value="Wedding">Wedding</option>
                 <option value="Graduation">Graduation</option>
-                <option value="Relegious">Relegious</option>
+                <option value="Relegious">Relegious</option> -->
             </select>
             <div *ngIf="submitted && f.etype.errors" class="invalid-feedback">
                 <div *ngIf="f.etype.errors.required">Event Type is required</div>
