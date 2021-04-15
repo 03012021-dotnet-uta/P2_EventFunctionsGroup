@@ -39,11 +39,10 @@ steps:
     cliProjectKey: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliProjectName: 'eventfunctionsangular_EventFunctions_P2_Angular'
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
-    extraProperties:
-      # sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/cobertura-coverage.xml
-      # sonar.exclusions=**/*.spec.ts
+    extraProperties: |
+      sonar.exclusions=**/*.spec.ts
       sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/angular-signup-verification-boilerplate/lcov.info
-
+# sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/cobertura-coverage.xml
 # - script: |
 #     cd "$(System.DefaultWorkingDirectory)/AngularTest"
 #     npm install -g @angular/cli
