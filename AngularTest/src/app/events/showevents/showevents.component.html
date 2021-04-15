@@ -5,6 +5,26 @@
     aria-describedby="search-addon" id="myInput" (keyup)="setTable()" placeholder="Search for names.." title="Type in a name">
     <button type="button" class="btn btn-outline-primary">search</button>
   </div>
+  <div >
+    <select name="recordPerPage" id="" (change)="changeRecordPerPage($event.target.value)">
+    <option value="1">1</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="25">25</option>
+    </select>
+    </div>
+    <ul class="pagination" >
+        <li class='page-item'><a class='page-link'>Previous</a></li>
+        <div *ngFor = "let btn of buttonArray">
+        <li class="page-item" >
+            
+             <a class="page-link" (click)="showPerPage(btn.i, btn.recordPerPage)">{{btn.i}}</a>
+        </li>
+        
+        </div>
+        <li class='page-item'><a class='page-link'>Next</a></li> 
+       
+      </ul>
 <table id="myTable" class="table table-striped">
     <thead>
         <tr>
@@ -16,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let event of allRawPreviewEvents">
+        <tr *ngFor="let event of allRawPreviewEvents;">
             <td>{{event.name}} </td>
             <td>{{event.location}}</td>
             <td>{{event.date}}</td>
@@ -32,5 +52,6 @@
         </tr>
     </tbody>
 </table>
+
 
 <router-outlet></router-outlet>
