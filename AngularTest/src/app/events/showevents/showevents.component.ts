@@ -8,8 +8,11 @@ import { RawPreviewEvent} from './../../_models/RawPreviewEvent';
   styleUrls: ['./showevents.component.less']
 })
 export class ShoweventsComponent implements OnInit {
+  public buttonArray: any = [];
+  public displayEvents=  Array<RawPreviewEvent>();
+ 
+
   public allRawPreviewEvents =  Array<RawPreviewEvent>();
-  private perPage = 2;
   
   constructor(
    
@@ -22,17 +25,18 @@ export class ShoweventsComponent implements OnInit {
     this.getAllEvents();
     this.setTable();
     
+    
   }
 
   getAllEvents(){
-    this.eventService.getAllUpcoming().subscribe(x => this.allRawPreviewEvents = x);
+     this.eventService.getAllUpcoming().subscribe(x => this.allRawPreviewEvents = x);
     console.log(this.allRawPreviewEvents);
   
   }
 
   setTable(){
     
-  var input, filter, table, tr, td, i, txtValue;
+  let input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("myTable");
@@ -84,6 +88,46 @@ export class ShoweventsComponent implements OnInit {
         switching = true;
       }
     }
+  }
+
+  paginateTable(recordPerPage: number){
+    let table = document.getElementById("myTable");
+    let tr = table.getElementsByTagName("tr");
+    let totalRecords = tr.length-1;
+    console.log(recordPerPage, totalRecords);
+    this.buttonArray = [];
+    for (let i =0; i < Math.ceil(totalRecords/recordPerPage); i++){
+      console.log('something');
+      this.buttonArray.push({i:i+1, recordPerPage: recordPerPage});
+      console.log(this.buttonArray[i]);
+          
+    }
+         
+  }
+  changeRecordPerPage(e){
+    console.log(e);
+    this.paginateTable(e);
+  }
+
+  showPerPage(k, rp){
+    console.log("show per page clicked");
+    console.log(k, rp);
+    rp = parseInt(rp);
+    let table, tr, i;
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    console.log(tr.length);
+    for (i = 1; i < tr.length; i++) {
+      console.log(i,k,rp);
+
+      if (i > (k-1)*rp && i <= (k-1)*rp+rp)
+     { 
+       
+     tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
   }
 
  

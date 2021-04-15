@@ -20,7 +20,7 @@ describe('AccountService Test', () => {
       service = TestBed.inject(AccountService);
   });
 
-  fit('should be created', () => {
+  it('should be created', () => {
       expect(service).toBeTruthy();
   });
 });
