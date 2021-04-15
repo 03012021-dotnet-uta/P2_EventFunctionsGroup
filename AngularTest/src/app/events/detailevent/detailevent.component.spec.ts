@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Account, AlertType, RawDetailEvent } from '@app/_models';
 import { AccountService, AlertService, EventService } from '@app/_services';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { DetaileventComponent } from './detailevent.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { stringify } from '@angular/compiler/src/util';
+import { HttpClient } from '@angular/common/http';
 
 
 describe('DetaileventComponent', () => {
@@ -16,12 +17,11 @@ describe('DetaileventComponent', () => {
   let accountServiceStub: Partial<AccountService>;
   let formBuilderStub: FormBuilder = new FormBuilder();
   let alertServiceStub: AlertService = new AlertService();
+  let eventServiceStub: EventService;
   let RouterStub: Router;
   let routerSpy = {navigate: jasmine.createSpy('navigate')};
-  let spy: any;
-  let testAlert;
 
-    class eventStub {
+    class eventStub extends EventService{
         getById(id: string): Observable<RawDetailEvent> { 
           return of ({
             id: '1',
@@ -41,8 +41,6 @@ describe('DetaileventComponent', () => {
         registerEvent(userId: string, eventType: string): Observable<string> {
           return of ('successful');
         }
-
-        
     }
   
     accountServiceStub = {
@@ -116,7 +114,8 @@ describe('DetaileventComponent', () => {
       isEventManager: false,
       role: 1,
     }
-    RouterStub = TestBed.get(Router);
+    RouterStub = TestBed.inject(Router);
+    eventServiceStub = TestBed.inject(EventService);
     fixture.detectChanges();
   });
 
@@ -124,10 +123,60 @@ describe('DetaileventComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should register', () => {
-    const spy = spyOn(alertServiceStub, 'success');
+  it('should register successfully', () => {
+    const eventService = fixture.debugElement.injector.get(EventService);
+    const spyError = spyOn(eventService, 'registerEvent').and.returnValue(of(true));
     component.onRegisterEvent();
     expect(routerSpy.navigate).toHaveBeenCalled();
+  })
+
+  // it('should register unsuccessfully', () => {
+  //   const eventService = fixture.debugElement.injector.get(EventService);
+  //   const spyError = spyOn(eventService, 'registerEvent').and.returnValue(throwError  ({status: 404}));
+  //   component.onRegisterEvent();
+  //   expect(routerSpy.navigate).not.toHaveBeenCalled();
+  // })
+
+  it('should unregister successfully', () => {
+    const eventService = fixture.debugElement.injector.get(EventService);
+    const spyError = spyOn(eventService, 'unregisterEvent').and.returnValue(of(true));
+    component.onUnRegisterEvent();
+    expect(routerSpy.navigate).toHaveBeenCalled();
+  })
+
+  it('should submit review', () => {
+    const eventService = fixture.debugElement.injector.get(EventService);
+    const spyError = spyOn(eventService, 'submitReview').and.returnValue(of(true));
+    component.onSubmit();
+    expect(routerSpy.navigate).toHaveBeenCalled();
+  })
+
+  it('should is signed true', () => {
+    component.esigneduser = true;
+    fixture.detectChanges();
+    let returnValue = component.isSigned();
+    expect(returnValue).toEqual(true);
+  })
+
+  it('should is signed false', () => {
+    component.esigneduser = false;
+    fixture.detectChanges();
+    let returnValue = component.isSigned();
+    expect(returnValue).toEqual(false);
+  })
+
+  it('should actionRegisterEvent', () => {
+    component.action = 'register';
+    fixture.detectChanges();
+    let returnValue = component.actionRegisterEvent();
+    expect(returnValue).toEqual(true);
+  })
+
+  it('should actionUnRegisterEvent', () => {
+    component.action = 'unregister';
+    fixture.detectChanges();
+    let returnValue = component.actionUnRegisterEvent();
+    expect(returnValue).toEqual(true);
   })
 });
 
