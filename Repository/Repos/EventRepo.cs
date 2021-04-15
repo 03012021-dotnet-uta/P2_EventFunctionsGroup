@@ -59,14 +59,6 @@ namespace Repository.Repos
             return allEvents;
         }
 
-        /// <summary>
-        /// Get an entity by its EventId
-        /// </summary>
-        public Event GetEventById(int eventId)
-        {
-            return context.Events.Find(eventId);
-        }
-
         public List<User> GetAllAttending(Guid eid)
         {
             var allAttending = context.Events.Include(x => x.Users).Where(x => Guid.Equals(x.Id, eid)).Select(x => x.Users).ToList();
@@ -80,6 +72,7 @@ namespace Repository.Repos
         public void UpdateEvent(Event eventName) 
         {
             context.Entry(eventName).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -126,7 +119,7 @@ namespace Repository.Repos
 
         public ICollection<Event> GetSignedUpEvents(Guid id)
         {
-            List<ICollection<Event>> myEvents = context.Users.Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
+            List<ICollection<Event>> myEvents = context.Users.Include(x => x.Events).Where(n => Guid.Equals(n.Id, id)).Select(n => n.Events).ToList();
             
             return myEvents[0];
         }

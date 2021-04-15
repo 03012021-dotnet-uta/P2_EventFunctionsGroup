@@ -41,7 +41,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Delete a Review
         /// </summary>
-        void DeleteReview(int reviewId);
+        void DeleteReview(Guid reviewId);
 
         /// <summary>
         /// Save changes

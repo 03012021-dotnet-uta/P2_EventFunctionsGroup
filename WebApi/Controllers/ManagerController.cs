@@ -26,9 +26,9 @@ namespace WebApi.Controllers
         /// <param name="id">Manager ID</param>
         /// <returns></returns>
         [HttpGet("getevents/{id}")]
-        public ActionResult<List<RawPreviewEvent>> GetAllCreatedEvents(Guid id)
+        public ActionResult<List<RawManagerEvent>> GetAllCreatedEvents(Guid id)
         {
-            List<RawPreviewEvent> allEvents = managerLogic.GetAllEvents(id);
+            List<RawManagerEvent> allEvents = managerLogic.GetAllEvents(id);
             return allEvents;
         }
 
@@ -37,7 +37,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("createevent")]
-        public async Task<ActionResult<Event>> CreateNewEvent(RawEvent userEvent)
+        public async Task<ActionResult<RawDetailEvent>> CreateNewEvent(RawEvent userEvent)
         {
             if(!ModelState.IsValid)
             {
@@ -45,7 +45,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                Event newEvent = await managerLogic.CreateNewEvent(userEvent);
+                RawDetailEvent newEvent = await managerLogic.CreateNewEvent(userEvent);
                 if(newEvent == null)
                 {
                     return StatusCode(450, "Failed to make event. Invalid inputs(Possibly could not find address).");
@@ -101,7 +101,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
-        [HttpGet("getallrevdata")]
+        [HttpGet("getallrevdata/{id}")]
         public ActionResult<decimal> GetAllRevenueInfo(Guid id)
         {
             decimal totalRevenue = managerLogic.GetTotalRevenue(id);

@@ -6,10 +6,11 @@ import { EventsRoutingModule } from './events-routing.module';
 import { LayoutComponent } from './layout.component';
 import { ShoweventsComponent } from './showevents/showevents.component';
 import { DetaileventComponent } from './detailevent/detailevent.component';
+import { ReviewsComponent} from './../reviews/reviews.component'
 
 
 @NgModule({
-  declarations: [CreateEventComponent, LayoutComponent, ShoweventsComponent, DetaileventComponent],
+  declarations: [CreateEventComponent, LayoutComponent, ShoweventsComponent, DetaileventComponent, ReviewsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

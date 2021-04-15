@@ -30,7 +30,7 @@ namespace Logic
         /// </summary>
         /// <param name="userEvent"></param>
         /// <returns></returns>
-        public async Task<Event> CreateNewEvent(RawEvent userEvent)
+        public async Task<RawDetailEvent> CreateNewEvent(RawEvent userEvent)
         {
             EventType type = await eventTypeRepo.GetEventTypeByIDAsync(userEvent.EventType);
             if(type is null)
@@ -49,7 +49,8 @@ namespace Logic
             User manager = await Task.Run(() => userRepo.GetUserByID(userEvent.ManagerID));
             Event newEvent = await mapper.RawToEvent(userEvent, type, existLoc, manager);
             newEvent = eventRepo.InsertEvent(newEvent);
-            return newEvent;
+            RawDetailEvent returnEvent = await Task.Run(() => mapper.EventToDetail(newEvent, 0));
+            return returnEvent;
         }
 
         /// <summary>
@@ -57,13 +58,14 @@ namespace Logic
         /// </summary>
         /// <param name="id">User Id</param>
         /// <returns></returns>
-        public List<RawPreviewEvent> GetAllEvents(Guid id)
+        public List<RawManagerEvent> GetAllEvents(Guid id)
         {
             List<Event> allEvents = eventRepo.GetAllManagerEvents(id);
-            List<RawPreviewEvent> allRawEvents = new List<RawPreviewEvent>();
+            List<RawManagerEvent> allRawEvents = new List<RawManagerEvent>();
             foreach(Event e in allEvents)
             {
-                allRawEvents.Add(mapper.EventToPreview(e));
+                int currentAttending = eventRepo.GetTotalAttend(e.Id);
+                allRawEvents.Add(mapper.EventToPreviewManager(e, currentAttending));
             }
             return allRawEvents;
         }

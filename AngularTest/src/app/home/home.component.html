@@ -1,6 +1,31 @@
-﻿<div class="p-4">
+<div class="p-4">
     <div class="container">
-        <h1>Hi {{account.fName}}!</h1>
+        <h1>Hi {{account.firstName}}!</h1>
         <p>You're logged in with Events and Functions Website..</p>
     </div>
+
+<h3>Your Up Coming Events</h3>
+<div *ngFor="let event of allFSignedEvents">
+<p>
+    <strong>Event: </strong> {{event.name}}<br />
+    <strong>Location: </strong> {{event.location}}<br />
+    <strong>Date and Time: </strong> {{event.date}}
+</p>
+<button class= "btn btn-danger" [routerLink]="['events/Details']" [queryParams]="{ id: event.id, signed: 'true', action: 'unregister'}"> Cancel Registeration</button>
+<!-- <p><a routerLink="events/Details" [queryParams]="{ id: event.id, signed: 'true', action: 'unregister'}">Cancel Registeration</a></p> -->
+
+</div>
+<h3>Your Previous Events</h3>
+<div *ngFor="let event of allPSignedEvents">
+<p>
+    <strong>Event: </strong> {{event.name}}<br />
+    <strong>Location: </strong> {{event.location}}<br />
+    <strong>Date and Time: </strong> {{event.date}}
+</p>
+<button class= "btn btn-primary" [routerLink]="['events/Details']" [queryParams]="{ id: event.id, signed: 'true', action: 'writeReview'}">Write a Review</button>
+
+<!-- <p><a routerLink="events/Details" [queryParams]="{ id: event.id, signed: 'true', action: 'register'}">Write Review</a></p> -->
+
+</div>
+<router-outlet></router-outlet>
 </div>

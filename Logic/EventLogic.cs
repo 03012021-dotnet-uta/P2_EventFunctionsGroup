@@ -63,19 +63,29 @@ namespace Logic
 
         /// <summary>
         /// Gets all events a user has been to from database based off userID
+        /// Shows previous/past events only
         /// </summary>
         /// <param name="id">User ID</param>
         /// <returns></returns>
         public async Task<List<RawPreviewEvent>> GetAllPreviousEventsAsync(Guid id)
         {
-            List<Event> previousEvents = await Task.Run(() => eventRepo.GetPreviousEvents(DateTime.UtcNow));
-            List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(previousEvents);
+            List<Event> previousEvents = await Task.Run(() => eventRepo.GetSignedUpEvents(id).ToList());
+            List<Event> filteredEvents = new List<Event>();
+            foreach(Event e in previousEvents)
+            {
+                if(e.Date < DateTime.Now)
+                {
+                    await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
+                }
+            }
+            List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
 
             return returnEvents;
         }
 
         /// <summary>
         /// Gets all events a user signed up for from the database based off userID
+        /// Shows future/upcoming events only
         /// </summary>
         /// /// <param name="id">User ID</param>
         /// <returns></returns>
@@ -85,7 +95,10 @@ namespace Logic
             List<Event> filteredEvents = new List<Event>();
             foreach(Event e in allEvents)
             {
-                await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
+                if(e.Date > DateTime.Now)
+                {
+                    await Task.Run(() => filteredEvents.Add(eventRepo.GetEventByID(e.Id)));
+                }
             }
 
             List<RawPreviewEvent> returnEvents = await ConvertAllEventsAsync(filteredEvents);
@@ -113,6 +126,35 @@ namespace Logic
             reviewRepo.InsertReview(newReview);
             RawReviewToFE rawToFE = mapper.ReviewToRaw(newReview, theUser.FName + " " + theUser.LName, theEvent.Name);
             return rawToFE;
+        }
+
+        /// <summary>
+        /// Removes a user from an event.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="eid"></param>
+        /// <returns></returns>
+        public bool UnregisterFromEvent(Guid uid, Guid eid)
+        {
+            Event tEvent = eventRepo.GetEventByID(eid);
+            if(tEvent == null)
+            {
+                return false;
+            }
+            User user = userRepo.GetUserByID(uid);
+            if(user == null)
+            {
+                return false;
+            }
+            
+            tEvent.TotalTicketsSold--;
+            tEvent.Users.Remove(user);
+            user.Events.Remove(tEvent);
+            eventRepo.Save();
+            //UsersEvent signupUser = mapper.signUpById(uid, eid, user, tEvent);
+            //usersEventRepo.InsertUsersEvent(signupUser);
+
+            return true;
         }
 
         /// <summary>

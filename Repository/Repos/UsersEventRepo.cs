@@ -56,7 +56,7 @@ namespace Repository.Repos
         /// <summary>
         /// Get the UsersEvents from database and present back to context
         /// </summary>
-        public ICollection<UsersEvent> GetAllUsersEvents() 
+        public List<UsersEvent> GetAllUsersEvents() 
         {
             return context.UsersEvents.ToList();
         }
@@ -64,9 +64,11 @@ namespace Repository.Repos
         /// <summary>
         /// Get an entity by its UsersEventId
         /// </summary>
-        public UsersEvent GetUsersEventById(int usersEventId)
+        public UsersEvent GetUsersEventById(Guid userId, Guid eventId)
         {
-            return context.UsersEvents.Find(usersEventId);
+            return context.UsersEvents
+                .Include(x => x.User).Include(x => x.Event)
+                .Where(x => Guid.Equals(x.UserId,userId)).Where(x => Guid.Equals(x.EventId, eventId)).FirstOrDefault();
         } 
 
         /// <summary>
@@ -87,11 +89,12 @@ namespace Repository.Repos
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteUsersEvent(int userEventId)
+        public void DeleteUsersEvent(Guid userId, Guid eventId)
         {
-            UsersEvent userEvent = context.UsersEvents.Find(userEventId);
+            UsersEvent userEvent = context.UsersEvents.Where(x => Guid.Equals(x.UserId,userId)).Where(x => Guid.Equals(x.EventId, eventId)).FirstOrDefault();
             context.Entry(userEvent).State = EntityState.Deleted;
             context.UsersEvents.Remove(userEvent);
+            context.SaveChanges();
         }
 
         /// <summary>

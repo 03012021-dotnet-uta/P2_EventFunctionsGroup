@@ -26,12 +26,12 @@ namespace Repository.Interfaces
         /// <summary>
         /// Read all UsersEvents
         /// </summary>
-        ICollection<UsersEvent> GetAllUsersEvents();
+        List<UsersEvent> GetAllUsersEvents();
 
         /// <summary>
         /// Read an entity by their UsersEventId
         /// </summary>
-        UsersEvent GetUsersEventById(int usersEventId);
+        UsersEvent GetUsersEventById(Guid userId, Guid eventId);
 
         /// <summary>
         /// Update a UserEvent
@@ -41,7 +41,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Delete a UserEvent
         /// </summary>
-        void DeleteUsersEvent(int userEventId);
+        void DeleteUsersEvent(Guid userId, Guid eventId);
 
         /// <summary>
         /// Save changes
