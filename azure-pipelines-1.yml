@@ -41,7 +41,7 @@ steps:
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties:
       # sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/cobertura-coverage.xml
-      sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/lcov.info
+      sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/angular-signup-verification-boilerplate/lcov.info
 
 # - script: |
 #     cd "$(System.DefaultWorkingDirectory)/AngularTest"
@@ -95,7 +95,7 @@ steps:
   condition: succeededOrFailed()
   inputs:
     # codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './AngularTest/coverage/lcov.info'
+    summaryFileLocation: './AngularTest/coverage/angular-signup-verification-boilerplate/lcov.info'
 
 - task: SonarCloudAnalyze@1
 
