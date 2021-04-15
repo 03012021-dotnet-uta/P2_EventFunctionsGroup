@@ -41,7 +41,7 @@ steps:
     cliSources: '$(System.DefaultWorkingDirectory)/AngularTest'
     extraProperties: |
       # sonar.flex.cobertura.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/cobertura-coverage.xml
-      sonar.exclusions=**/**/*spec.ts
+      sonar.exclusions=**/*.spec.ts
       sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/AngularTest/coverage/angular-signup-verification-boilerplate/lcov.info
 
 # - script: |
