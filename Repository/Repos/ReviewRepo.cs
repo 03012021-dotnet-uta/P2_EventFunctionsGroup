@@ -78,7 +78,7 @@ namespace Repository.Repos
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        public void DeleteReview(int reviewId)
+        public void DeleteReview(Guid reviewId)
         {
             Review review = context.Reviews.Find(reviewId);
             context.Entry(review).State = EntityState.Deleted;

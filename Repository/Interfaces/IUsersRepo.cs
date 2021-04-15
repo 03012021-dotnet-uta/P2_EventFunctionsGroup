@@ -37,7 +37,7 @@ namespace Repository.Interfaces
         /// <summary>
         /// Delete an item from context and database
         /// </summary>
-        void DeleteUser(int userId);
+        void DeleteUser(Guid userId);
 
         /// <summary>
         /// Save changes back to database
