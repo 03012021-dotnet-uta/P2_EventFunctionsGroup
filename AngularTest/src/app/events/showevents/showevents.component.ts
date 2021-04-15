@@ -9,7 +9,7 @@ import { RawPreviewEvent} from './../../_models/RawPreviewEvent';
 })
 export class ShoweventsComponent implements OnInit {
   public buttonArray: any = [];
-  public displayEvents=  Array<RawPreviewEvent>();
+  //public displayEvents=  Array<RawPreviewEvent>();
  
 
   public allRawPreviewEvents =  Array<RawPreviewEvent>();
@@ -30,7 +30,7 @@ export class ShoweventsComponent implements OnInit {
 
   getAllEvents(){
      this.eventService.getAllUpcoming().subscribe(x => this.allRawPreviewEvents = x);
-    console.log(this.allRawPreviewEvents);
+    //console.log(this.allRawPreviewEvents);
   
   }
 
@@ -94,31 +94,31 @@ export class ShoweventsComponent implements OnInit {
     let table = document.getElementById("myTable");
     let tr = table.getElementsByTagName("tr");
     let totalRecords = tr.length-1;
-    console.log(recordPerPage, totalRecords);
+    //console.log(recordPerPage, totalRecords);
     this.buttonArray = [];
     for (let i =0; i < Math.ceil(totalRecords/recordPerPage); i++){
-      console.log('something');
+      //console.log('something');
       this.buttonArray.push({i:i+1, recordPerPage: recordPerPage});
-      console.log(this.buttonArray[i]);
+      //console.log(this.buttonArray[i]);
           
     }
          
   }
   changeRecordPerPage(e){
-    console.log(e);
+    //console.log(e);
     this.paginateTable(e);
   }
 
   showPerPage(k, rp){
-    console.log("show per page clicked");
-    console.log(k, rp);
+    // console.log("show per page clicked");
+    // console.log(k, rp);
     rp = parseInt(rp);
     let table, tr, i;
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
-    console.log(tr.length);
+    //console.log(tr.length);
     for (i = 1; i < tr.length; i++) {
-      console.log(i,k,rp);
+      //console.log(i,k,rp);
 
       if (i > (k-1)*rp && i <= (k-1)*rp+rp)
      { 
