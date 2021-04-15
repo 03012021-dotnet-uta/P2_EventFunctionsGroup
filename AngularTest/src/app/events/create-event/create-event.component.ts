@@ -16,6 +16,7 @@ export class CreateEventComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
+  eventTypes: any;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -34,13 +35,16 @@ export class CreateEventComponent implements OnInit {
         date: ['', Validators.required],
         eventType:"ea3bf8bf-5e12-45b0-bd9a-209defc23e9c",
         street:[''],
-        capacity:786,
+        ticketPrice: [''],
+        capacity:[''],
         city:[''],
         state:[''],
-        zipcode:78672,
+        zipCode:[''],
         description:[''],
 
     });
+
+    this.getEventTypeTable();
 }
 
   // convenience getter for easy access to form fields
@@ -70,6 +74,11 @@ export class CreateEventComponent implements OnInit {
                   this.loading = false;
               }
           });
+  }
+
+  getEventTypeTable(){
+      this.eventService.getEventTypes()
+      .subscribe(et => this.eventTypes = et);
   }
 
 }

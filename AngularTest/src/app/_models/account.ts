@@ -3,8 +3,8 @@
 export class Account {
     id: string;
     title: string;
-    fName: string;
-    lName: string;
+    firstName: string;
+    lastName: string;
     email: string;
     isEventManager: boolean;
     role: Role;

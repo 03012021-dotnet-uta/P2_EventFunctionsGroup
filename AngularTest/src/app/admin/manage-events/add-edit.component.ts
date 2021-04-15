@@ -14,6 +14,7 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitted = false;
     account = this.accountService.accountValue;
+    eventTypes: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -33,7 +34,7 @@ export class AddEditComponent implements OnInit {
             etype: ['', Validators.required],
             name: ['', Validators.required],
             date: ['', Validators.required],
-            eventType:"ea3bf8bf-5e12-45b0-bd9a-209defc23e9c",
+            eventType:"",
             street:[''],
             ticketPrice: [''],
             capacity:[''],
@@ -42,6 +43,8 @@ export class AddEditComponent implements OnInit {
             zipCode:[''],
             description:[''],
         });
+
+        this.getEventTypeTable();
 
         if (!this.isAddMode) {
             this.eventService.getById(this.id)
@@ -100,5 +103,10 @@ export class AddEditComponent implements OnInit {
                     this.loading = false;
                 }
             });
+    }
+
+    getEventTypeTable(){
+        this.eventService.getEventTypes()
+        .subscribe(et => this.eventTypes = et);
     }
 }

@@ -1,11 +1,36 @@
 <h1>Events......</h1>
-<div *ngFor="let event of allRawPreviewEvents">
-<p>
-    <strong>Event: </strong> {{event.name}}<br />
-    <strong>Location: </strong> {{event.location}}}<br />
-    <strong>Date and Time: </strong> {{event.date}}
-</p>
-<p><a routerLink="../Details" [queryParams]="{ id: event.id}">Details</a></p>
 
-...</div>
+<div class="input-group">
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+    aria-describedby="search-addon" id="myInput" (keyup)="setTable()" placeholder="Search for names.." title="Type in a name">
+    <button type="button" class="btn btn-outline-primary">search</button>
+  </div>
+<table id="myTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width:30%">Name<button (click)="sortTable('0')">↓</button></th>
+            <th style="width:30%">Location<button (click)="sortTable('1')">↓</button></th>
+            <th style="width:30%">Date & Time<button (click)="sortTable('2')">↓</button></th>
+            
+            <th style="width:10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of allRawPreviewEvents">
+            <td>{{event.name}} </td>
+            <td>{{event.location}}</td>
+            <td>{{event.date}}</td>
+            <td style="white-space: nowrap">
+                <p><a routerLink="../Details" [queryParams]="{ id: event.id, action:'register'}">Details</a></p>
+                
+            </td>
+        </tr>
+        <tr *ngIf="!allRawPreviewEvents">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <router-outlet></router-outlet>
