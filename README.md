@@ -1,25 +1,45 @@
-# Revature Project 2 Team 3
-#Propsal
-The proposal is made to meet the ever demanded Web / Cloud based Event Management System. Initally sytem should be able to provide necessary services to three clients (beneficiaries). These are:
-- Event Facility Provider / Owners
-- Event Management Party
-- General Public as customer for participating in any event.
+# EventFunctions [Website](https://eventsfunctions.azurewebsites.net)
+## Proposal
+EventFunctions is a web application for managing, tracking, and planning events including private functions, seminars, and concerts. Using EventFunctions, event managers will be able to create and post events for consumers to see and sign up for. The event managers will be able to provide a variety of information about the event when creating and also see details about events that they have created, ranging from people attending the event to revenue details. The event-goers will be able to find events near them and the sign up for such events. After the event has finished, users will be able to leave a rating and review for the events that they just attended.
 
-##The Facility Orivider should be able to:
-- Create a general layout on google maps of their facility
-- Indicate seating / attending capacity
-- Include Necessary information to promote / attract customer who are interested in arranging an event on their facility
-- Booking / Renting rates etc
+# Technologies
+- Frontend
+  - Angular 2+
+- Backend
+  - .NET Framework
+  - ASP.NET Core
+  - C#
+  - SQL
+  - EntityFramework
+- DevOps
+  - Azure Pipeline(CI/CD)
+  - Azure Web Service
+  - Azure Web App
+  - AzureSQL Database
+  - SonarCloud
 
-## The Event Manger should be able to:
--select a facility available in the area of their interest
--Make ticketing / booking plan
--Provide necessary info to the participants (guests) of events
+## Users:
+- As a user, I want to create an account and log in.
+- As a user, I want to view all events that are in my area.
+- As a user, I want to be able to sort and filter events.
+- As a user, I want to be able to sign up for an event.
+- As a user, I want to view all events that I have been to before.
+- As a user, I want to view all upcoming events that I have signed up for.
+- As a user, I want to view information about events that I have signed up for.
+- As a user, I want to be able to leave a review for an event that I have been to.
+- As a user, I want to receive email notifications so that I can confirm my attendance.
 
-## General Public Should be able:
--To see necessary informations e.g location (google maps api), weather (weather API) and parking area etc
--TO puchase tickets as set by event manger
+## Event Manager:
+- As an event manager, I want to create an event.
+- As an event manager, I want to edit an event that I have created.
+- As an event manager, I want to be able to see a list of people that have registered for my event.
+- As an event manager, I want to be able to see the total number of tickets sold and how many are available(left and total).
+- As an event manager, I want to see estimated revenues based on past events.
+- As an event manager, I want to see total revenue and profits on my event.
 
-#further functionalities should be easily added
-- Booking of Hotels/Car and airtickets for participants
-# A small update here
+## Contributors:
+[Nicholas Wong](https://github.com/nicholasvvong)
+
+[Muhammad Tahir Monir](https://github.com/mtmonir)
+
+[Christopher Trimmer](https://github.com/cpt409)
